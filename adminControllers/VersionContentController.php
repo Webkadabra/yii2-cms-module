@@ -6,7 +6,7 @@
  * All rights reserved.
  */
 
-namespace webkadabra\yii\modules\cms\backendControllers;
+namespace webkadabra\yii\modules\cms\adminControllers;
 use webkadabra\yii\modules\cms\models\CmsDocumentVersion;
 use webkadabra\yii\modules\cms\models\CmsDocumentVersionContent;
 use dektrium\user\filters\AccessRule;
