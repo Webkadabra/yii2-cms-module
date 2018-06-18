@@ -8,7 +8,18 @@ You can install package with a command:
 
 > composer require webkadabra/yii2-cms-module
 
+This module is compatible with the following yii-2 extensions:
+
+`omgdef\multilingual`.
+`dektrium\user`.
+
 ## Setup
+
+### Requirements
+
+* Your application must have `application\components\Controller` component
+
+### Configuration
 
 Add `cmsRouter` component to your main application configuration (e.g. `config/main.php` or `frontend/config/main.php`, 
 depending on your application structure):
@@ -99,6 +110,10 @@ Add `cms` module to your admin or backend application (it can be the same applic
 ],
 // ...
 ```
+
+Setup database by running migrations:
+
+> $ php yii migrate --migrationPath=@webkadabra/yii2-cms-module/migrations
 
 Thanks, pull requests and donations are welcome!
 
