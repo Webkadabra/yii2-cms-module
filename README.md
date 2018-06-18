@@ -53,8 +53,7 @@ Add `cms` module to your admin or backend application (it can be the same applic
 'modules' => [
         // ...
         'cms' => [
-            'class' => 'common\modules\cms\Module',
-            'mode' => \common\modules\cms\Module::MODE_BACKEND,
+            'class' => 'webkadabra\yii\modules\cms\Module',
             'availableControllerRoutes' => [
                 'site' => [
                     'label' => 'Global',
