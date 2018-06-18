@@ -111,9 +111,29 @@ Add `cms` module to your admin or backend application (it can be the same applic
 // ...
 ```
 
-Setup database by running migrations:
+(optional) Add module migrations folder to your console application config file (or main config file, if you're not using 
+advanced application structure):
+
+```
+// ...
+'controllerMap' => [
+    'migrate' => [
+        'class' => 'yii\console\controllers\MigrateController',
+        'migrationNamespaces' => [
+            'vendor/webkadabra/yii2-cms-module/migrations',
+            // ... other modules' migrations, if any
+        ],
+    ],
+],
+// ...
+```
+
+... and then run `php yii migrate` command. If you choose not to add module's migrations path to your config,
+you can setup database by running migrations directly:
 
 > $ php yii migrate --migrationPath=@vendor/webkadabra/yii2-cms-module/migrations
+
+NOTICE: you will have to run this command every time there is a change in modules' migrations.
 
 Thanks, pull requests and donations are welcome!
 
