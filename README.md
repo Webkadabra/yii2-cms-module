@@ -18,7 +18,7 @@ You can install package with a command:
 This module is compatible with the following yii-2 extensions:
 
 * `omgdef\multilingual`
-* dektrium\user`
+* `dektrium\user`
 
 ## Setup
 
