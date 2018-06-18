@@ -21,12 +21,6 @@ class Module extends \yii\base\Module
 
     public $mode = 'frontend';
 
-    public function init()
-    {
-        parent::init();
-        $this->viewPath = '@vendor/webkadabra/yii/modules/cms/views';
-    }
-
     public function getTemplatesViewsPath()
     {
         $viewPath = $this->frontendViewTemplatesPath;
