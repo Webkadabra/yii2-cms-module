@@ -8,24 +8,6 @@ You can install package with a command:
 
 > composer require webkadabra/yii2-cms-module
 
-## Example usage with Yii2 Advanced App
-
-Assume the following structure of your applicaiton's folders:
-
-```
-/
-  backend
-  common
-  docs
-    /user
-      /orders
-        /fulfillment.md
-  frontend  
-```
-
-Where `fulfillment.md` is your user documentaiton for, well, looks like some e-commerce thing. 
-Anyways, add this module to your `backend` config first:
-
 ## Setup
 
 Add `cmsRouter` component to your main application configuration (e.g. `config/main.php` or `frontend/config/main.php`, 
