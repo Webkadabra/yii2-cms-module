@@ -2,6 +2,13 @@
 
 A CMS & routing module for Yii 2 applications.
 
+Features:
+
+* content version history & sandbox mode
+* handles routing on top of built-in `urlManager`
+* supports multiple websites
+* sitemap-aware
+
 ## Installation via Composer
 
 You can install package with a command:
@@ -10,8 +17,8 @@ You can install package with a command:
 
 This module is compatible with the following yii-2 extensions:
 
-`omgdef\multilingual`.
-`dektrium\user`.
+* `omgdef\multilingual`
+* dektrium\user`
 
 ## Setup
 
