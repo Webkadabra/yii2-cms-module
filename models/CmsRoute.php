@@ -41,8 +41,8 @@ use yii\web\UrlManager;
  */
 class CmsRoute extends \yii\db\ActiveRecord
 {
-    use \common\modules\cms\CmsPageTrait;
-    use \common\modules\cms\CmsPageFormTrait;
+    use \webkadabra\yii\modules\cms\CmsPageTrait;
+    use \webkadabra\yii\modules\cms\CmsPageFormTrait;
 
     /**
      * @inheritdoc
