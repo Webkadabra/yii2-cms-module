@@ -19,8 +19,6 @@ class Module extends \yii\base\Module
      */
     public $frontendViewTemplatesPath = '@frontend/views/cms-templates';
 
-    public $mode = 'frontend';
-
     public function getTemplatesViewsPath()
     {
         $viewPath = $this->frontendViewTemplatesPath;
