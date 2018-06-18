@@ -113,7 +113,7 @@ Add `cms` module to your admin or backend application (it can be the same applic
 
 Setup database by running migrations:
 
-> $ php yii migrate --migrationPath=@webkadabra/yii2-cms-module/migrations
+> $ php yii migrate --migrationPath=@vendor/webkadabra/yii2-cms-module/migrations
 
 Thanks, pull requests and donations are welcome!
 
