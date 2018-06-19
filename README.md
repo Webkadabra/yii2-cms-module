@@ -53,6 +53,18 @@ Add `cmsRouter` component to `bootstrap` property at your main application confi
 // ...
 ```
 
+Add `cms` module to your main (web) application:
+
+```
+// ...
+'modules' => [
+        // ...
+        'cms' => 'webkadabra\yii\modules\cms\Module',
+        // ...
+],
+// ...
+```
+
 Add `cms` module to your admin or backend application (it can be the same application config):
 
 ```
