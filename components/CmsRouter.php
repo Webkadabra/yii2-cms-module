@@ -168,7 +168,7 @@ class CmsRouter implements BootstrapInterface
                 }
             } else if ($viewingDocument->nodeType === 'document') {
                 /** @see \frontend\controllers\CmsController::actionPage */
-                $routeArray[$route[0]] = '/cms/view/page';
+                $routeArray[$route[0]] = '/cms-web/view/page';
                 $_GET['id'] = $viewingDocument->id;
             }
         }
@@ -241,7 +241,7 @@ class CmsRouter implements BootstrapInterface
                 }
 
             } else if ($row->nodeType === 'document') {
-                $routeArray[$route[0]] = '/cms/view/page';
+                $routeArray[$route[0]] = '/cms-web/view/page';
             }
         }
         $app->urlManager->addRules($routeArray);
