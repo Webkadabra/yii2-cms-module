@@ -3,8 +3,8 @@
 namespace webkadabra\yii\modules\cms\components;
 
 use webkadabra\yii\modules\cms\models\CmsRoute;
-use application\components\Controller;
 use Yii;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
