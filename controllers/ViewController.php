@@ -1,18 +1,18 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Gama
+ * Date: 19.06.2018
+ * Time: 3:08
+ */
 
-namespace webkadabra\yii\modules\cms\components;
+namespace webkadabra\yii\modules\cms\controllers;
 
 use webkadabra\yii\modules\cms\models\CmsRoute;
 use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-/**
- * Class AccessCmsController
- * @author Sergii Gamaiunov <devkadabra@gmail.com>
- * @package webkadabra\yii\modules\cms\components
- */
-class AccessCmsController extends Controller
+class ViewController extends \yii\web\Controller
 {
     /** @var CmsRoute */
     public $node;
