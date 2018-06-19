@@ -6,7 +6,7 @@ namespace webkadabra\yii\modules\cms;
  * @author Sergii Gamaiunov <devkadabra@gmail.com>
  * @package webkadabra\yii\modules\cms
  */
-class Module extends \yii\base\Module
+class AdminModule extends \yii\base\Module
 {
     public $allowedRoles = ['admin'];
 
