@@ -1,5 +1,3 @@
-# MODULE IS IN HEAVY DEV STAFGE, GIVE ME A DAY OR TWO FOR A RELEASE
-
 # yii2-cms-module
 
 A CMS & routing module for Yii 2 applications.
