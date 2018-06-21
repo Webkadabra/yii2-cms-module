@@ -181,45 +181,4 @@ class PagesController extends Controller
             ]);
         }
     }
-
-    /**
-     * Updates an existing CmsRoute model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-        if (Yii::$app->request->isPost) {
-            $className = explode('\\', ($model->className()));
-            $className = array_pop($className);
-            $bodyParams = Yii::$app->request->bodyParams;
-            if (isset($_POST[$className]['category_ids'])) {
-                if (empty($bodyParams[$className]['category_ids'])) {
-                    $bodyParams[$className]['category_ids'] = [];
-                } else {
-                    $bodyParams[$className]['category_ids'] = explode(',', $_POST[$className]['category_ids']);
-                }
-                Yii::$app->request->setBodyParams($bodyParams);
-            }
-        }
-//        $models = $model->getItemOptionsDataProvider()->models;
-//        if (Model::loadMultiple($models, Yii::$app->request->post()) && Model::validateMultiple($models)) {
-//            $count = 0;
-//            foreach ($models as $index => $modelIN) {
-//                if ($modelIN->save()) {
-//                    $count++;
-//                }
-//            }
-//        }
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-                'apps' => CmsApp::find()->all(),
-            ]);
-        }
-    }
 }
