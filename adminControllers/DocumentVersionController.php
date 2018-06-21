@@ -6,7 +6,7 @@
  * All rights reserved.
  */
 
-namespace common\modules\cms\adminControllers;
+namespace webkadabra\yii\modules\cms\adminControllers;
 
 use webkadabra\yii\modules\cms\models\CmsContentBlock;
 use webkadabra\yii\modules\cms\models\CmsDocumentVersion;
