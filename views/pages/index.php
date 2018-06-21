@@ -89,12 +89,16 @@ $tabs[] = [
                         isActive: true,
                         init: function(options) {
                             var form  = $('#' + options.formId);
+                            form.on('submit', function(e) {
+                                e.preventDefault();
+                                return false;
+                            })
                             var input = form.find('input[type="text"]');
                             input.on('keyup', function(e) {
                                 var that = this;
                                 clearTimeout(typeTimer);
                                 typeTimer = setTimeout(function(){doTableSearch(that, options.tableId);}, 500)
-                            }).focus();
+                            }).select().focus();
                         },
                     };
                     return pub;
