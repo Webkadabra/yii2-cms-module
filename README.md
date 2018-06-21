@@ -1,5 +1,3 @@
-# MODULE IS IN HEAVY DEV STAFGE, GIVE ME A DAY OR TWO FOR A RELEASE
-
 # yii2-cms-module
 
 A CMS & routing module for Yii 2 applications.
@@ -55,13 +53,13 @@ Add `cmsRouter` component to `bootstrap` property at your main application confi
 // ...
 ```
 
-Add `cms` module to your main (web) application:
+Add `cms-web` module to your main (web) application:
 
 ```
 // ...
 'modules' => [
         // ...
-        'cms' => 'webkadabra\yii\modules\cms\Module',
+        'cms-web' => 'webkadabra\yii\modules\cms\Module',
         // ...
 ],
 // ...
