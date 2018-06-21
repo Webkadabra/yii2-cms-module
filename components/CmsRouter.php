@@ -23,6 +23,12 @@ class CmsRouter implements BootstrapInterface
 
     public $templateMap = [];
 
+    /**
+     * @var string name of module used to serve pages
+     * @see \webkadabra\yii\modules\cms\controllers\ViewController
+     */
+    public $moduleId = 'cms-web';
+
     public function getContainerId() {
         if (!$this->_containerAppId) {
             if ($this->containerAppCode) {
@@ -168,7 +174,7 @@ class CmsRouter implements BootstrapInterface
                 }
             } else if ($viewingDocument->nodeType === 'document') {
                 /** @see \frontend\controllers\CmsController::actionPage */
-                $routeArray[$route[0]] = '/cms-web/view/page';
+                $routeArray[$route[0]] = '/' . $this->moduleId . '/view/page';
                 $_GET['id'] = $viewingDocument->id;
             }
         }
