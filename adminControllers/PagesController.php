@@ -168,7 +168,6 @@ class PagesController extends Controller
                 Yii::$app->request->setBodyParams($bodyParams);
             }
         }
-        $apps = CmsApp::find()->all();
         if ($appId) {
             $model->container_app_id = $appId;
         }
@@ -178,7 +177,7 @@ class PagesController extends Controller
             return $this->render('create', [
                 'model' => $model,
                 'parent' => $parent,
-                'apps' => $apps,
+                'apps' => CmsApp::find()->all(),
             ]);
         }
     }
@@ -219,6 +218,7 @@ class PagesController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'apps' => CmsApp::find()->all(),
             ]);
         }
     }

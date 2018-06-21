@@ -21,6 +21,7 @@ $this->context->layout = '//slim';
         <div class="card">
             <?= $this->render('_form', [
                 'model' => $model,
+                'apps' => $apps,
             ]) ?>
         </div>
     </div>
