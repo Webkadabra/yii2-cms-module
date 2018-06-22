@@ -44,6 +44,10 @@ class CmsRoute extends \yii\db\ActiveRecord
     use \webkadabra\yii\modules\cms\CmsPageTrait;
     use \webkadabra\yii\modules\cms\CmsPageFormTrait;
 
+    const IMG_SUB = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG2YAABzjgAA4VsAAIYrAAB8KAAAzkYAADQZAAAcfP/pwnAAAAMAUExURQAAAP///////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEjKtwcAAAADdFJOU///ANfKDUEAAAAcSURBVHjaYmBCAgz4OQxUloFBXJYCAAAA//8DAFVgARPcMjyVAAAAAElFTkSuQmCC';
+    const IMG_SUB2 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFCAgI////vE5+ngAAAAJ0Uk5T/wDltzBKAAAAF0lEQVR42mJgRAIM9OIwMCJDXMoAAgwAK7YAi7Pk8iwAAAAASUVORK5CYII=';
+
+
     /**
      * @inheritdoc
      */
@@ -227,20 +231,7 @@ class CmsRoute extends \yii\db\ActiveRecord
      */
     public function getNameExtendedWImage($remove=0)
     {
-        $level = $this->tree_level-($remove);
-        $prefix = $level > 0 ? str_repeat("—", $level) . ' · ' : '';
-        if ($level == 0) {
-            $prefix = ' ';
-        } else {
-            if ($level == 1) {
-                $prefix = '<img src="/i/ui/sub.png"> ';
-            } else {
-                $prefix = '<img src="/i/ui/sub.png">';
-                $prefix .= str_repeat('<img src="/i/ui/sub2.png">', $level - 1);
-                $prefix .= ' ';
-            }
-        }
-        return $prefix . ' ' . $this->name;
+        return $this->getNameExtendedPrefix() . ' ' . $this->name;
     }
 
     public function getNameExtendedPrefix($remove=0)
@@ -251,10 +242,10 @@ class CmsRoute extends \yii\db\ActiveRecord
             $prefix = ' ';
         } else {
             if ($level == 1) {
-                $prefix = '<img src="/i/ui/sub.png"> ';
+                $prefix = '<img src="'.static::IMG_SUB.'" > ';
             } else {
-                $prefix = '<img src="/i/ui/sub.png">';
-                $prefix .= str_repeat('<img src="/i/ui/sub2.png">', $level - 1);
+                $prefix = '<img src="'.static::IMG_SUB.'">';
+                $prefix .= str_repeat('<img src="'.static::IMG_SUB2.'">', $level - 1);
                 $prefix .= ' ';
             }
         }
