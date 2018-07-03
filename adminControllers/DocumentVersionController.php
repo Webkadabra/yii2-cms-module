@@ -27,7 +27,7 @@ use yii\web\NotFoundHttpException;
 /**
  * Class DocumentVersionController
  * @author Sergii Gamaiunov <devkadabra@gmail.com>
- * @package common\modules\cms\backendControllers
+ * @package webkadabra\yii\modules\cms\adminControllers
  */
 class DocumentVersionController extends Controller
 {

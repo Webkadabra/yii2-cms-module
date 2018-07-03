@@ -2,7 +2,7 @@
     "name": "webkadabra/yii2-cms-module",
 	"version": "1.0.0",
     "description": "Yii2 CMS & Router Module",
-    "type": "yii2-module",
+    "type": "yii2-extension",
     "license": "MIT",
 	"keywords": [
 		"yii2",

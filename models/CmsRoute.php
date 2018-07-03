@@ -1,7 +1,6 @@
 <?php
 
 namespace webkadabra\yii\modules\cms\models;
-use common\models\ShopItem;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;

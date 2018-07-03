@@ -8,7 +8,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Order */
+/* @var $model \webkadabra\yii\modules\cms\models\CmsRoute */
 
 $this->title = $model->name;
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];

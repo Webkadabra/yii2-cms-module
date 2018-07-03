@@ -12,7 +12,6 @@ use yii\helpers\Html;
 //use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Order */
 /* @var $form yii\widgets\ActiveForm */
 
 if (!isset($staticOnly)) $staticOnly = false;
@@ -27,7 +26,7 @@ echo $form->errorSummary($model);
     $cc = [
         'contentBlockName'=>['type'=>Form::INPUT_DROPDOWN_LIST, 'items'=>$model->blockIdDropdownOptions(), 'hint'=>''],
         'sort_order'=>['type'=>Form::INPUT_TEXT, 'hint'=>''],
-        'contentType'=>['type'=>Form::INPUT_DROPDOWN_LIST, 'items'=>\common\modules\cms\models\CmsContentBlock::typeDropdownOptions(), 'hint'=>''],
+        'contentType'=>['type'=>Form::INPUT_DROPDOWN_LIST, 'items'=>\webkadabra\yii\modules\cms\models\CmsContentBlock::typeDropdownOptions(), 'hint'=>''],
         'content' => [
             'type'=>Form::INPUT_WIDGET,
             'widgetClass'=>'\conquer\codemirror\CodemirrorWidget',

@@ -6,7 +6,7 @@
  * All rights reserved.
  */
 /* @var $this yii\web\View */
-/* @var $model \common\modules\cms\models\CmsApp */
+/* @var $model \webkadabra\yii\modules\cms\models\CmsApp */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];

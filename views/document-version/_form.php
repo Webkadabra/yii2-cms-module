@@ -46,7 +46,7 @@ if ($model->isNewRecord)
         'attributes'=>[
             'nodeType'=>[
                 'type'=>Form::INPUT_DROPDOWN_LIST,
-                'items'=>\common\modules\cms\models\CmsRoute::typeDropDownData(),
+                'items'=>\webkadabra\yii\modules\cms\models\CmsRoute::typeDropDownData(),
                 'hint'=>'<b>Документ</b> — создать страницу с произвольным HTML содержимым<br />
                     <b>Контроллер</b> — привязать один из существующих контроллеров<br />
                     <b>Редирект</b> — перенаправить пользователя по ссылке на страницу или файл<br />'
@@ -64,7 +64,7 @@ if ($model->isNewRecord)
             'attributes'=>[
                 'viewTemplate'=>[
                     'type'=>Form::INPUT_DROPDOWN_LIST,
-                    'items'=>\common\modules\cms\models\CmsRoute::templatesDropdownOptions(),
+                    'items'=>\webkadabra\yii\modules\cms\models\CmsRoute::templatesDropdownOptions(),
                     'options' => ['empty'=>'', 'prompt' => ''],
                 ],
                 'viewLayout'=>[

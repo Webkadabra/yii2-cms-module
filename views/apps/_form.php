@@ -11,7 +11,7 @@ use yii\helpers\Html;
 
 //use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
-/* @var $model common\modules\cms\models\CmsRoute */
+/* @var $model \webkadabra\yii\modules\cms\models\CmsRoute */
 /* @var $form yii\widgets\ActiveForm */
 
 
