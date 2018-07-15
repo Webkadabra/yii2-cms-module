@@ -9,11 +9,9 @@ use kartik\builder\Form;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 
-//use yii\widgets\ActiveForm;
-
 /* @var $this yii\web\View */
-/* @var $model \common\modules\cms\models\CmsDocumentVersionContent */
-/* @var $documentVersion \common\modules\cms\models\CmsDocumentVersion */
+/* @var $model webkadabra\yii\modules\cms\models\CmsDocumentVersionContent */
+/* @var $documentVersion webkadabra\yii\modules\cms\models\CmsDocumentVersion */
 
 if (!isset($staticOnly)) $staticOnly = false;
 $form = ActiveForm::begin(['type'=>ActiveForm::TYPE_HORIZONTAL]);
@@ -27,7 +25,7 @@ echo $form->errorSummary($model);
     $cc = [
         'contentBlockName'=>['type'=>Form::INPUT_DROPDOWN_LIST, 'items'=>$model->blockIdDropdownOptions(), 'hint'=>''],
         'sort_order'=>['type'=>Form::INPUT_TEXT, 'hint'=>''],
-        'contentType'=>['type'=>Form::INPUT_DROPDOWN_LIST, 'items'=>\common\modules\cms\models\CmsContentBlock::typeDropdownOptions(), 'hint'=>''],
+        'contentType'=>['type'=>Form::INPUT_DROPDOWN_LIST, 'items'=>\webkadabra\yii\modules\cms\models\CmsContentBlock::typeDropdownOptions(), 'hint'=>''],
         'content' => [
             'type'=>Form::INPUT_WIDGET,
             'widgetClass'=>'\conquer\codemirror\CodemirrorWidget',
