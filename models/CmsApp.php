@@ -46,10 +46,10 @@ class CmsApp extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'code' => 'Code',
-            'active_yn' => 'Active Yn',
+            'name' => Yii::t('cms', 'Site Name'),
+            'code' => Yii::t('cms', 'Code'),
+            'domain' => Yii::t('cms', 'Domain'),
+            'active_yn' => Yii::t('cms', 'Active'),
         ];
     }
 
