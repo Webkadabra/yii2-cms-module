@@ -84,4 +84,19 @@ class AdminModule extends \yii\base\Module
         }
         return $templates;
     }
+
+    public function init()
+    {
+        parent::init();
+        $this->registerTranslations();
+    }
+
+    public function registerTranslations()
+    {
+        \Yii::$app->i18n->translations['cms*'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en',
+            'basePath' => '@vendor/webkadabra/yii2-cms-module/messages',
+        ];
+    }
 }
