@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->context->layout = '//slim';
 
 $this->beginBlock('actions');
-echo Html::a(Yii::t('app', 'Create New Page'), [
+echo Html::a(Yii::t('cms', 'Add another site'), [
     'create',
     'appId' => Yii::$app->request->get('appId')
 ], ['class' => 'btn btn-primary']);

@@ -9,15 +9,11 @@ use kartik\builder\Form;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 
-//use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
-/* @var $model common\modules\cms\models\CmsRoute */
+/* @var $model webkadabra\yii\modules\cms\models\CmsRoute */
 /* @var $form yii\widgets\ActiveForm */
 
-
-
 if (!isset($staticOnly)) $staticOnly = false;
-
 ?>
 
 <? $form = ActiveForm::begin([
@@ -67,7 +63,7 @@ echo $form->errorSummary($model);
 <? } ?>
 
 <!-- Controller Action Selector -->
-<?=$this->render('_controller_config_form', compact('model', 'form', 'staticOnly'))?>
+<?php echo $this->render('_controller_config_form', compact('model', 'form', 'staticOnly'))?>
 
 <div class="clearfix available-for-controller available-for-document <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
     <?php echo Form::widget([
@@ -105,10 +101,9 @@ echo $form->errorSummary($model);
 </div>
 <?php if (!$staticOnly) { ?>
 <div class="pull-right-">
-    <?= Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
+    <?php echo Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
 </div>
 <?php } ?>
 
-
-<?  ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 

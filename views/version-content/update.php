@@ -8,8 +8,8 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model \common\modules\cms\models\CmsDocumentVersionContent */
-/* @var $documentVersion \common\modules\cms\models\CmsDocumentVersion */
+/* @var $model webkadabra\yii\modules\cms\models\CmsDocumentVersionContent */
+/* @var $documentVersion webkadabra\yii\modules\cms\models\CmsDocumentVersion */
 
 $this->title = $documentVersion->name;
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
@@ -20,11 +20,11 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Content'), 'url' => 
 $this->params['breadcrumbs'][] = Yii::t('app', 'Edit «{name}» block', ['name' => $model->name]);
 $this->context->layout = '//slim';
 ?>
-<div class="order-create">
+<div class="page-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2><?php echo Html::encode($this->title) ?></h2>
 
-    <?= $this->render('_form', [
+    <?php echo $this->render('_form', [
         'model' => $model,
         'documentVersion' => $documentVersion,
     ]) ?>

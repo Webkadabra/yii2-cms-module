@@ -8,7 +8,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Order */
+/* @var $model webkadabra\yii\modules\cms\models\CmsContentBlock */
 
 $this->title = $containerModel->name;
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
@@ -19,9 +19,9 @@ $this->context->layout = '//slim';
 ?>
 <div class="order-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2><?php echo Html::encode($this->title) ?></h2>
 
-    <?= $this->render('_form', [
+    <?php echo $this->render('_form', [
         'model' => $model,
         'containerModel' => $containerModel,
     ]) ?>

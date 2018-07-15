@@ -8,15 +8,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Order */
+/* @var $model webkadabra\yii\modules\cms\models\CmsDocumentVersion */
 
 $this->context->layout = '//slim';
 $this->title = $model->name;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
 $this->params['breadcrumbs'][] = ['label' => $model->document->name, 'url' => ['/cms/pages/view', 'id' => $model->document->id]];
-//$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/cms/document-version/view', 'id' => $model->id]];
-//$this->params['breadcrumbs'][] = Yii::t('app', 'Settings');
 $this->params['breadcrumbs'][] = $model->name;
 
 $this->beginBlock('actions');
@@ -30,7 +28,7 @@ $this->endBlock();
     <div class="col-md-7 col-md-offset-2">
         <div class="card card-loose">
             <h5 class="text-uppercase">Настройки</h5>
-            <?= $this->render('_form', [
+            <?php echo $this->render('_form', [
                 'model' => $model,
             ]) ?>
             <hr class="hr" />
@@ -38,12 +36,12 @@ $this->endBlock();
 <!---->
 <!--        <div class="card ">-->
             <h5 class="text-uppercase">Содержимое</h5>
-            <?=Html::a('Редактировать содержимое', ['/cms/version-content', 'id' => $model->id], [
+            <?php echo Html::a('Редактировать содержимое', ['/cms/version-content', 'id' => $model->id], [
     'class' => 'btn btn-default'])?>
 
             <hr class="hr" />
 
-            <?=Html::a('Удалить', ['/cms/document-version/delete', 'id' => $model->id], [
+            <?php echo Html::a('Удалить', ['/cms/document-version/delete', 'id' => $model->id], [
     'class' => 'btn btn-danger',
             'data-method' => 'post',
             'data-confirm' => 'Вы уверены, что хотите удалить эту версию?'])?>
@@ -54,7 +52,7 @@ $this->endBlock();
         <div class="card card-loose">
             <h5 class="text-uppercase">Публикация</h5>
 
-            <?=Html::a('Опубликовать', ['/cms/document-version/publish', 'id' => $model->id], [
+            <?php echo Html::a('Опубликовать', ['/cms/document-version/publish', 'id' => $model->id], [
     'class' => 'btn btn-primary',
             'data-method' => 'post',
             'data-confirm' => 'Вы уверены, что хотите опубликовать эту версию страницы?'])?>

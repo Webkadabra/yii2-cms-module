@@ -9,23 +9,16 @@ use kartik\builder\Form;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 
-//use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
-/* @var $model common\modules\cms\models\CmsRoute */
+/* @var $model webkadabra\yii\modules\cms\models\CmsRoute */
 /* @var $form yii\widgets\ActiveForm */
 
-
-
 if (!isset($staticOnly)) $staticOnly = false;
-
 ?>
-
-<? $form = ActiveForm::begin([
+<?php $form = ActiveForm::begin([
     'type'=>ActiveForm::TYPE_HORIZONTAL,
-    'formConfig' => ['labelSpan' => 3]]);
-echo $form->errorSummary($model);
-?>
-
+    'formConfig' => ['labelSpan' => 3]]); ?>
+<?php echo $form->errorSummary($model); ?>
 <?php echo Form::widget([
     'model'=>$model,
     'form'=>$form,
@@ -52,11 +45,7 @@ echo $form->errorSummary($model);
         ],
     ]); ?>
 </div>
-
 <div class="pull-right-">
-    <?= Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
+    <?php echo Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
 </div>
-
-
-<?  ActiveForm::end(); ?>
-
+<?php ActiveForm::end(); ?>

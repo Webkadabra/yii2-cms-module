@@ -17,8 +17,8 @@ if (!isset($staticOnly)) $staticOnly = false;
 $form = ActiveForm::begin(['type'=>ActiveForm::TYPE_HORIZONTAL]);
 echo $form->errorSummary($model);
 ?>
-<div class="order-form">
-    <?
+<div class="page-form">
+    <?php
     if ($documentVersion) {
         echo Html::activeHiddenInput($model,'version_id',['value' => $documentVersion->id]);
     }
@@ -62,5 +62,5 @@ echo $form->errorSummary($model);
     </div>
 
 </div>
-<?  ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 

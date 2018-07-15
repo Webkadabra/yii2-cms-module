@@ -7,12 +7,11 @@
  */
 
 /* @var $this yii\web\View */
-/* @var $model \common\modules\cms\models\CmsRoute */
+/* @var $model webkadabra\yii\modules\cms\models\CmsRoute */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/cms/pages/view', 'id' => $model->id]];
-//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Content'), 'url' => ['/cms/blocks', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Settings');
 $this->context->layout = '//slim';
 
@@ -26,12 +25,12 @@ $this->endBlock();
 <div class="row">
     <div class="col-md-7 col-md-offset-2">
         <div class="card">
-            <?= $this->render('_form_route', [
+            <?php echo $this->render('_form_route', [
                 'model' => $model,
                 'staticOnly' => $model,
             ]) ?>
             <hr/>
-            <?= $this->render('_form_properties', [
+            <?php echo $this->render('_form_properties', [
                 'model' => $model,
                 'staticOnly' => true,
             ]) ?>
@@ -54,7 +53,7 @@ $this->endBlock();
                 }
             ]);
         } ?>
-        <?=\yii\helpers\Html::a('Create New Version', ['/cms/document-version/create','page' => $model->id], [
+        <?php echo \yii\helpers\Html::a(Yii::t('cms', 'Create New Version'), ['/cms/document-version/create','page' => $model->id], [
             'class' => 'btn btn-default'
         ]);?>
     </div>

@@ -35,17 +35,11 @@ $tabs[] = [
 
 <div class="ui-card">
     <div class="ui-card-tabs">
-        <!--        --><?php //echo Html::a('Настройки сайта', ['/cms/apps'], ['class' => 'btn btn-default pull-right',
-        //            'items' => $tabs,
-        ////            'items' => \common\models\SavedObjectFilter::makeTabsConfig($searchModel, $tabs),
-        //        ]); ?>
         <?php echo \yii\bootstrap\Tabs::widget([
             'options' => ['class' => 'tabs'],
             'items' => $tabs,
 //            'items' => \common\models\SavedObjectFilter::makeTabsConfig($searchModel, $tabs),
         ]); ?>
-
-
     </div>
     <style>
         span.highlighted {
@@ -127,7 +121,7 @@ $tabs[] = [
     </form>
     <?php Pjax::begin(); ?>
     <div class="card-section card-section--roots">
-        <?= GridView::widget([
+        <?php echo GridView::widget([
             'id'=>'cmsTable',
             'bordered' => 0,
             'layout' => '{items}{pager}{summary}',

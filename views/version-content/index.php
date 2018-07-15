@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $documentVersion \common\modules\cms\models\CmsDocumentVersion*/
+/* @var $documentVersion webkadabra\yii\modules\cms\models\CmsDocumentVersion*/
 $this->context->layout = '//slim';
 
 $this->title = $documentVersion->name;
@@ -27,32 +27,16 @@ echo \yii\helpers\Html::a('Preview <i class="fa fa-external-link" aria-hidden="t
 ]);
 $this->endBlock();
 ?>
-<div class="order-index">
-
+<div class="page-index">
     <div class="pull-right">
-        <?= Html::a(Yii::t('app', 'Add Item'), ['create', 'containerId' => $documentVersion->id], ['class' => 'btn btn-primary']) ?>
+        <?php echo Html::a(Yii::t('app', 'Add Item'), ['create', 'containerId' => $documentVersion->id], ['class' => 'btn btn-primary']) ?>
     </div>
-
-    <h2><?= Html::encode($this->title) ?></h2>
-
-
+    <h2><?php echo Html::encode($this->title) ?></h2>
     <?php Pjax::begin(); ?>
     <?php \yii\widgets\ActiveForm::begin(['options'=>['data-pjax'=>true]]); ?>
-    <?= GridView::widget([
+    <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-////            ['class' => 'yii\grid\SerialColumn'],
-//            [
-//                'format' => 'raw',
-//                'value' => function($data) {
-//                    return Html::img($data->photo_cart_item,['style'=>'
-//                        max-width: 80px;
-//                        max-height: 80px;
-//                        display: block;
-//                        margin:0 auto
-//                    ']);
-//                },
-//            ],
             'contentBlockName',
             [
                 'attribute' => 'content',
@@ -65,10 +49,6 @@ $this->endBlock();
             ],
             'contentType',
             'sort_order',
-//            [
-//                'attribute' => 'available_yn',
-//                'format' => 'boolean',
-//            ],
             ['class' => 'yii\grid\ActionColumn',
             'buttons'=> [
                 'delete' => function ($url, $model, $key)
@@ -83,4 +63,5 @@ $this->endBlock();
         ],
     ]); ?>
     <?php \yii\widgets\ActiveForm::end(); ?>
-    <?php Pjax::end(); ?></div>
+    <?php Pjax::end(); ?>
+</div>

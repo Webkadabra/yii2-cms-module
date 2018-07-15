@@ -9,7 +9,7 @@ use kartik\builder\Form;
 use yii\helpers\Html;
 
 ?>
-<? $currentActionKey = $model->getController_route() ? md5($model->getController_route()) : false; ?>
+<?php $currentActionKey = $model->getController_route() ? md5($model->getController_route()) : false; ?>
 <style>
     .controller_action_params_container {
         background: #e8e8e8;
@@ -91,7 +91,6 @@ $controllerRouteOptions = $model->getControllerRouteOptions();
 // actionParameters
 ?>
 <div class="available-for-controller <?php if ($model->nodeType !== 'controller') echo 'hidden_el'; ?>">
-
     <?php echo Form::widget([
         'model'=>$model,
         'form'=>$form,
@@ -104,8 +103,6 @@ $controllerRouteOptions = $model->getControllerRouteOptions();
             ],
         ],
     ]); ?>
-
-
     <div class="form-group ">
         <div class="col-md-offset-3 col-md-9">
             <!-- Action's extended parameters -->
@@ -114,8 +111,6 @@ $controllerRouteOptions = $model->getControllerRouteOptions();
                  id="controller_action_params">
                 <span style="font-weight:bold">Настройки действия: </span> <br/>
                 <?php
-
-
                 $actionKeyMap = array(); // We need to remap strings like "controller/action" to md5 key, since jQuery can't get elements by selector with slash
 
                 foreach ($controllerRouteOptions['actionParameters'] as $actionKey => $actionParameters) {

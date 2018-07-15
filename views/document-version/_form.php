@@ -9,24 +9,21 @@ use kartik\builder\Form;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 
-//use yii\widgets\ActiveForm;
-
 /* @var $this yii\web\View */
-/* @var $parent common\modules\cms\models\CmsRoute */
-/* @var $model common\modules\cms\models\CmsNodeVersion */
+/* @var $parent webkadabra\yii\modules\cms\models\CmsRoute */
+/* @var $model webkadabra\yii\modules\cms\models\CmsDocumentVersion */
 /* @var $form yii\widgets\ActiveForm */
 
-
 if (!isset($staticOnly)) $staticOnly = false;
+
 $form = ActiveForm::begin([
     'type'=>ActiveForm::TYPE_HORIZONTAL,
     'formConfig' => ['labelSpan' => 3]]);
 echo $form->errorSummary($model);
 
-if ($model->isNewRecord)
+if ($model->isNewRecord) {
     echo Html::activeHiddenInput($model,'node_id',['value' => $parent->id]);
-
-?>
+} ?>
 <style>
     .controller_action_params_container {
         background: #e8e8e8;
@@ -52,7 +49,6 @@ if ($model->isNewRecord)
                     <b>Редирект</b> — перенаправить пользователя по ссылке на страницу или файл<br />'
             ],
             'description'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Отображается только в админке'],
-//            'nodeRoute'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
         ],
     ]); ?>
     <div class="clearfix available-for-controller available-for-document <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
@@ -80,18 +76,9 @@ if ($model->isNewRecord)
             ],
         ]); ?>
     </div>
-    <div style="margin-left:0px" class="row alert alert-info available-for-document <?php if ($model->nodeType !== 'document') echo 'hidden_el'; ?>">
-        <h3>
-            <?php echo (!$model->isNewRecord and $model->nodeType == 'document')
-                ? 'Вы можете отредактировать содержимое страницы <a href="#" onclick=\'$("#cms-form-tabs a[href=#cms-form-tabs_tab_2]").trigger("click");return false\'>здесь</a>'
-                : 'Редактор текста/HTML будет доступен на следующем шаге'
-            ?>
-        </h3>
-    </div>
-
     <hr/>
     <!-- Controller Action Selector -->
-    <?=$this->render('/pages/_controller_config_form', compact('model', 'form', 'staticOnly'))?>
+    <?php echo $this->render('/pages/_controller_config_form', compact('model', 'form', 'staticOnly'))?>
 
     <!-- Page Title -->
     <div class="clearfix available-for-controller available-for-document <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
@@ -114,9 +101,9 @@ if ($model->isNewRecord)
     </div>
 
     <div class="pull-right-">
-        <?= Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
+        <?php echo Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
     </div>
 
 </div>
-<?  ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 

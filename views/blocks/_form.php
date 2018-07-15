@@ -9,8 +9,6 @@ use kartik\builder\Form;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 
-//use yii\widgets\ActiveForm;
-
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
 
@@ -19,7 +17,7 @@ $form = ActiveForm::begin(['type'=>ActiveForm::TYPE_HORIZONTAL]);
 echo $form->errorSummary($model);
 ?>
 <div class="order-form">
-    <?
+    <?php
     if ($containerModel) {
         echo Html::activeHiddenInput($model,'Pages_pageID',['value' => $containerModel->id]);
     }
@@ -59,9 +57,9 @@ echo $form->errorSummary($model);
 
 ?>
     <div class="pull-right-">
-        <?= Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
+        <?php echo Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
     </div>
 
 </div>
-<?  ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 

@@ -18,32 +18,16 @@ $this->params['breadcrumbs'][] = ['label' => $containerModel->name, 'url' => ['/
 $this->params['breadcrumbs'][] = Yii::t('app', 'Content');
 $this->context->layout = '//slim';
 ?>
-<div class="order-index">
-
+<div class="page-index">
     <div class="pull-right">
-        <?= Html::a(Yii::t('app', 'Add Item'), ['create', 'containerId' => $containerModel->id], ['class' => 'btn btn-primary']) ?>
+        <?php echo Html::a(Yii::t('app', 'Add Item'), ['create', 'containerId' => $containerModel->id], ['class' => 'btn btn-primary']) ?>
     </div>
-
-    <h2><?= Html::encode($this->title) ?></h2>
-
-
+    <h2><?php echo Html::encode($this->title) ?></h2>
     <?php Pjax::begin(); ?>
     <?php \yii\widgets\ActiveForm::begin(['options'=>['data-pjax'=>true]]); ?>
-    <?= GridView::widget([
+    <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-////            ['class' => 'yii\grid\SerialColumn'],
-//            [
-//                'format' => 'raw',
-//                'value' => function($data) {
-//                    return Html::img($data->photo_cart_item,['style'=>'
-//                        max-width: 80px;
-//                        max-height: 80px;
-//                        display: block;
-//                        margin:0 auto
-//                    ']);
-//                },
-//            ],
             'contentBlockName',
             [
                 'attribute' => 'content',
@@ -56,10 +40,6 @@ $this->context->layout = '//slim';
             ],
             'contentType',
             'sort_order',
-//            [
-//                'attribute' => 'available_yn',
-//                'format' => 'boolean',
-//            ],
             ['class' => 'yii\grid\ActionColumn',
             'buttons'=> [
                 'delete' => function ($url, $model, $key)
@@ -74,4 +54,5 @@ $this->context->layout = '//slim';
         ],
     ]); ?>
     <?php \yii\widgets\ActiveForm::end(); ?>
-    <?php Pjax::end(); ?></div>
+    <?php Pjax::end(); ?>
+</div>

@@ -6,7 +6,7 @@
  * All rights reserved.
  */
 /* @var $this yii\web\View */
-/* @var $model \webkadabra\yii\modules\cms\models\CmsApp */
+/* @var $model webkadabra\yii\modules\cms\models\CmsApp */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
@@ -31,23 +31,6 @@ $this->endBlock();
             ]) ?>
         </div>
     </div>
-    <div class="col-md-3">
-<!--        --><?php //if ($model->versions) {
-//            echo count($model->versions) .' versions:';
-//            $dataProvider = new \yii\data\ArrayDataProvider();
-//            $dataProvider->models = $model->versions;
-//            $dataProvider->pagination = false;
-//            echo \yii\widgets\ListView::widget([
-//                'dataProvider' => $dataProvider,
-//                'options' => ['class' => 'list-group'],
-//                'itemView' => function ($version, $key, $index, $widget) use ($model) {
-//                    /** @var \common\modules\cms\models\CmsDocumentVersion $version */
-//                    return \yii\helpers\Html::a($version->name, \yii\helpers\Url::toRoute(['/cms/document-version/view',
-//                        'id' => $version->id]), ['class' => 'list-group-item '
-//                        . ($version->id == $model->version_id ? 'active' : '')]);
-//                }
-//            ]);
-//        } ?>
-    </div>
+    <div class="col-md-3"><!-- Form Sidebar--></div>
 </div>
 

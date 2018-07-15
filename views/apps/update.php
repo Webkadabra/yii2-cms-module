@@ -6,7 +6,7 @@
  * All rights reserved.
  */
 /* @var $this yii\web\View */
-/* @var $model \webkadabra\yii\modules\cms\models\CmsRoute */
+/* @var $model webkadabra\yii\modules\cms\models\CmsRoute */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
@@ -22,15 +22,6 @@ $this->context->layout = '//slim';
                 'model' => $model,
             ]) ?>
         </div>
-    </div>
-    <div class="col-md-3">
-        <?=\yii\helpers\Html::a('Create New Version', ['/cms/document-version/create','page' => $model->id], [
-    'class' => 'btn btn-default'
-]);?>
-        <?=\yii\helpers\Html::a('View', $model->getPermalink(), [
-    'class' => 'btn btn-default',
-            'target' => '_blank'
-]);?>
     </div>
 </div>
 
