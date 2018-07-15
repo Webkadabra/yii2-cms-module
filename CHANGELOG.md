@@ -8,4 +8,6 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ Add module translations for admin section and load them up automatically.
+
 ### Fixed
