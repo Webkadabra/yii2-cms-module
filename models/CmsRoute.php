@@ -62,16 +62,16 @@ class CmsRoute extends \yii\db\ActiveRecord
     {
         return [
             [['tree_root', 'tree_left', 'tree_right', 'tree_level', 'nodeEnabled', 'nodeContentPageID', 'nodeHomePage',
-                'nodeOrder', 'deleted_yn', 'sitemap_yn'], 'integer', 'on' => ['insert']],
-            [['nodeType'], 'required', 'on' => ['insert']],
-            [['nodeType', 'nodeProperties', 'nodeAccessLockType'], 'string', 'on' => ['insert']],
-            [['nodeBackendName', 'nodeRoute', 'nodeParentRoute', 'nodeAccessLockConfig'], 'string', 'max' => 255, 'on' => ['insert']],
-            [['viewLayout'], 'string', 'max' => 100, 'on' => ['insert']],
-            [['viewTemplate'], 'string', 'max' => 200, 'on' => ['insert']],
-            [['nodeHomePage'], 'unique', 'on' => ['insert']],
+                'nodeOrder', 'deleted_yn', 'sitemap_yn'], 'integer'],
+            [['nodeType'], 'required'],
+            [['nodeType', 'nodeProperties', 'nodeAccessLockType'], 'safe'],
+            [['nodeBackendName', 'nodeRoute', 'nodeParentRoute', 'nodeAccessLockConfig'], 'string', 'max' => 255],
+            [['viewLayout'], 'string', 'max' => 100],
+            [['viewTemplate'], 'string', 'max' => 200],
+            [['nodeHomePage'], 'unique'],
 
 
-            [['nodeBackendName'], 'required'],
+            [['container_app_id'], 'required'],
             [['nodeRoute'], 'required'],
             [['nodeRoute'], 'unique'],
             [['sitemap_yn'], 'integer'],
@@ -91,26 +91,6 @@ class CmsRoute extends \yii\db\ActiveRecord
                 ],
                 'value' => new Expression('NOW()'),
             ],
-//            'ml' => [
-//                'class' => \omgdef\multilingual\MultilingualBehavior::className(),
-//            'currentLanguage' => Yii::$app->langasync->language,
-//                'languages' => [
-//                    'ru' => 'Russian',
-//                    'en' => 'English',
-//                    'uk' => 'Ukrainian',
-//                ],
-//                //'languageField' => 'language',
-//                //'localizedPrefix' => '',
-//                //'requireTranslations' => false',
-//                //'dynamicLangClass' => true',
-//                //'langClassName' => PostLang::className(), // or namespace/for/a/class/PostLang
-//                'defaultLanguage' => 'ru',
-//                'langForeignKey' => 'item_id',
-//                'tableName' => "{{%shop_item_lang}}",
-//                'attributes' => [
-//                    'frontend_name', 'cart_name', 
-//                ]
-//            ],
         ];
     }
 
