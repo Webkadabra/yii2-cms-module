@@ -66,14 +66,6 @@ echo $form->errorSummary($model);
         ],
     ]); ?>
 </div>
-<div style="margin-left:0px" class="alert alert-info available-for-document  available-for-controller <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
-    <p>
-        <?php echo ($model->isNewRecord || !in_array($model->nodeType, array('controller', 'document')))
-            ? 'Вы можете отредактировать содержимое страницы <a href="#" onclick=\'$("#cms-form-tabs a[href=#cms-form-tabs_tab_2]").trigger("click");return false\'>здесь</a>'
-            : 'Редактор текста/HTML будет доступен на следующем шаге'
-        ?>
-    </p>
-</div>
 
 <hr/>
 <!-- Controller Action Selector -->
@@ -88,7 +80,8 @@ echo $form->errorSummary($model);
         'attributes'=>[
             'viewTemplate'=>[
                 'type'=>Form::INPUT_DROPDOWN_LIST,
-                'items'=>$model->templatesDropdownOptions()
+                'items'=>\webkadabra\yii\modules\cms\models\CmsRoute::templatesDropdownOptions(),
+                'options' => ['empty'=>'', 'prompt' => ''],
             ],
         ],
     ]); ?>
