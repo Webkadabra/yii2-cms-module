@@ -5,6 +5,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\web\UrlManager;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * This is the model class for table "{{%cms_route}}".
@@ -90,6 +91,16 @@ class CmsRoute extends \yii\db\ActiveRecord
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['nodeLastEdit'],
                 ],
                 'value' => new Expression('NOW()'),
+            ],
+            'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::className(),
+                'softDeleteAttributeValues' => [
+                    'deleted_yn' => true
+                ],
+                'allowDeleteCallback' => function ($model) {
+                    /** @var $model CmsRoute */
+                    return !$order->versions && !$order->contentBlocks; // allow to delete empty draft orders
+                }
             ],
         ];
     }

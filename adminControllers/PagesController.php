@@ -123,23 +123,6 @@ class PagesController extends Controller
     }
 
     /**
-     * Displays a single CmsRoute model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->addFlash('success', Yii::t('app', 'Changes Saved'));
-            return $this->refresh();
-        }
-        return $this->render('view', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
      * Creates a new CmsRoute model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -180,5 +163,37 @@ class PagesController extends Controller
                 'apps' => CmsApp::find()->all(),
             ]);
         }
+    }
+
+    /**
+     * Displays a single CmsRoute model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->addFlash('success', Yii::t('app', 'Changes Saved'));
+            return $this->refresh();
+        }
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Displays a single CmsRoute model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->delete()) {
+            Yii::$app->session->addFlash('warning', Yii::t('app', 'Page deleted'));
+            return $this->redirect(['index']);
+        }
+        return $this->redirect(['index']);
     }
 }

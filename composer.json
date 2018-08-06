@@ -20,7 +20,8 @@
   "require": {
     "yiisoft/yii2": ">=2.0.4",
     "kartik-v/yii2-widgets": "3.*",
-    "kartik-v/yii2-builder": "^1.6"
+    "kartik-v/yii2-builder": "^1.6",
+    "yii2tech/ar-softdelete": "^1.0"
   },
   "autoload": {
     "psr-4": {

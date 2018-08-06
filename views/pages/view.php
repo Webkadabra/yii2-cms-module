@@ -59,3 +59,17 @@ $this->endBlock();
     </div>
 </div>
 
+<hr />
+<div class="row">
+    <div class="col-lg-5 col-lg-offset-2 col-md-8">
+        <?=\yii\helpers\Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-default',
+            'data' => [
+                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'method' => 'post',
+            ],
+        ]) ?>
+
+    </div>
+</div
+
