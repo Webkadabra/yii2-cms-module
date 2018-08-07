@@ -2,6 +2,8 @@
 
 namespace webkadabra\yii\modules\cms\models;
 
+use creocoder\nestedsets\NestedSetsQueryBehavior;
+
 /**
  * This is the ActiveQuery class for [[CmsRoute]].
  * @author Sergii Gamaiunov <devkadabra@gmail.com>
@@ -10,11 +12,11 @@ namespace webkadabra\yii\modules\cms\models;
  */
 class CmsRouteQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        $this->andWhere('[[status]]=1');
-        return $this;
-    }*/
+    public function behaviors() {
+        return [
+            NestedSetsQueryBehavior::className(),
+        ];
+    }
 
     /**
      * @inheritdoc

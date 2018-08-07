@@ -1,6 +1,7 @@
 <?php
 
 namespace webkadabra\yii\modules\cms\models;
+use creocoder\nestedsets\NestedSetsBehavior;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -44,9 +45,13 @@ class CmsRoute extends \yii\db\ActiveRecord
     use \webkadabra\yii\modules\cms\CmsPageTrait;
     use \webkadabra\yii\modules\cms\CmsPageFormTrait;
 
+    use \kartik\tree\models\TreeTrait;
+
     const IMG_SUB = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG2YAABzjgAA4VsAAIYrAAB8KAAAzkYAADQZAAAcfP/pwnAAAAMAUExURQAAAP///////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEjKtwcAAAADdFJOU///ANfKDUEAAAAcSURBVHjaYmBCAgz4OQxUloFBXJYCAAAA//8DAFVgARPcMjyVAAAAAElFTkSuQmCC';
     const IMG_SUB2 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFCAgI////vE5+ngAAAAJ0Uk5T/wDltzBKAAAAF0lEQVR42mJgRAIM9OIwMCJDXMoAAgwAK7YAi7Pk8iwAAAAASUVORK5CYII=';
 
+    public $make_child_of;
+    public $make_root_yn;
 
     /**
      * @inheritdoc
@@ -63,7 +68,7 @@ class CmsRoute extends \yii\db\ActiveRecord
     {
         return [
             [['tree_root', 'tree_left', 'tree_right', 'tree_level', 'nodeEnabled', 'nodeContentPageID', 'nodeHomePage',
-                'nodeOrder', 'deleted_yn', 'sitemap_yn'], 'integer'],
+                'nodeOrder', 'deleted_yn', 'sitemap_yn',], 'integer'],
             [['nodeType'], 'required'],
             [['nodeType', 'nodeProperties', 'nodeAccessLockType'], 'safe'],
             [['nodeBackendName', 'nodeRoute', 'nodeParentRoute', 'nodeAccessLockConfig'], 'string', 'max' => 255],
@@ -77,6 +82,7 @@ class CmsRoute extends \yii\db\ActiveRecord
             [['nodeRoute'], 'unique'],
             [['sitemap_yn'], 'integer'],
             [['nodeEnabled'], 'integer'],
+            [['make_child_of', 'make_root_yn'], 'integer'], // tree manipulation attributes
 
         ];
     }
@@ -102,7 +108,24 @@ class CmsRoute extends \yii\db\ActiveRecord
                     return !$order->versions && !$order->contentBlocks; // allow to delete empty draft orders
                 }
             ],
+            'tree' => [
+                'class' => NestedSetsBehavior::className(),
+                'treeAttribute' => 'tree_root',
+                'leftAttribute' => 'tree_left',
+                'rightAttribute' => 'tree_right',
+                'depthAttribute' => 'tree_level',
+            ],
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $model = $this;
+        Yii::$app->on('afterRequest', function() use ($model) {
+            if (!$model->isRoot() && $model->make_root_yn)
+                $model->makeRoot();
+        });
     }
 
     /**
@@ -286,5 +309,14 @@ class CmsRoute extends \yii\db\ActiveRecord
         if ($test || !$viewLayout)
             return null;
         return $viewLayout;
+    }
+
+    /** required for tree manager input */
+    public function getIcon() {}
+    /** required for tree manager input */
+    public function getIcon_type() {}
+    /** required for tree manager input */
+    public function getDisabled() {
+        return false;
     }
 }
