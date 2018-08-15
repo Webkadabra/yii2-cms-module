@@ -32,19 +32,62 @@ $this->endBlock();
                 'model' => $model,
             ]) ?>
             <hr class="hr" />
-<!--        </div>-->
-<!---->
-<!--        <div class="card ">-->
+            <!--        </div>-->
+            <!---->
+            <!--        <div class="card ">-->
+            <div class="pull-right">
+                <?php echo Html::a('Добавить блок', ['/cms/version-content/create', 'containerId' => $model->id], [
+                    'class' => 'btn btn-default'])?>
+            </div>
             <h5 class="text-uppercase">Содержимое</h5>
-            <?php echo Html::a('Редактировать содержимое', ['/cms/version-content', 'id' => $model->id], [
-    'class' => 'btn btn-default'])?>
+            <?php echo \yii\grid\GridView::widget([
+                'dataProvider' => $dataProvider,
+                'tableOptions' => ['class' => 'table table-striped table--no-sort'],
+                'layout' => '{items}',
+                'columns' => [
+                    'contentBlockName',
+                    [
+                        'attribute' => 'content',
+                        'value' => function($data) {
+                            $text = $data->content ? $data->content : $data->content_ru;
+                            $text = strip_tags($text);
+                            return \yii\helpers\StringHelper::truncate($text, 124);
+                        },
+                        'format' => 'raw',
+                    ],
+                    'contentType',
+                    ['class' => 'yii\grid\ActionColumn',
+                        'template' => '{update}',
+                        'buttons'=> [
+                            'delete' => function ($url, $model, $key) {
+                                return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                    'title' => Yii::t('yii', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                    'data-method' => 'post',
+                                ]);
+                            },
+                            'update' => function ($url, $model) {
+                                return \yii\helpers\Html::a(' &nbsp; <i class="fa fa-pencil"></i> &nbsp; ', $url, [
+                                    'class' => 'btn btn-default btn-sm',
+                                    'title' => Yii::t('app', 'Edit'),
+                                ]);
+                            },
+                        ],
+                        'urlCreator' => function ($action, $model, $key, $index) {
+                            return \yii\helpers\Url::toRoute(['version-content/' . $action, 'id' => $model->id]); // your own url generation logic
+                        }
+                    ],
+                ],
+            ]); ?>
+
+
 
             <hr class="hr" />
 
             <?php echo Html::a('Удалить', ['/cms/document-version/delete', 'id' => $model->id], [
-    'class' => 'btn btn-danger',
-            'data-method' => 'post',
-            'data-confirm' => 'Вы уверены, что хотите удалить эту версию?'])?>
+                'class' => 'btn btn-danger',
+                'data-method' => 'post',
+                'data-confirm' => 'Вы уверены, что хотите удалить эту версию?'])?>
         </div>
     </div>
 
@@ -53,9 +96,9 @@ $this->endBlock();
             <h5 class="text-uppercase">Публикация</h5>
 
             <?php echo Html::a('Опубликовать', ['/cms/document-version/publish', 'id' => $model->id], [
-    'class' => 'btn btn-primary',
-            'data-method' => 'post',
-            'data-confirm' => 'Вы уверены, что хотите опубликовать эту версию страницы?'])?>
+                'class' => 'btn btn-primary',
+                'data-method' => 'post',
+                'data-confirm' => 'Вы уверены, что хотите опубликовать эту версию страницы?'])?>
         </div>
     </div>
 </div>

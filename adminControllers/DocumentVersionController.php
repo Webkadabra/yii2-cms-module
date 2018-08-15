@@ -176,10 +176,16 @@ class DocumentVersionController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->refresh();
         } else {
+            $dataProvider = new ActiveDataProvider([
+                'query' => CmsDocumentVersionContent::find()->where(['version_id' => $id])->orderBy('sort_order ASC'),
+                'pagination' => false,
+                'sort' => false,
+            ]);
             return $this->render('update', [
                 'model' => $model,
+                'dataProvider' => $dataProvider,
             ]);
         }
     }
