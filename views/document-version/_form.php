@@ -76,7 +76,7 @@ if ($model->isNewRecord) {
             ],
         ]); ?>
     </div>
-    <hr/>
+    <hr class="hr--stretch"/>
     <!-- Controller Action Selector -->
     <?php echo $this->render('/pages/_controller_config_form', compact('model', 'form', 'staticOnly'))?>
 
@@ -100,7 +100,7 @@ if ($model->isNewRecord) {
         <?php echo $form->field($model, 'redirect_to')->label('Редирект на ссылку:')->hint('Укажите URL (относительный или абсолютный), на который должен быть перенаправлен посетитель этой страницы'); ?>
     </div>
 
-    <div class="pull-right-">
+    <div class="text-center">
         <?php echo Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
     </div>
 
