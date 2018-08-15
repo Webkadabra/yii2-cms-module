@@ -137,14 +137,7 @@ class VersionContentController extends Controller
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $model->delete();
-        $containerModel = $this->findContainerModel($model->version_id);
-        $dataProvider = new ActiveDataProvider([
-            'query' => CmsDocumentVersionContent::find()->where(['version_id' => $containerModel->id]),
-            'pagination' => false,
-        ]);
-        return $this->renderPartial('index', [
-            'dataProvider' => $dataProvider,
-            'documentVersion' => $containerModel,
-        ]);
+        Yii::$app->session->addFlash('success', 'Block removed'); // todo: i18n
+        return $this->redirect(['/cms/document-version/update', 'id' => $model->version_id]);
     }
 }
