@@ -15,8 +15,7 @@ $this->title = $documentVersion->name;
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
 
 $this->params['breadcrumbs'][] = ['label' => $documentVersion->document->name, 'url' => ['/cms/pages/view', 'id' => $documentVersion->document->id]];
-$this->params['breadcrumbs'][] = ['label' => $documentVersion->name, 'url' => ['/cms/document-version/view', 'id' => $documentVersion->id]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Content'), 'url' => ['/cms/version-content', 'id' => $documentVersion->id]];
+$this->params['breadcrumbs'][] = ['label' => $documentVersion->name, 'url' => ['/cms/document-version/update', 'id' => $documentVersion->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Edit «{name}» block', ['name' => $model->name]);
 $this->context->layout = '//slim';
 ?>
