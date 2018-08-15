@@ -118,19 +118,6 @@ class DocumentVersionController extends Controller
         foreach (['nodeType', 'nodeProperties', 'viewTemplate', 'viewLayout'] as $attribute) {
             $model->{$attribute} = $parent->{$attribute};
         }
-//        if (Yii::$app->request->isPost) {
-//            $className = explode('\\', ($model->className()));
-//            $className = array_pop($className);
-//            $bodyParams = Yii::$app->request->bodyParams;
-//            if (isset($_POST[$className]['category_ids'])) {
-//                if (empty($bodyParams[$className]['category_ids'])) {
-//                    $bodyParams[$className]['category_ids'] = [];
-//                } else {
-//                    $bodyParams[$className]['category_ids'] = explode(',', $_POST[$className]['category_ids']);
-//                }
-//                Yii::$app->request->setBodyParams($bodyParams);
-//            }
-//        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->copyPageBlockIds) {
                 if (!$parent->version_id) {
@@ -188,28 +175,6 @@ class DocumentVersionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (Yii::$app->request->isPost) {
-            $className = explode('\\', ($model->className()));
-            $className = array_pop($className);
-            $bodyParams = Yii::$app->request->bodyParams;
-            if (isset($_POST[$className]['category_ids'])) {
-                if (empty($bodyParams[$className]['category_ids'])) {
-                    $bodyParams[$className]['category_ids'] = [];
-                } else {
-                    $bodyParams[$className]['category_ids'] = explode(',', $_POST[$className]['category_ids']);
-                }
-                Yii::$app->request->setBodyParams($bodyParams);
-            }
-        }
-//        $models = $model->getItemOptionsDataProvider()->models;
-//        if (Model::loadMultiple($models, Yii::$app->request->post()) && Model::validateMultiple($models)) {
-//            $count = 0;
-//            foreach ($models as $index => $modelIN) {
-//                if ($modelIN->save()) {
-//                    $count++;
-//                }
-//            }
-//        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

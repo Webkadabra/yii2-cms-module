@@ -138,19 +138,6 @@ class PagesController extends Controller
             $parent = null;
         }
         $model = new CmsRoute();
-        if (Yii::$app->request->isPost) {
-            $className = explode('\\', ($model->className()));
-            $className = array_pop($className);
-            $bodyParams = Yii::$app->request->bodyParams;
-            if (isset($_POST[$className]['category_ids'])) {
-                if (empty($bodyParams[$className]['category_ids'])) {
-                    $bodyParams[$className]['category_ids'] = [];
-                } else {
-                    $bodyParams[$className]['category_ids'] = explode(',', $_POST[$className]['category_ids']);
-                }
-                Yii::$app->request->setBodyParams($bodyParams);
-            }
-        }
         if ($appId) {
             $model->container_app_id = $appId;
         }
