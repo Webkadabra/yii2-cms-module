@@ -30,3 +30,9 @@ $this->context->layout = '//slim';
     ]) ?>
 
 </div>
+    <hr class="hr" />
+
+<?php echo Html::a('Удалить', ['delete', 'id' => $model->id], [
+    'class' => 'btn btn-default',
+    'data-method' => 'post',
+    'data-confirm' => 'Вы уверены, что хотите удалить эту версию?'])?>
