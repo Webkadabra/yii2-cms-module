@@ -5,7 +5,6 @@
  * Copyright (C) 2015-present Sergii Gamaiunov <devkadabra@gmail.com>
  * All rights reserved.
  */
-use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -121,12 +120,12 @@ $tabs[] = [
     </form>
     <?php Pjax::begin(); ?>
     <div class="card-section card-section--roots">
-        <?php echo GridView::widget([
+        <?php echo \yii\grid\GridView::widget([
             'id'=>'cmsTable',
-            'bordered' => 0,
             'layout' => '{items}{pager}{summary}',
             'tableOptions' => [
                 'width' => '100%',
+				'class' => 'table table--no-sort table-striped',
             ],
             'dataProvider' => $dataProvider,
             'columns' => [

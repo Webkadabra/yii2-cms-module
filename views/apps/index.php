@@ -5,7 +5,6 @@
  * Copyright (C) 2015-present Sergii Gamaiunov <devkadabra@gmail.com>
  * All rights reserved.
  */
-use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -34,8 +33,11 @@ $this->endBlock();
     </div>
     <?php Pjax::begin(); ?>
     <div class="card-section card-section--roots">
-        <?= GridView::widget([
-            'bordered' => 0,
+        <?= \yii\grid\GridView::widget([
+            'tableOptions' => [
+                'width' => '100%',
+                'class' => 'table table-striped',
+            ],
         'dataProvider' => $dataProvider,
         'columns' => [
             [
