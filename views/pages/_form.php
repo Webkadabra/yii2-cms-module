@@ -74,7 +74,7 @@ echo $form->errorSummary($model);
         'columns'=>1,
         'attributes'=>[
             'sitemap_yn'=>[
-                'type'=>Form::INPUT_CHECKBOX,
+                'type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
             ],
         ],
     ]); ?>

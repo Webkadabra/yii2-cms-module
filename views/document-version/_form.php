@@ -68,8 +68,8 @@ if ($model->isNewRecord) {
                     'options' => ['hint' => 'Укажите имя файла `layout` без расширения (напр.: `main`)'],
                 ],
                 'copyPageBlockIds'=>[
-                    'type'=>Form::INPUT_CHECKBOX_LIST,
-                    'items'=>(isset($blockOptions) ? $blockOptions : []),
+                    'type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
+                    'options' => ['list'=>(isset($blockOptions) ? $blockOptions : [])],
                     'visible' => $model->isNewRecord,
                     'label'=>$model->isNewRecord ? $model->getAttributeLabel('copyPageBlockIds') : false,
                 ],

@@ -28,7 +28,7 @@ if (!isset($staticOnly)) $staticOnly = false;
         'nodeBackendName'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Отображается только в админке'],
         'nodeRoute'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
         'nodeEnabled'=>[
-            'type'=>Form::INPUT_CHECKBOX,
+            'type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
         ],
     ],
 ]); ?>
@@ -40,7 +40,7 @@ if (!isset($staticOnly)) $staticOnly = false;
             'columns'=>1,
             'attributes'=>[
                 'sitemap_yn'=>[
-                    'type'=>Form::INPUT_CHECKBOX,
+                    'type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
                 ],
             ],
         ]); ?>
@@ -64,7 +64,7 @@ if (!isset($staticOnly)) $staticOnly = false;
                 'multiple' => false,
             ]
         ],
-        'make_root_yn'=>['type'=>Form::INPUT_CHECKBOX,'visible' => !$model->isRoot()],
+        'make_root_yn'=>['type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,'visible' => !$model->isRoot()],
     ],
 ]); ?>
 
