@@ -70,7 +70,7 @@ if ($model->isNewRecord) {
                 'copyPageBlockIds'=>[
                     'type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
                     'options' => ['list'=>(isset($blockOptions) ? $blockOptions : [])],
-                    'visible' => $model->isNewRecord,
+                    'visible' => $blockOptions && $model->isNewRecord,
                     'label'=>$model->isNewRecord ? $model->getAttributeLabel('copyPageBlockIds') : false,
                 ],
             ],
