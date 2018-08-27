@@ -53,7 +53,7 @@ if (!isset($staticOnly)) $staticOnly = false;
     'attributes'=>[
         'make_child_of' => [
             'type'=>Form::INPUT_WIDGET,
-            'widgetClass'=>'\webkadabra\yii\modules\cms\components\CmsTreeViewInput',
+            'widgetClass'=>'\kartik\tree\TreeViewInput',
             'options' => [
                 'query' => \webkadabra\yii\modules\cms\models\CmsRoute::find()->addOrderBy('tree_root, tree_level, tree_left'),
                 'headingOptions' => ['label' => 'Pages'],

@@ -164,9 +164,10 @@ $tabs[] = [
                     'template' => '{view}',
                     'buttons' => [
                         'view' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', $url, [
+                            return Html::a('<span class="fa fa-chevron-right"></span>', $url, [
                                 'title' => Yii::t('app', 'Settings'),
-                                'class' => 'btn btn-sm btn-default'
+                                'class' => 'btn btn-sm btn-default',
+                                'data-pjax' => '0',
                             ]);
                         }
                     ],

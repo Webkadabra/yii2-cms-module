@@ -53,7 +53,7 @@ echo $form->errorSummary($model);
         'nodeRoute'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
         'make_child_of' => [
             'type'=>Form::INPUT_WIDGET,
-            'widgetClass'=>'\webkadabra\yii\modules\cms\components\CmsTreeViewInput',
+            'widgetClass'=>'\kartik\tree\TreeViewInput',
             'options' => [
                 'query' => \webkadabra\yii\modules\cms\models\CmsRoute::find()->addOrderBy('tree_root, tree_level, tree_left'),
                 'headingOptions' => ['label' => 'Pages'],
