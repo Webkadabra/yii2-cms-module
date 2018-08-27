@@ -100,7 +100,7 @@ class PagesController extends Controller
         $query = CmsRoute::find();
         $searchModel = new CmsRoute();
 
-        $query->andWhere(['container_app_id' => $appId]);
+        $query->andWhere(['container_app_id' => $appId])->addOrderBy('tree_root, tree_level, tree_left');
 //
 //        if (($filter && !$filterConfig = SavedObjectFilter::findObjectFilter($searchModel, $filter)) || !$filter) {
 //            $filterConfig = SavedObjectFilter::getDefaultFilter($searchModel);
