@@ -91,38 +91,38 @@ Add `cms` module to your admin or backend application (it can be the same applic
                 'rss'=>[
                     'label' => 'RSS feeds controller',
                     'actions'=>[
-                        'view'=>array(
+                        'view'=>[
                             'label'=>'Display feed',
                             'params'=>['id'], // Required or available action params
                         ],
                     ],
-                ],
-                'store' => array(
-                    'label' => 'Store',
-                    'actions' => array(
-                        'index' => 'Store front page',
-                        'good' => [
-                            'label' => 'Offer page',
-                            'params' => [
-                                ['alias' => 'Offer code (alias or SKU)'],
+                    'store' => [
+                        'label' => 'Store',
+                        'actions' => [
+                            'index' => 'Store front page',
+                            'good' => [
+                                'label' => 'Offer page',
+                                'params' => [
+                                    ['alias' => 'Offer code (alias or SKU)'],
+                                ],
                             ],
-                        ],
-                        'listCategory' => [
-                            'label' => 'Offers in a category',
-                            'params' => [
-                                ['alias' => 'Category code (alias)'],
+                            'listCategory' => [
+                                'label' => 'Offers in a category',
+                                'params' => [
+                                    ['alias' => 'Category code (alias)'],
+                                ],
                             ],
-                        ),
-                        'promotion' => [
-                            'label' => 'Promo page',
-                            'params' => [
-                                ['promoid' => 'Promotion ID'],
-                                ['promoName' => 'Promotion name'],
+                            'promotion' => [
+                                'label' => 'Promo page',
+                                'params' => [
+                                    ['promoid' => 'Promotion ID'],
+                                    ['promoName' => 'Promotion name'],
+                                ],
                             ],
                         ],
                     ],
-                ],
-            ]
+                ]
+            ],
         ],
         // ...
 ],
@@ -136,12 +136,12 @@ advanced application structure):
 // ...
 'controllerMap' => [
     'migrate' => [
-        'class' => 'yii\console\controllers\MigrateController',
-        'migrationNamespaces' => [
-            'vendor/webkadabra/yii2-cms-module/migrations',
-            // ... other modules' migrations, if any
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => [
+                '@app/migrations',
+                'vendor/webkadabra/yii2-cms-module/migrations',
+            ],
         ],
-    ],
 ],
 // ...
 ```
