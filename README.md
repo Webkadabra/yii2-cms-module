@@ -24,7 +24,7 @@ This module is compatible with the following yii-2 extensions:
 
 ### Requirements
 
-* Your application must have `application\components\Controller` component
+This module uses Tree Manager <https://github.com/kartik-v/yii2-tree-manager>  - you must install it, if you're using admin interface.
 
 ### Configuration
 
