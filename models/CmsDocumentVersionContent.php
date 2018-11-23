@@ -90,7 +90,10 @@ class CmsDocumentVersionContent extends \yii\db\ActiveRecord
 
     public static function find()
     {
-        return new MultilingualQuery(get_called_class());
+        if (class_exists('MultilingualQuery')) {
+            return new MultilingualQuery(get_called_class());
+        }
+        return parent::find();
     }
 
     public function getName()
