@@ -149,8 +149,10 @@ class PagesController extends Controller
                 } else {
                     $model->appendTo($root);
                 }
-            } else {
+            } else if($baseRoot) {
                 $model->appendTo($baseRoot);
+            } else {
+                $model->makeRoot();
             }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
