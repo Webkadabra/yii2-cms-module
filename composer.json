@@ -30,5 +30,13 @@
     "psr-4": {
       "webkadabra\\yii\\modules\\cms\\": ""
     }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "php yii migrate --migrationPath=@vendor/webkadabra/yii2-cms-module/migrations --interactive=0"
+    ],
+    "post-update-cmd": [
+      "php yii migrate --migrationPath=@vendor/webkadabra/yii2-cms-module/migrations --interactive=0"
+    ]
   }
 }
