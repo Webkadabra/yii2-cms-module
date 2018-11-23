@@ -24,7 +24,8 @@ This module is compatible with the following yii-2 extensions:
 
 ### Requirements
 
-This module uses Tree Manager <https://github.com/kartik-v/yii2-tree-manager>  - you must install it, if you're using admin interface.
+This module uses Tree Manager <https://github.com/kartik-v/yii2-tree-manager>  - you must install it first, 
+if you're planning to use admin interface. 
 
 ### Configuration
 
@@ -128,6 +129,8 @@ Add `cms` module to your admin or backend application (it can be the same applic
 ],
 // ...
 ```
+
+Make sure you have create folder where module will look for template files. By default, it's `@app/views/cms-templates`
 
 (optional) Add module migrations folder to your console application config file (or main config file, if you're not using 
 advanced application structure):

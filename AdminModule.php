@@ -17,7 +17,7 @@ class AdminModule extends \yii\base\Module
     /**
      * @var string Path to main application's view path. Should be explicitly defined for advanced applications with different backend/frontend apps
      */
-    public $frontendViewTemplatesPath = '@frontend/views/cms-templates';
+    public $frontendViewTemplatesPath = '@app/views/cms-templates';
 
     public function getTemplatesViewsPath()
     {
