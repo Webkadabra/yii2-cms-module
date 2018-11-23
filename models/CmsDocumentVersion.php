@@ -21,6 +21,8 @@ use Yii;
  * @property string $nodeProperties
  * @property string $viewLayout
  * @property string $viewTemplate
+ *
+ * @property CmsRoute $document
  */
 class CmsDocumentVersion extends \yii\db\ActiveRecord
 {
@@ -28,7 +30,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
     use \webkadabra\yii\modules\cms\CmsPageFormTrait;
 
     public $copyPageBlockIds=[];
-    
+
     /**
      * @inheritdoc
      */
@@ -85,10 +87,15 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
      */
     public function getPermalink()
     {
-        return Yii::$app->urlManagerFrontend->createAbsoluteUrl([
-            '/'.$this->document->nodeRoute, 'previewVersion' => $this->id]);
+        if ($this->document->cmsApp->url_component) {
+            /** @see UrlManager::createAbsoluteUrl() */
+            $comp =  Yii::$app->get($this->document->cmsApp->url_component);
+            return $comp->createAbsoluteUrl('/'.$this->document->nodeRoute);
+        } else {
+            return Yii::$app->urlManager->createAbsoluteUrl(['/'.$this->document->nodeRoute, 'previewVersion' => $this->id]);
+        }
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -123,7 +130,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
         if (isset($this->modifiedProperties) AND is_array($this->modifiedProperties)) {
             $this->nodeProperties = json_encode($this->modifiedProperties);
         } else if ($this->nodeProperties === 'Array') {
-           // $this->nodeProperties = [];
+            // $this->nodeProperties = [];
         }
 
         if ($this->isNewRecord) {
@@ -180,7 +187,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
         }
         return $this->setAction_parameters($actionParameters);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -209,7 +216,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
     public function getLocalizedContentBlocks() {
         return $this->hasMany(CmsDocumentVersionContent::className(), ['version_id' => 'id'])->localized(Yii::$app->langasync->language);
     }
-    
+
     public function getLocalizedContentBlocksArray() {
         return $this->hasMany(CmsDocumentVersionContent::className(), ['version_id' => 'id'])->localized(Yii::$app->langasync->language)->asArray();
     }
