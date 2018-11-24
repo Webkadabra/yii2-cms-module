@@ -2,6 +2,7 @@
 
 namespace webkadabra\yii\modules\cms\models;
 
+use webkadabra\yii\modules\cms\AdminModule;
 use Yii;
 
 /**
@@ -123,7 +124,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
 
         // set the first available theme layout for the 'document' node
 //        if ($this->nodeType == 'document' && empty($this->nodeLayout)) {
-//            $layouts = app()->getModule('cms')->layoutList();
+//            $layouts = AdminModule::getInstance()->layoutList();
 //            $this->nodeLayout = reset($layouts);
 //        }
         // pack 'em at the end
@@ -159,7 +160,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
     protected function setPostActionParameters($data)
     {
         $key = md5($this->controller_route);
-        $routesMap = Yii::$app->getModule('cms')->availableControllerRoutes;
+        $routesMap = AdminModule::getInstance()->availableControllerRoutes;
         $actionParameters = array();
         if ($this->controller_route && strstr($this->controller_route, '/'))
             list($controller, $action) = explode('/', $this->controller_route);

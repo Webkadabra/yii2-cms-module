@@ -3,6 +3,7 @@
 namespace webkadabra\yii\modules\cms\models;
 
 use omgdef\multilingual\MultilingualQuery;
+use webkadabra\yii\modules\cms\AdminModule;
 use Yii;
 
 /**
@@ -131,7 +132,7 @@ class CmsContentBlock extends \yii\db\ActiveRecord
     }
 
     public function blockIdDropdownOptions() {
-        $templatesWC = Yii::$app->getModule('cms')->templateListWithConfigs();
+        $templatesWC = AdminModule::getInstance()->templateListWithConfigs();
         $templatesList = $templatesCells = array();
         foreach ($templatesWC as $templateID => $templateOptions) {
             $templatesList[ltrim($templateID,'/')] = isset($templateOptions['label']) ? $templateOptions['label'] : $templateID;

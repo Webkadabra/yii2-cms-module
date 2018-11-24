@@ -15,7 +15,7 @@ trait CmsPageFormTrait
      */
     public function getControllerRouteOptions()
     {
-        $routesMap = Yii::$app->getModule('cms')->availableControllerRoutes;
+        $routesMap = AdminModule::getInstance()->availableControllerRoutes;
         $dropdownOptions = $boundActionOptions = array();
 
         // Loop controllers

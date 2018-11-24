@@ -2,6 +2,7 @@
 
 namespace webkadabra\yii\modules\cms\models;
 use creocoder\nestedsets\NestedSetsBehavior;
+use webkadabra\yii\modules\cms\AdminModule;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -292,7 +293,7 @@ class CmsRoute extends \yii\db\ActiveRecord
     }
 
     public static function templatesDropdownOptions() {
-        $templatesWC = Yii::$app->getModule('cms')->templateListWithConfigs();
+        $templatesWC = AdminModule::getInstance()->templateListWithConfigs();
         $templatesList = array();
         foreach ($templatesWC as $templateID => $templateOptions) {
             $templatesList[ltrim($templateID,'/')] = isset($templateOptions['label']) ? $templateOptions['label'] : $templateID;
