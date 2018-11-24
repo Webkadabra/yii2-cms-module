@@ -8,15 +8,14 @@
 
 namespace webkadabra\yii\modules\cms\controllers;
 
+use deadpool\components\CmsControllerTrait;
 use webkadabra\yii\modules\cms\models\CmsRoute;
 use Yii;
 use yii\web\NotFoundHttpException;
 
 class ViewController extends \yii\web\Controller
 {
-    /** @var CmsRoute */
-    public $node;
-    public $contentBlocks;
+    use CmsControllerTrait;
 
     /**
      * Display a document page

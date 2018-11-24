@@ -14,6 +14,9 @@ use yii;
 
 trait CmsControllerTrait
 {
+    /** @var CmsRoute */
+    public $node;
+
     protected function parseBlock($in) {
         return $in;
     }
