@@ -3,6 +3,7 @@
 namespace webkadabra\yii\modules\cms\models;
 
 use webkadabra\yii\modules\cms\AdminModule;
+use webkadabra\yii\modules\cms\Module;
 use Yii;
 
 /**
@@ -208,6 +209,10 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
     }
 
     public function getLocalizedContentBlocks() {
-        return $this->hasMany(CmsDocumentVersionContent::className(), ['version_id' => 'id'])->localized(Yii::$app->langasync->language);
+        $query = $this->hasMany(CmsDocumentVersionContent::className(), ['version_id' => 'id']);
+        if (Yii::$app->getModule('cms')->enableMultiLanguage) {
+            $query->localized(Yii::$app->langasync->language);
+        }
+        return $query;
     }
 }

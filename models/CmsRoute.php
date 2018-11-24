@@ -3,6 +3,7 @@
 namespace webkadabra\yii\modules\cms\models;
 use creocoder\nestedsets\NestedSetsBehavior;
 use webkadabra\yii\modules\cms\AdminModule;
+use webkadabra\yii\modules\cms\Module;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -187,7 +188,11 @@ class CmsRoute extends \yii\db\ActiveRecord
     }
 
     public function getLocalizedContentBlocks() {
-        return $this->hasMany(CmsContentBlock::className(), ['Pages_pageID' => 'id'])->localized(Yii::$app->langasync->language);
+        $query = $this->hasMany(CmsContentBlock::className(), ['Pages_pageID' => 'id']);
+        if (Yii::$app->getModule('cms')->enableMultiLanguage) {
+            $query->localized(Yii::$app->langasync->language);
+        }
+        return $query;
     }
 
     public function getVersions() {
