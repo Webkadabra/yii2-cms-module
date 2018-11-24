@@ -6,7 +6,7 @@ namespace webkadabra\yii\modules\cms;
  * @author Sergii Gamaiunov <devkadabra@gmail.com>
  * @package webkadabra\yii\modules\cms
  */
-class AdminModule extends \yii\base\Module
+class AdminModule extends Module
 {
     public $allowedRoles = ['admin'];
 
@@ -87,7 +87,7 @@ class AdminModule extends \yii\base\Module
 
     public function init()
     {
-        parent::init();
+        \yii\base\Module::init();
         $this->registerTranslations();
     }
 

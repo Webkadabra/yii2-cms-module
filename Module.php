@@ -12,6 +12,8 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'webkadabra\yii\modules\cms\controllers';
 
+    public $enableMultiLanguage = true;
+
     public function init()
     {
         parent::init();
