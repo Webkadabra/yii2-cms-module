@@ -81,7 +81,12 @@ trait CmsControllerTrait
     protected function preparePageBlocks() {
         if ($node = $this->getCmsNode()) {
             if ($this->pagePrepared === false) {
-                foreach ($node->localizedContentBlocksArray as $value) {
+                if (\webkadabra\yii\modules\cms\Module::getInstance()->enableMultiLanguage) {
+                    $data = $node->getLocalizedContentBlocks()->asArray()->all();
+                } else {
+                    $data = $node->getContentBlocks()->asArray()->all();
+                }
+                foreach ($data as $value) {
                     $blockName = (isset($value['contentBlockName']) ? $value['contentBlockName'] : $i++);
                     if ($value['contentType'] == CmsContentBlock::TYPE_HTML)
                         $this->contentBlocks[$blockName][] = $value['content'];
@@ -99,7 +104,6 @@ trait CmsControllerTrait
                 $this->pagePrepared = true;
             }
         }
-
     }
 
     public function hasCmsNode() {
