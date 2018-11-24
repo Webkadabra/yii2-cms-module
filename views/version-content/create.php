@@ -11,8 +11,6 @@ use yii\helpers\Html;
 /* @var $model webkadabra\yii\modules\cms\models\CmsDocumentVersionContent */
 /* @var $documentVersion webkadabra\yii\modules\cms\models\CmsDocumentVersion */
 
-$this->context->layout = '//slim';
-
 $this->title = $documentVersion->name;
 
 $this->params['breadcrumbs'][] = ['label' => $documentVersion->document->name, 'url' => ['/cms/pages/view', 'id' => $documentVersion->document->id]];

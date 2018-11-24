@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/cms/pages/view', 'id' => $model->id]];
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Content'), 'url' => ['/cms/blocks', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Settings');
-$this->context->layout = '//slim';
 ?>
 <div class="row">
     <div class="col-md-7 col-md-offset-2">

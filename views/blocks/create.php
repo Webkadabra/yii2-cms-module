@@ -15,7 +15,6 @@ $this->title = $containerModel->name;
 $this->params['breadcrumbs'][] = ['label' => $containerModel->name, 'url' => ['/cms/pages/view', 'id' => $containerModel->id]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Content'), 'url' => ['/cms/blocks', 'id' => $containerModel->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Add block');
-$this->context->layout = '//slim';
 ?>
 <div class="order-create">
 

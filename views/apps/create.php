@@ -13,12 +13,11 @@ use yii\helpers\Html;
 $this->title = $model->name;
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Create page');
-$this->context->layout = '//slim';
 ?>
 <div class="page-create">
-    
+
     <h2><?= Html::encode($this->title) ?></h2>
-    
+
     <?= $this->render('_form', [
         'model' => $model,
         'apps' => $apps,

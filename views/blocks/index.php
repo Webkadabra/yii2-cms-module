@@ -16,7 +16,6 @@ $this->title = $containerModel->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
 $this->params['breadcrumbs'][] = ['label' => $containerModel->name, 'url' => ['/cms/pages/update', 'id' => $containerModel->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Content');
-$this->context->layout = '//slim';
 ?>
 <div class="page-index">
     <div class="pull-right">

@@ -17,7 +17,7 @@ $this->title = $documentVersion->name;
 $this->params['breadcrumbs'][] = ['label' => $documentVersion->document->name, 'url' => ['/cms/pages/view', 'id' => $documentVersion->document->id]];
 $this->params['breadcrumbs'][] = ['label' => $documentVersion->name, 'url' => ['document-version/update', 'id' => $documentVersion->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Edit «{name}» block', ['name' => $model->name]);
-$this->context->layout = '//slim';
+
 ?>
     <div class="row">
         <div class="col-md-3">

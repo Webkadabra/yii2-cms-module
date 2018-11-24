@@ -12,7 +12,6 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $documentVersion webkadabra\yii\modules\cms\models\CmsDocumentVersion*/
-$this->context->layout = '//slim';
 
 $this->title = $documentVersion->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];

@@ -10,7 +10,6 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model webkadabra\yii\modules\cms\models\CmsDocumentVersion */
 
-$this->context->layout = '//slim';
 $this->title = $model->name;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];

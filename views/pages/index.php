@@ -13,7 +13,6 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('app', 'Pages');
 $this->params['breadcrumbs'][] = $this->title;
-$this->context->layout = '//slim';
 
 $this->beginBlock('actions');
 echo Html::a(Yii::t('app', 'Create New Page'), [

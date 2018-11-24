@@ -13,7 +13,6 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/cms/pages/view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Settings');
-$this->context->layout = '//slim';
 
 $this->beginBlock('actions');
 echo \yii\helpers\Html::a('View <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
