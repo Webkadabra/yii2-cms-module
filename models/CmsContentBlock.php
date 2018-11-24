@@ -2,7 +2,6 @@
 
 namespace webkadabra\yii\modules\cms\models;
 
-use omgdef\multilingual\MultilingualQuery;
 use webkadabra\yii\modules\cms\AdminModule;
 use Yii;
 
@@ -79,8 +78,8 @@ class CmsContentBlock extends \yii\db\ActiveRecord
 
     public static function find()
     {
-        if (class_exists('MultilingualQuery')) {
-            return new MultilingualQuery(get_called_class());
+        if (class_exists('omgdef\multilingual\MultilingualQuery')) {
+            return new \omgdef\multilingual\MultilingualQuery(get_called_class());
         }
         return parent::find();
     }
