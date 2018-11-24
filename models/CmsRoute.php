@@ -186,15 +186,8 @@ class CmsRoute extends \yii\db\ActiveRecord
         return $this->hasMany(CmsContentBlock::className(), ['Pages_pageID' => 'id']);
     }
 
-    public function getContentBlocksArray() {
-        return $this->hasMany(CmsContentBlock::className(), ['Pages_pageID' => 'id'])->asArray();
-    }
-
     public function getLocalizedContentBlocks() {
         return $this->hasMany(CmsContentBlock::className(), ['Pages_pageID' => 'id'])->localized(Yii::$app->langasync->language);
-    }
-    public function getLocalizedContentBlocksArray() {
-        return $this->hasMany(CmsContentBlock::className(), ['Pages_pageID' => 'id'])->localized(Yii::$app->langasync->language)->asArray();
     }
 
     public function getVersions() {

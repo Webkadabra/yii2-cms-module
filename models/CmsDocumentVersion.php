@@ -65,13 +65,6 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
         return $this->document->route;
     }
 
-    /**
-     * @return ShopCatalogCategory main category for this product
-     */
-    public function getContentBlocksArray() {
-        return $this->document->contentBlocksArray;
-    }
-
     public function getSafeViewLayout() {
         return CmsRoute::safeViewLayout($this->viewLayout);
     }
@@ -216,9 +209,5 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
 
     public function getLocalizedContentBlocks() {
         return $this->hasMany(CmsDocumentVersionContent::className(), ['version_id' => 'id'])->localized(Yii::$app->langasync->language);
-    }
-
-    public function getLocalizedContentBlocksArray() {
-        return $this->hasMany(CmsDocumentVersionContent::className(), ['version_id' => 'id'])->localized(Yii::$app->langasync->language)->asArray();
     }
 }
