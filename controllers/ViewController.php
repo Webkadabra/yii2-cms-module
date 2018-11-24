@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Gama
- * Date: 19.06.2018
- * Time: 3:08
+ * Alphatech, <http://www.alphatech.com.ua>
+ *
+ * Copyright (C) 2018-present Sergii Gamaiunov <devkadabra@gmail.com>
+ * All rights reserved.
  */
 
 namespace webkadabra\yii\modules\cms\controllers;
