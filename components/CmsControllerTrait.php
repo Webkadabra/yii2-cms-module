@@ -6,7 +6,7 @@
  * All rights reserved.
  */
 
-namespace deadpool\components;
+namespace webkadabra\yii\modules\cms\components;
 
 use webkadabra\yii\modules\cms\models\CmsContentBlock;
 use webkadabra\yii\modules\cms\models\CmsRoute;

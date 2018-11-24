@@ -8,7 +8,7 @@
 
 namespace webkadabra\yii\modules\cms\controllers;
 
-use deadpool\components\CmsControllerTrait;
+use webkadabra\yii\modules\cms\components\CmsControllerTrait;
 use webkadabra\yii\modules\cms\models\CmsRoute;
 use Yii;
 use yii\web\NotFoundHttpException;
