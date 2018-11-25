@@ -211,7 +211,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
     public function getLocalizedContentBlocks() {
         $query = $this->hasMany(CmsDocumentVersionContent::className(), ['version_id' => 'id']);
         if (Yii::$app->cms->enableMultiLanguage) {
-            $query->localized(Yii::$app->langasync->language);
+            $query->localized(Yii::$app->cms->language);
         }
         return $query;
     }

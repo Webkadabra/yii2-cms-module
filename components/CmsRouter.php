@@ -12,7 +12,7 @@ use yii\base\BootstrapInterface;
  * @author Sergii Gamaiunov <devkadabra@gmail.com>
  * @package webkadabra\yii\modules\cms\components
  */
-class CmsRouter implements BootstrapInterface
+class CmsRouter extends yii\base\Component implements BootstrapInterface
 {
     /**
      * @var string key for `CmsApp` model
@@ -30,6 +30,22 @@ class CmsRouter implements BootstrapInterface
     public $serveContent = true;
 
     public $enableMultiLanguage = true;
+
+    /**
+     * @var null|callback
+     */
+    public $languageCallback = null;
+
+    /**
+     * @return mixed|string Default application language or language, returned by callback in `CmsRouter::$languageCallback` option
+     */
+    public function getLanguage() {
+        if ($this->languageCallback === null) {
+            return Yii::$app->language;
+        } else {
+            return call_user_func($this->languageCallback);
+        }
+    }
 
     /**
      * @var string name of module used to serve pages
