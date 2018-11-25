@@ -9,6 +9,7 @@
 namespace webkadabra\yii\modules\cms\controllers;
 
 use webkadabra\yii\modules\cms\components\CmsControllerTrait;
+use webkadabra\yii\modules\cms\components\CmsRouter;
 use webkadabra\yii\modules\cms\models\CmsRoute;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -19,10 +20,10 @@ class ViewController extends \yii\web\Controller
 
     /**
      * Display a document page
+     * @see CmsRouter
      * @param null $id
      * @return string
      * @throws NotFoundHttpException
-     * @todo move to Action class file in CMS module folder
      */
     public function actionPage($id=null) {
         if (isset(Yii::$app->params['view_preview_node']) && Yii::$app->params['view_preview_node']) {
