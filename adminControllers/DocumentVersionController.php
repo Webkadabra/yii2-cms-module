@@ -196,7 +196,7 @@ class DocumentVersionController extends Controller
             throw new Exception('Can not delete published version');
         }
         $model->delete();
-        return $this->redirect(['/cms/pages/view', 'id' => $model->node_id]);
+        return $this->redirect(['pages/view', 'id' => $model->node_id]);
     }
 
     public function actionPublish($id) {
@@ -209,7 +209,8 @@ class DocumentVersionController extends Controller
             $model->published_on = new Expression('NOW()');
             $model->published_yn = 1;
             $model->save(false);
+            Yii::$app->session->addFlash('success', Yii::t('cms', 'Version {v} has been published', ['v' => $model->version]));
         }
-        return $this->redirect(['/cms/pages/view', 'id' => $model->node_id]);
+        return $this->redirect(['pages/view', 'id' => $model->node_id]);
     }
 }
