@@ -1,6 +1,7 @@
 <?php
 namespace webkadabra\yii\modules\cms\components;
 
+use webkadabra\yii\modules\cms\controllers\ViewController;
 use webkadabra\yii\modules\cms\models\CmsApp;
 use webkadabra\yii\modules\cms\models\CmsDocumentVersion;
 use webkadabra\yii\modules\cms\models\CmsRoute;
@@ -47,6 +48,22 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
         }
     }
 
+    protected $_languages = null;
+
+    public function setLanguages($value) {
+        $this->_languages = $value;
+    }
+
+    public function getLanguages() {
+        if ($this->_languages && is_callable($this->_languages)) {
+            return call_user_func($this->_languages);
+        } else if ($this->_languages) {
+            return $this->_languages;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * @var string name of module used to serve pages
      * @see \webkadabra\yii\modules\cms\controllers\ViewController
@@ -84,14 +101,18 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
                 'deleted_yn' => 0,
                 'container_app_id' => $this->getContainerId(),
             ]);
-        } else if ($route[0]) {
-            $route_norm = trim($route[0]);
-            $route_norm = trim($route_norm, '/');
-            $filter = [
+        } else if ($route[0] || $app->request->pathInfo) {
+            if ($route[0]) {
+                $route_norm = trim($route[0]);
+                $route_norm = trim($route_norm, '/');
+            } else {
+                $route_norm = trim($app->request->pathInfo, '/');
+            }
+            $row = CmsRoute::find()->where([
                 'nodeRoute' => $route_norm,
                 'container_app_id' => $this->getContainerId(),
-            ];
-            $row = CmsRoute::findOne($filter);
+                'deleted_yn' => 0,
+            ])->limit(1)->one();
 //            if (!$routes = Yii::$app->cache->get('cms-routes')) {
 //                $routes = CmsRoute::find()->where([
 //                    'deleted_yn' => 0,
@@ -124,12 +145,6 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
 //            }
             if (!isset($row)) $row = null;
 
-        } else if ($app->request->pathInfo) {
-            $route_norm = trim($app->request->pathInfo, '/');
-            $row = CmsRoute::findOne([
-                'nodeRoute' => $route_norm,
-                'container_app_id' => $this->getContainerId(),
-            ]);
         } else {
             $row = null;
         }
@@ -200,7 +215,7 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
                     }
                 }
             } else if ($viewingDocument->nodeType === 'document') {
-                /** @see \frontend\controllers\CmsController::actionPage */
+                /** @see ViewController::actionPage */
                 $routeArray[$route[0]] = '/' . $this->moduleId . '/view/page';
                 $_GET['id'] = $viewingDocument->id;
             }

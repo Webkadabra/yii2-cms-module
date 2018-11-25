@@ -55,11 +55,7 @@ class CmsContentBlock extends \yii\db\ActiveRecord
             $behaviors['ml'] = [
                 'class' => \omgdef\multilingual\MultilingualBehavior::className(),
                 'currentLanguage'=> Yii::$app->cms->language,
-                'languages' => [
-                    'ru' => 'Russian',
-                    'en' => 'English',
-                    'uk' => 'Ukrainian',
-                ],
+                'languages' => Yii::$app->cms->languages,
                 //'languageField' => 'language',
                 //'localizedPrefix' => '',
                 //'requireTranslations' => false',
