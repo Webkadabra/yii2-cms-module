@@ -189,7 +189,7 @@ class CmsRoute extends \yii\db\ActiveRecord
 
     public function getLocalizedContentBlocks() {
         $query = $this->hasMany(CmsContentBlock::className(), ['Pages_pageID' => 'id']);
-        if (Yii::$app->getModule('cms')->enableMultiLanguage) {
+        if (Yii::$app->cms->enableMultiLanguage) {
             $query->localized(Yii::$app->langasync->language);
         }
         return $query;

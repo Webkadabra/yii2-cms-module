@@ -29,6 +29,8 @@ class CmsRouter implements BootstrapInterface
      */
     public $serveContent = true;
 
+    public $enableMultiLanguage = true;
+
     /**
      * @var string name of module used to serve pages
      * @see \webkadabra\yii\modules\cms\controllers\ViewController

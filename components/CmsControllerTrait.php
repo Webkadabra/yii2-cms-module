@@ -81,7 +81,7 @@ trait CmsControllerTrait
     protected function preparePageBlocks() {
         if ($node = $this->getCmsNode()) {
             if ($this->pagePrepared === false) {
-                if (\webkadabra\yii\modules\cms\Module::getInstance()->enableMultiLanguage) {
+                if (Yii::$app->cms->enableMultiLanguage) {
                     $data = $node->getLocalizedContentBlocks()->asArray()->all();
                 } else {
                     $data = $node->getContentBlocks()->asArray()->all();
