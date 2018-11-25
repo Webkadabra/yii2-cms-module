@@ -101,14 +101,6 @@ class PagesController extends Controller
         $searchModel = new CmsRoute();
 
         $query->andWhere(['container_app_id' => $appId])->addOrderBy('tree_root, tree_level, tree_left');
-//
-//        if (($filter && !$filterConfig = SavedObjectFilter::findObjectFilter($searchModel, $filter)) || !$filter) {
-//            $filterConfig = SavedObjectFilter::getDefaultFilter($searchModel);
-//        }
-//        if (isset($filterConfig)) {
-//            if (isset($filterConfig->filter_config['where']))
-//                $query->andWhere($filterConfig->filter_config['where']);
-//        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -200,7 +192,7 @@ class PagesController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->delete()) {
-            Yii::$app->session->addFlash('warning', Yii::t('app', 'Page deleted'));
+            Yii::$app->session->addFlash('warning', Yii::t('cms', 'Page deleted'));
             return $this->redirect(['index']);
         }
         return $this->redirect(['index']);
