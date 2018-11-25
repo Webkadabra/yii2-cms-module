@@ -29,14 +29,14 @@ if you're planning to use admin interface.
 
 ### Configuration
 
-Add `cmsRouter` component to your main application configuration (e.g. `config/main.php` or `frontend/config/main.php`, 
+Add `cms` component to your main application configuration (e.g. `config/main.php` or `frontend/config/main.php`, 
 depending on your application structure):
 
 ```
 // ...
 'components' => [
         // ...
-        'cmsRouter' =>[
+        'cms' =>[
             'class' => 'webkadabra\yii\modules\cms\components\CmsRouter',
             'containerAppCode' => null, // default
         ],
@@ -45,11 +45,11 @@ depending on your application structure):
 // ...
 ```
 
-Add `cmsRouter` component to `bootstrap` property at your main application config (usually, the same file as in previous step):
+Add `cms` component to `bootstrap` property at your main application config (usually, the same file as in previous step):
 
 ```
 // ...
-    'bootstrap' => ['log',  'cmsRouter', /* ... other conponents ... */],
+    'bootstrap' => ['log',  'cms', /* ... other conponents ... */],
 ],
 // ...
 ```
