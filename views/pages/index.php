@@ -23,7 +23,7 @@ $this->endBlock();
 $tabs[] = [
     'encode' => false,
     'label' => '<i class="fa fa-cog"></i> &nbsp; Настройки сайта',
-    'url' =>['/cms/apps'],
+    'url' =>['apps/index'],
     'headerOptions'=>['class' => 'pull-right', 'style' => 'position: absolute; right: 25px'],
     'linkOptions'=>['style' => 'border: 0',],
     'class' => 'btn btn-default pull-right',
@@ -104,7 +104,7 @@ $tabs[] = [
             'tableId' => 'cmsTable',
         ]).')', \yii\web\View::POS_LOAD);
     ?>
-    <form id="megaSearch" class="form-horizontal" action="/orders/index" method="get" style="padding:15px 15px 0 15px;text-align: center;margin:0;overflow:hidden">
+    <form id="megaSearch" class="form-horizontal" method="get" style="padding:15px 15px 0 15px;text-align: center;margin:0;overflow:hidden">
 
         <!--            <label class="control-label col-sm-3" for="ordersearch-created_at">Дата заказа</label>-->
         <div class="col-sm-6 col-sm-offset-3">

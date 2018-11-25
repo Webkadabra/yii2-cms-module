@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Pages');
+$this->title = Yii::t('cms', 'Websites');
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->beginBlock('actions');

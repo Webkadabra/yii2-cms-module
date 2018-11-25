@@ -10,8 +10,8 @@
 /* @var $model webkadabra\yii\modules\cms\models\CmsRoute */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/cms/pages/view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['pages/index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['pages/view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Settings');
 
 $this->beginBlock('actions');
