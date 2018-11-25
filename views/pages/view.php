@@ -46,13 +46,13 @@ $this->endBlock();
                 'options' => ['class' => 'list-group'],
                 'itemView' => function ($version, $key, $index, $widget) use ($model) {
                     /** @var \common\modules\cms\models\CmsDocumentVersion $version */
-                    return \yii\helpers\Html::a($version->name, \yii\helpers\Url::toRoute(['/cms/document-version/view',
+                    return \yii\helpers\Html::a($version->name, \yii\helpers\Url::toRoute(['document-version/view',
                         'id' => $version->id]), ['class' => 'list-group-item '
                         . ($version->id == $model->version_id ? 'active' : '')]);
                 }
             ]);
         } ?>
-        <?php echo \yii\helpers\Html::a(Yii::t('cms', 'Create New Version'), ['/cms/document-version/create','page' => $model->id], [
+        <?php echo \yii\helpers\Html::a(Yii::t('cms', 'Create New Version'), ['document-version/create','page' => $model->id], [
             'class' => 'btn btn-default'
         ]);?>
     </div>
