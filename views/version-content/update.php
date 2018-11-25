@@ -14,7 +14,7 @@ use yii\helpers\Html;
 $this->title = $documentVersion->name;
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
 
-$this->params['breadcrumbs'][] = ['label' => $documentVersion->document->name, 'url' => ['/cms/pages/view', 'id' => $documentVersion->document->id]];
+$this->params['breadcrumbs'][] = ['label' => $documentVersion->document->name, 'url' => ['pages/view', 'id' => $documentVersion->document->id]];
 $this->params['breadcrumbs'][] = ['label' => $documentVersion->name, 'url' => ['document-version/update', 'id' => $documentVersion->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Edit «{name}» block', ['name' => $model->name]);
 

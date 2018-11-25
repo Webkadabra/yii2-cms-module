@@ -11,9 +11,8 @@ use yii\helpers\Html;
 /* @var $model webkadabra\yii\modules\cms\models\CmsContentBlock */
 
 $this->title = $containerModel->name;
-//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
-$this->params['breadcrumbs'][] = ['label' => $containerModel->name, 'url' => ['/cms/pages/view', 'id' => $containerModel->id]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Content'), 'url' => ['/cms/blocks', 'id' => $containerModel->id]];
+$this->params['breadcrumbs'][] = ['label' => $containerModel->name, 'url' => ['pages/view', 'id' => $containerModel->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Content'), 'url' => ['blocks/index', 'id' => $containerModel->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Edit «{name}» block', ['name' => $model->name]);
 ?>
 <div class="order-create">

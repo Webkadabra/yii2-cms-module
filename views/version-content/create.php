@@ -13,9 +13,9 @@ use yii\helpers\Html;
 
 $this->title = $documentVersion->name;
 
-$this->params['breadcrumbs'][] = ['label' => $documentVersion->document->name, 'url' => ['/cms/pages/view', 'id' => $documentVersion->document->id]];
-$this->params['breadcrumbs'][] = ['label' => $documentVersion->name, 'url' => ['/cms/document-version/view', 'id' => $documentVersion->id]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Content'), 'url' => ['/cms/version-content', 'id' => $documentVersion->id]];
+$this->params['breadcrumbs'][] = ['label' => $documentVersion->document->name, 'url' => ['pages/view', 'id' => $documentVersion->document->id]];
+$this->params['breadcrumbs'][] = ['label' => $documentVersion->name, 'url' => ['document-version/view', 'id' => $documentVersion->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Content'), 'url' => ['version-content/index', 'id' => $documentVersion->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Add block');
 ?>
 <div class="page-create">

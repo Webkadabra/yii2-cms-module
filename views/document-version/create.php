@@ -11,7 +11,7 @@ use yii\helpers\Html;
 /* @var $model webkadabra\yii\modules\cms\models\CmsDocumentVersion */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['pages/index']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Create page');
 ?>
 <div class="page-create">

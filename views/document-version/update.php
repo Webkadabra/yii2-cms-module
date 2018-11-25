@@ -12,8 +12,8 @@ use yii\helpers\Html;
 
 $this->title = $model->name;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
-$this->params['breadcrumbs'][] = ['label' => $model->document->name, 'url' => ['/cms/pages/view', 'id' => $model->document->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['pages/index']];
+$this->params['breadcrumbs'][] = ['label' => $model->document->name, 'url' => ['pages/view', 'id' => $model->document->id]];
 $this->params['breadcrumbs'][] = $model->name;
 
 $this->beginBlock('actions');
@@ -35,7 +35,7 @@ $this->endBlock();
             <!---->
             <!--        <div class="card ">-->
             <div class="pull-right">
-                <?php echo Html::a('Добавить блок', ['/cms/version-content/create', 'containerId' => $model->id], [
+                <?php echo Html::a('Добавить блок', ['version-content/create', 'containerId' => $model->id], [
                     'class' => 'btn btn-default'])?>
             </div>
             <h5 class="text-uppercase">Содержимое</h5>
@@ -83,7 +83,7 @@ $this->endBlock();
 
             <hr class="hr" />
 
-            <?php echo Html::a('Удалить', ['/cms/document-version/delete', 'id' => $model->id], [
+            <?php echo Html::a('Удалить', ['document-version/delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data-method' => 'post',
                 'data-confirm' => 'Вы уверены, что хотите удалить эту версию?'])?>
@@ -94,7 +94,7 @@ $this->endBlock();
         <div class="card card-loose">
             <h5 class="text-uppercase">Публикация</h5>
 
-            <?php echo Html::a('Опубликовать', ['/cms/document-version/publish', 'id' => $model->id], [
+            <?php echo Html::a('Опубликовать', ['document-version/publish', 'id' => $model->id], [
                 'class' => 'btn btn-primary',
                 'data-method' => 'post',
                 'data-confirm' => 'Вы уверены, что хотите опубликовать эту версию страницы?'])?>
