@@ -47,9 +47,9 @@ class PagesController extends Controller
                 ],
             ],
         ];
-        if (class_exists('AccessRule')) {
+        if (class_exists('dektrium\user\filters\AccessRule')) {
             $rules['access']['ruleConfig'] = [
-                'class' => AccessRule::className(),
+                'class' => \dektrium\user\filters\AccessRule::class,
             ];
         }
         return $rules;

@@ -46,9 +46,9 @@ class VersionContentController extends Controller
                 ],
             ],
         ];
-        if (class_exists('AccessRule')) {
+        if (class_exists('dektrium\user\filters\AccessRule')) {
             $rules['access']['ruleConfig'] = [
-                'class' => AccessRule::className(),
+                'class' => \dektrium\user\filters\AccessRule::class,
             ];
         }
         return $rules;
@@ -134,10 +134,11 @@ class VersionContentController extends Controller
             'documentVersion' => $documentVersion,
         ]);
     }
+
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $model->delete();
         Yii::$app->session->addFlash('success', 'Block removed'); // todo: i18n
-        return $this->redirect(['/cms/document-version/update', 'id' => $model->version_id]);
+        return $this->redirect(['document-version/update', 'id' => $model->version_id]);
     }
 }
