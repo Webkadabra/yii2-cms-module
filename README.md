@@ -156,6 +156,28 @@ you can setup database by running migrations directly:
 
 NOTICE: you will have to run this command every time there is a change in modules' migrations.
 
+## Usage
+
+## Template files
+
+Each PHP template must have a block of comments at the beginning of a file for it to be used in CMS module.
+Example of such code block:
+
+```
+<?php
+/**
+ * Template: Catalog Category
+ * Blocks: Content, Image link, Footer
+ *
+ * @var $Category common\models\ShopCatalogCategory
+ */
+ ?>
+ 
+<img src="<?php echo $this->context->printBlock('Image link'); ?>" />
+<?php echo $this->context->printBlock('Content'); ?>
+<?php echo $this->context->printBlock('Footer'); ?>
+```
+
 Thanks, pull requests and donations are welcome!
 
 - Sergii
