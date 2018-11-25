@@ -24,6 +24,12 @@ class CmsRouter implements BootstrapInterface
     public $templateMap = [];
 
     /**
+     * @var bool disable serving CMS pages & documents via router. This is useful for advanced project structures, when
+     * admin application does not serve content
+     */
+    public $serveContent = true;
+
+    /**
      * @var string name of module used to serve pages
      * @see \webkadabra\yii\modules\cms\controllers\ViewController
      */
@@ -46,6 +52,9 @@ class CmsRouter implements BootstrapInterface
      */
     public function bootstrap($app)
     {
+        if (!$this->serveContent) {
+            return;
+        }
         if (!$this->containerAppCode) {
             $this->containerAppCode = Yii::$app->id;
         }
