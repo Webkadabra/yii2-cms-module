@@ -26,11 +26,11 @@ if (!isset($staticOnly)) $staticOnly = false;
     'staticOnly'=>$staticOnly,
     'columns'=>1,
     'attributes'=>[
-        'name'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Отображается только в админке'],
-        'code'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
-        'domain'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
-        'base_url'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
-        'url_component'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
+        'name'=>['type'=>Form::INPUT_TEXT,],
+        'code'=>['type'=>Form::INPUT_TEXT,],
+        'domain'=>['type'=>Form::INPUT_TEXT,],
+        'base_url'=>['type'=>Form::INPUT_TEXT,],
+        'url_component'=>['type'=>Form::INPUT_TEXT,],
     ],
 ]); ?>
 <?php echo Form::widget([
@@ -44,7 +44,10 @@ if (!isset($staticOnly)) $staticOnly = false;
         ],
     ],
 ]); ?>
-<div class="pull-right-">
-    <?= Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
-</div>
+    <div class="row clearfix">
+    <div class="col-md-9 col-md-push-3  clearfix">
+
+    <?= Html::button(Yii::t('cms', 'Save'), ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
+            </div>
+            </div>
 <?  ActiveForm::end(); ?>
