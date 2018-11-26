@@ -50,6 +50,20 @@ class CmsApp extends \yii\db\ActiveRecord
             'code' => Yii::t('cms', 'Code'),
             'domain' => Yii::t('cms', 'Domain'),
             'active_yn' => Yii::t('cms', 'Active'),
+            'base_url' => Yii::t('cms', 'Site URL'),
+        ];
+    }
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
+            'name' => Yii::t('cms', 'Internal use only'),
+            'code' => Yii::t('cms', 'App ID as it appears in `config.php` (for multiple websites only)'),
+            'domain' => Yii::t('cms', 'Website dmain, e.g. `example.com`'),
+            'base_url' => Yii::t('cms', 'E.g. `https://example.com`'),
+            'url_component' => Yii::t('cms', 'Optional custom URL manager component name, available in `Yii::$app`. By default, component `urlManager` will be used.'),
         ];
     }
 
