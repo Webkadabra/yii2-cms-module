@@ -106,6 +106,17 @@ class AppsController extends Controller
         ]);
     }
 
+
+    /**
+     * Updates an existing CmsApp model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        return $this->redirect(['view', 'id' => $id]);
+    }
     /**
      * Creates a new CmsApp model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -127,30 +138,13 @@ class AppsController extends Controller
             $model->container_app_id = $appId;
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes saved'));
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'parent' => $parent,
                 'apps' => $apps,
-            ]);
-        }
-    }
-
-    /**
-     * Updates an existing CmsApp model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
             ]);
         }
     }
