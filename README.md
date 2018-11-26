@@ -180,4 +180,8 @@ Example of such code block:
 
 Thanks, pull requests and donations are welcome!
 
+Donate BTC:
+
+> 1Ceg8xdYpFmyPgeqqWDBBXVztcuNsWTMpq
+
 - Sergii
