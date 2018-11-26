@@ -23,7 +23,10 @@ $this->endBlock();
 $tabs[] = [
     'encode' => false,
     'label' => '<i class="fa fa-cog"></i> &nbsp; Настройки сайта',
-    'url' =>['apps/index'],
+    'url' => Yii::$app->request->get('appId')
+        ? ['apps/view', 'id' => Yii::$app->request->get('appId')]
+        : ['apps/index']
+    ,
     'headerOptions'=>['class' => 'pull-right', 'style' => 'position: absolute; right: 25px'],
     'linkOptions'=>['style' => 'border: 0',],
     'class' => 'btn btn-default pull-right',

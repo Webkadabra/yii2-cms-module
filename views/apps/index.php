@@ -12,6 +12,8 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('cms', 'Websites');
+
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Content'), 'url' => ['pages/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->beginBlock('actions');
@@ -45,7 +47,22 @@ $this->endBlock();
             [
                 'attribute' => 'domain',
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a('<span class="fa fa-chevron-right"></span>', $url, [
+                            'title' => Yii::t('app', 'Settings'),
+                            'class' => 'btn btn-sm btn-default',
+                            'data-pjax' => '0',
+                        ]);
+                    }
+                ],
+                'options' => [
+                    'width' => '1%'
+                ]
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

@@ -9,8 +9,8 @@
 /* @var $model webkadabra\yii\modules\cms\models\CmsApp */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['pages/index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['pages/view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Websites'), 'url' => ['apps/index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['pages/index', 'appId' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Settings');
 
 $this->beginBlock('actions');
