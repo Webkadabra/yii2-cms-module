@@ -12,7 +12,7 @@ use yii\helpers\Html;
 
 $this->title = $model->name;
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Create page');
+$this->params['breadcrumbs'][] = Yii::t('cms', 'Add website');
 ?>
 <div class="page-create">
 
