@@ -36,17 +36,19 @@ echo $form->errorSummary($model);
             ]
         ],
     ];
-    foreach ($model->languages as $lang) {
-        if ($model->defaultLanguage != $lang)
-            $cc['content_'.$lang] = [
-                'type'=>Form::INPUT_WIDGET,
-                'widgetClass'=>'\conquer\codemirror\CodemirrorWidget',
-                'options' => [
-                    'preset'=>'html',
-                    'presetsDir'=>\Yii::getAlias('@common/config/codemirror'),
-                    'options'=>['rows' => 30,],
-                ]
-            ];
+    if (Yii::$app->cms->enableMultiLanguage) {
+        foreach ($model->languages as $lang) {
+            if ($model->defaultLanguage != $lang)
+                $cc['content_'.$lang] = [
+                    'type'=>Form::INPUT_WIDGET,
+                    'widgetClass'=>'\conquer\codemirror\CodemirrorWidget',
+                    'options' => [
+                        'preset'=>'html',
+                        'presetsDir'=>\Yii::getAlias('@common/config/codemirror'),
+                        'options'=>['rows' => 30,],
+                    ]
+                ];
+        }
     }
     echo Form::widget([
         'model'=>$model,
