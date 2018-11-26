@@ -9,12 +9,13 @@
 namespace webkadabra\yii\modules\cms\components;
 
 use webkadabra\yii\modules\cms\models\CmsContentBlock;
+use webkadabra\yii\modules\cms\models\CmsDocumentVersion;
 use webkadabra\yii\modules\cms\models\CmsRoute;
 use yii;
 
 trait CmsControllerTrait
 {
-    /** @var CmsRoute */
+    /** @var CmsRoute|CmsDocumentVersion */
     public $node;
 
     protected function parseBlock($in) {
@@ -81,10 +82,11 @@ trait CmsControllerTrait
     protected function preparePageBlocks() {
         if ($node = $this->getCmsNode()) {
             if ($this->pagePrepared === false) {
+                // do not use `asArray()` while looking up the content, because in that case model will not have events raised and translations would not work
                 if (Yii::$app->cms->enableMultiLanguage) {
-                    $data = $node->getLocalizedContentBlocks()->asArray()->all();
+                    $data = $node->getLocalizedContentBlocks()->all();
                 } else {
-                    $data = $node->getContentBlocks()->asArray()->all();
+                    $data = $node->getContentBlocks()->all();
                 }
                 foreach ($data as $value) {
                     $blockName = (isset($value['contentBlockName']) ? $value['contentBlockName'] : $i++);
