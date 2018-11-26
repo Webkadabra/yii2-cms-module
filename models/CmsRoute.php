@@ -89,6 +89,15 @@ class CmsRoute extends \yii\db\ActiveRecord
         ];
     }
 
+    public function afterValidate()
+    {
+        parent::afterValidate();
+        if ($this->getIsRedirectType() && !$this->getRedirect_to()) {
+            // we definitely need a URL to be redirected to if this is a redirect route:
+            $this->addError('redirect_to', Yii::t('cms', 'This field is mandatory.'));
+        }
+    }
+
     public function behaviors()
     {
         return [
@@ -141,8 +150,8 @@ class CmsRoute extends \yii\db\ActiveRecord
             'tree_left' => 'Tree Left',
             'tree_right' => 'Tree Right',
             'tree_level' => 'Tree Level',
-            'nodeBackendName' => 'Node Backend Name',
-            'nodeRoute' => 'Node Route',
+            'nodeBackendName' => Yii::t('cms', 'Internal name'),
+            'nodeRoute' => Yii::t('cms', 'Route'),
             'nodeParentRoute' => 'Node Parent Route',
             'nodeType' => 'Node Type',
             'nodeEnabled' => 'Node Enabled',
@@ -285,7 +294,7 @@ class CmsRoute extends \yii\db\ActiveRecord
             'forward' => Yii::t('app','Redirect'),
         );
     }
-    
+
     public function getIsRedirectType() {
         return $this->nodeType == 'forward';
     }
