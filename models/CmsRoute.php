@@ -93,7 +93,7 @@ class CmsRoute extends \yii\db\ActiveRecord
     public function afterValidate()
     {
         parent::afterValidate();
-        if ($this->getIsRedirectType() && !$this->getRedirect_to()) {
+        if ($this->isAttributeSafe('redirect_to') && $this->getIsRedirectType() && !$this->getRedirect_to()) {
             // we definitely need a URL to be redirected to if this is a redirect route:
             $this->addError('redirect_to', Yii::t('cms', 'This field is mandatory.'));
         }
