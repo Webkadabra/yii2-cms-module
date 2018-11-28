@@ -51,7 +51,7 @@ echo $form->errorSummary($model);
         ],
         'nodeBackendName'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Отображается только в админке'],
         'nodeRoute'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
-        'make_child_of' => [
+        'appendTo' => [
             'type'=>Form::INPUT_WIDGET,
             'widgetClass'=>'\kartik\tree\TreeViewInput',
             'options' => [
