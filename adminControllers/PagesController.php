@@ -135,7 +135,7 @@ class PagesController extends Controller
         }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $baseRoot = CmsRoute::find()->roots(1)->andWhere(['container_app_id' => $model->container_app_id])->one();
-            if ($model->make_child_of > 0 && $root = CmsRoute::findOne($model->make_child_of)) {
+            if ($model->appendTo > 0 && $root = CmsRoute::findOne($model->appendTo)) {
                 if ($root->id == $model->id) {
                     if (!$model->isRoot()) $model->makeRoot();
                 } else {
@@ -165,18 +165,28 @@ class PagesController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if ($model->make_child_of > 0 && $root = CmsRoute::findOne($model->make_child_of)) {
+            if ($model->appendTo > 0 && $root = CmsRoute::findOne($model->appendTo)) {
                 if ($root->id == $model->id) {
-                    if (!$model->isRoot()) $model->makeRoot();
+                    if (!$model->isRoot()) {
+                        $model->makeRoot();
+                    }
                 } else {
                     $model->appendTo($root);
+                    $model->tree_level = $root->tree_level + 1;
+                    if ($model->save()) {
+                        Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes saved'));
+                    }
                 }
+            } else if ($model->moveToRoot && !$model->isRoot()) {
+                $model->makeRoot();
             } else if (!$model->isRoot()) {
                 if (!$model->parents()->count())
                     $model->makeRoot();
             }
-            Yii::$app->session->addFlash('success', Yii::t('app', 'Changes Saved'));
-            return $this->refresh();
+            if (!$model->hasErrors()) {
+                Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
+                return $this->refresh();
+            }
         }
         return $this->render('view', [
             'model' => $model,
