@@ -29,6 +29,10 @@ if (!isset($staticOnly)) $staticOnly = false;
         'nodeRoute'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
         'nodeEnabled'=>[
             'type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
+            // hide label column, because it would be duplicate of label inside of a CHECKBOX element. To do so,
+            // we must set `label` as empty string, because `false` would break form layout (whole label column
+            // will be hidden) and setting it ti NULL would display default label:
+            'label' => '',
         ],
     ],
 ]); ?>
@@ -41,6 +45,7 @@ if (!isset($staticOnly)) $staticOnly = false;
             'attributes'=>[
                 'sitemap_yn'=>[
                     'type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
+                    'label' => '',
                 ],
             ],
         ]); ?>
@@ -51,11 +56,13 @@ if (!isset($staticOnly)) $staticOnly = false;
     'staticOnly'=>$staticOnly,
     'columns'=>1,
     'attributes'=>[
-        'make_child_of' => [
+        'appendTo' => [
             'type'=>Form::INPUT_WIDGET,
             'widgetClass'=>'\kartik\tree\TreeViewInput',
             'options' => [
-                'query' => \webkadabra\yii\modules\cms\models\CmsRoute::find()->addOrderBy('tree_root, tree_level, tree_left'),
+                'query' => \webkadabra\yii\modules\cms\models\CmsRoute::find()
+                    ->andWhere(['container_app_id' => $model->container_app_id])
+                    ->addOrderBy('tree_root, tree_level, tree_left'),
                 'headingOptions' => ['label' => 'Pages'],
                 'rootOptions' => ['label'=>'<i class="fa fa-home text-success"></i>'],
                 'fontAwesome' => false,
@@ -64,7 +71,12 @@ if (!isset($staticOnly)) $staticOnly = false;
                 'multiple' => false,
             ]
         ],
-        'make_root_yn'=>['type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,'visible' => !$model->isRoot()],
+        'moveToRoot'=>['type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
+            'visible' => !$model->isRoot(), 'label' => '',
+        ],
+        'adoptAllPages'=>['type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
+            'visible' => $model->isRoot(), 'label' => '',
+        ],
     ],
 ]); ?>
 
