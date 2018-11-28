@@ -8,6 +8,7 @@ use Yii;
 
 /**
  * This is the model class for table "cms_document_version".
+ *
  * @author Sergii Gamaiunov <devkadabra@gmail.com>
  * @package webkadabra\yii\modules\cms\models
  *
@@ -25,6 +26,8 @@ use Yii;
  * @property string $viewTemplate
  *
  * @property CmsRoute $document
+ * @property CmsDocumentVersionContent[] $contentBlocks
+ * @property CmsDocumentVersionContent[] $localizedContentBlocks
  */
 class CmsDocumentVersion extends \yii\db\ActiveRecord
 {
@@ -46,21 +49,21 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return ShopCatalogCategory main category for this product
+     * @return \yii\db\ActiveQuery|CmsRoute
      */
     public function getDocument() {
         return $this->hasOne(CmsRoute::className(), ['id' => 'node_id']);
     }
 
     /**
-     * @return ShopCatalogCategory main category for this product
+     * @return int
      */
     public function getNodeEnabled() {
         return $this->document->nodeEnabled;
     }
 
     /**
-     * @return ShopCatalogCategory main category for this product
+     * @return mixed
      */
     public function getRoute() {
         return $this->document->route;
@@ -71,7 +74,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return ShopCatalogCategory main category for this product
+     * @return string
      */
     public function getViewTemplate() {
         return '//cms-templates/'. $this->viewTemplate;
@@ -107,44 +110,38 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
         ];
     }
 
-
-
+    /**
+     * @inheritdoc
+     */
     public function beforeSave($insert)
     {
-        if (trim($this->viewLayout) == '')
+        if (trim($this->viewLayout) == '') {
             $this->viewLayout = null;
-
+        }
         $this->cleanUnusedOptions();
-
-        // set the first available theme layout for the 'document' node
-//        if ($this->nodeType == 'document' && empty($this->nodeLayout)) {
-//            $layouts = AdminModule::getInstance()->layoutList();
-//            $this->nodeLayout = reset($layouts);
-//        }
         // pack 'em at the end
         if (isset($this->modifiedProperties) AND is_array($this->modifiedProperties)) {
             $this->nodeProperties = json_encode($this->modifiedProperties);
-        } else if ($this->nodeProperties === 'Array') {
-            // $this->nodeProperties = [];
         }
-
         if ($this->isNewRecord) {
             if (!$this->owner_user_id && !Yii::$app->user->isGuest) {
                 $this->owner_user_id = Yii::$app->user->id;
             }
+            // bump version
             $max = CmsDocumentVersion::find()
                 ->where(['node_id'=>$this->node_id])
                 ->select('max(version)')
                 ->max('version');
             $this->version = ($max + 1);
         }
-//        $this->nodeLastEdit = new CDbExpression('NOW()');
-
         return parent::beforeSave($insert);
     }
 
-
-
+    /**
+     * @param array $data
+     * @param null $formName
+     * @return bool
+     */
     public function load($data, $formName = null)
     {
         $this->setPostActionParameters($data);
@@ -204,10 +201,16 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery|CmsDocumentVersionContent[]
+     */
     public function getContentBlocks() {
         return $this->hasMany(CmsDocumentVersionContent::className(), ['version_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery|CmsDocumentVersionContent
+     */
     public function getLocalizedContentBlocks() {
         $query = $this->hasMany(CmsDocumentVersionContent::className(), ['version_id' => 'id']);
         if (Yii::$app->cms->enableMultiLanguage) {
