@@ -116,7 +116,7 @@ class CmsRoute extends \yii\db\ActiveRecord
                 ],
                 'allowDeleteCallback' => function ($model) {
                     /** @var $model CmsRoute */
-                    return !$order->versions && !$order->contentBlocks; // allow to delete empty draft orders
+                    return !$model->versions && !$model->contentBlocks; // allow to delete empty draft orders
                 }
             ],
             'tree' => [
