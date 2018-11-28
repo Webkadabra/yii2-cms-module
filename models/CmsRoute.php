@@ -184,7 +184,9 @@ class CmsRoute extends \yii\db\ActiveRecord
      * @return string
      */
     public function getName() {
-        return $this->nodeBackendName;
+        return $this->nodeBackendName
+            ? $this->nodeBackendName
+            : Yii::t('app', 'Untitled');
     }
 
     /**
