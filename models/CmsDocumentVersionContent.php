@@ -68,11 +68,6 @@ class CmsDocumentVersionContent extends \yii\db\ActiveRecord
                 'class' => \omgdef\multilingual\MultilingualBehavior::className(),
                 'currentLanguage'=> Yii::$app->cms->language,
                 'languages' => Yii::$app->cms->languages,
-                //'languageField' => 'language',
-                //'localizedPrefix' => '',
-                //'requireTranslations' => false',
-                'dynamicLangClass' => true,
-                //'langClassName' => PostLang::className(), // or namespace/for/a/class/PostLang
                 'defaultLanguage' => 'ru',
                 'langForeignKey' => 'version_content_id',
                 'tableName' => "{{%cms_document_version_content_lang}}",
