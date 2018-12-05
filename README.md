@@ -178,10 +178,18 @@ Example of such code block:
 <?php echo $this->context->printBlock('Footer'); ?>
 ```
 
-Thanks, pull requests and donations are welcome!
+## TODO
 
-Donate BTC:
+* Template management
+
+## Support project development
+
+Hey guys, I'm disabled developer that can't hold a job in the office. If you can - support my opensource, I gotta keep the cats fed. Thanks!
+
+Bitcoin address (I can not accept Paypal in my country):
 
 > 1Ceg8xdYpFmyPgeqqWDBBXVztcuNsWTMpq
 
 - Sergii
+
+Thanks, pull requests and donations are welcome!
