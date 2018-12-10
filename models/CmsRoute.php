@@ -46,7 +46,6 @@ class CmsRoute extends \yii\db\ActiveRecord
 {
     use \webkadabra\yii\modules\cms\CmsPageTrait;
     use \webkadabra\yii\modules\cms\CmsPageFormTrait;
-
     use \kartik\tree\models\TreeTrait;
 
     const IMG_SUB = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG2YAABzjgAA4VsAAIYrAAB8KAAAzkYAADQZAAAcfP/pwnAAAAMAUExURQAAAP///////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEjKtwcAAAADdFJOU///ANfKDUEAAAAcSURBVHjaYmBCAgz4OQxUloFBXJYCAAAA//8DAFVgARPcMjyVAAAAAElFTkSuQmCC';
@@ -70,7 +69,7 @@ class CmsRoute extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tree_root', 'tree_left', 'tree_right', 'tree_level', 'nodeEnabled', 'nodeContentPageID', 'nodeHomePage',
+            [['tree_root', 'tree_level', 'nodeEnabled', 'nodeContentPageID', 'nodeHomePage',
                 'nodeOrder', 'deleted_yn', 'sitemap_yn',], 'integer'],
             [['nodeType'], 'required'],
             [['nodeType', 'nodeProperties', 'nodeAccessLockType'], 'safe'],
@@ -130,14 +129,12 @@ class CmsRoute extends \yii\db\ActiveRecord
         ];
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function beforeSave($insert)
     {
-        parent::afterSave($insert, $changedAttributes);
-        $model = $this;
-        Yii::$app->on('afterRequest', function() use ($model) {
-            if (!$model->isRoot() && $model->make_root_yn)
-                $model->makeRoot();
-        });
+        if (isset($this->modifiedProperties) AND is_array($this->modifiedProperties)) {
+            $this->nodeProperties = json_encode($this->modifiedProperties);
+        }
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -148,14 +145,12 @@ class CmsRoute extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'tree_root' => 'Tree Root',
-            'tree_left' => 'Tree Left',
-            'tree_right' => 'Tree Right',
             'tree_level' => 'Tree Level',
             'nodeBackendName' => Yii::t('cms', 'Internal name'),
             'nodeRoute' => Yii::t('cms', 'Route'),
             'nodeParentRoute' => 'Node Parent Route',
             'nodeType' => 'Node Type',
-            'nodeEnabled' => 'Node Enabled',
+            'nodeEnabled' => Yii::t('cms', 'Page is published'),
             'nodeProperties' => 'Node Properties',
             'nodeContentPageID' => 'Node Content Page ID',
             'nodeHomePage' => 'Node Home Page',
