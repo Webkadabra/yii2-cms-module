@@ -74,9 +74,6 @@ if (!isset($staticOnly)) $staticOnly = false;
         'moveToRoot'=>['type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
             'visible' => !$model->isRoot(), 'label' => '',
         ],
-        'adoptAllPages'=>['type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
-            'visible' => $model->isRoot(), 'label' => '',
-        ],
     ],
 ]); ?>
 
