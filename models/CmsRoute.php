@@ -41,6 +41,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property CmsDocumentVersion[] $versions
  * @property CmsDocumentVersion $publishedVersion
+ * @property CmsApp $cmsApp
  */
 class CmsRoute extends \yii\db\ActiveRecord
 {
