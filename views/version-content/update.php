@@ -35,12 +35,15 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Edit «{name}» block', ['name' 
                 <?php
                 $variants = [];
                 foreach ($model->page->contentBlocks as $item) {
-                    $variants[] = ['content' => $item->name . '<small class="text-muted pull-right">'.$item->contentType.'</small>', 'url' => \yii\helpers\Url::toRoute(['update', 'id' => $item->id]),
+                    $variants[] = ['content' => Html::tag((!$item->contentBlockName
+                        ? 'em'
+                        : 'span'), $item->name . '<small class="text-muted pull-right">'.$item->contentType.'</small>'), 'url' => \yii\helpers\Url::toRoute(['update', 'id' => $item->id]),
                         'options' => [
                             'data-filter' => 'products',
                             'class' => $item->id == $model->id
                                 ? 'active'
-                                : '',
+                                : ''
+                            ,
                         ],];
                 }
                 echo \kartik\helpers\Html::listGroup($variants)?>

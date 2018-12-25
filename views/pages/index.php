@@ -12,7 +12,14 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Pages');
+
+
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Websites'),
+    'url' => ['apps/index', 'fromId' => $activeApp->id]];
 $this->params['breadcrumbs'][] = $this->title;
+
+
+
 
 $this->beginBlock('actions');
 echo Html::a(Yii::t('app', 'Create New Page'), [
@@ -23,11 +30,11 @@ $this->endBlock();
 $tabs[] = [
     'encode' => false,
     'label' => '<i class="fa fa-cog"></i> &nbsp; Настройки сайта',
-    'url' => Yii::$app->request->get('appId')
-        ? ['apps/view', 'id' => Yii::$app->request->get('appId')]
+    'url' => $activeApp
+        ? ['apps/view', 'id' => $activeApp->id]
         : ['apps/index']
     ,
-    'headerOptions'=>['class' => 'pull-right', 'style' => 'position: absolute; right: 25px'],
+    'headerOptions'=>['class' => 'pull-right', 'style' => 'position: absolute; right: 40px'],
     'linkOptions'=>['style' => 'border: 0',],
     'class' => 'btn btn-default pull-right',
     'contentOptions'=>['class' => 'btn btn-default pull-right'],
@@ -58,7 +65,7 @@ $tabs[] = [
             element.innerHTML =sourceValue.replace(regex,'$1<span class="highlighted">$2</span>$3');
         }
         function doTableSearch(input, myTable) {
-            var  filter, table, tr, td, i;
+            var  filter, table, tr, td, i, mc = 0;
             filter = input.value.toUpperCase();
             table = document.getElementById(myTable);
             tr = table.getElementsByTagName("tr");
@@ -69,6 +76,7 @@ $tabs[] = [
                     var searchable = td.querySelector('span[data-searchable-value]');
                     var searchInText = searchable.getAttribute('data-searchable-value');
                     if (searchInText.toUpperCase().indexOf(filter) > -1) {
+                        mc++; // match counter
                         tr[i].style.display = "";
                         highlightTextNodes(searchable, input.value);
                     } else {
@@ -76,12 +84,25 @@ $tabs[] = [
                     }
                 }
             }
+            // window.yii.TableSearch.updateMatchCount(mc);
+            if (mc === 0) {
+                $('#'+myTable).hide();
+                $('#'+myTable+'_emptyContent').show();
+            } else {
+                $('#'+myTable).show();
+                $('#'+myTable+'_emptyContent').hide();
+            }
         }
         function setupTableSearch(options) {
             window.yii.TableSearch = window.yii.TableSearch || (function($) {
                 var typeTimer;
                 var pub = {
+                    options: options,
                     isActive: true,
+                    // updateMatchCount: function(c) {
+                    //     var form  = $('#' + options.formId);
+                    //     form.hide();
+                    // },
                     init: function(options) {
                         var form  = $('#' + options.formId);
                         form.on('submit', function(e) {
@@ -92,7 +113,7 @@ $tabs[] = [
                         input.on('keyup', function(e) {
                             var that = this;
                             clearTimeout(typeTimer);
-                            typeTimer = setTimeout(function(){doTableSearch(that, options.tableId);}, 500)
+                            typeTimer = setTimeout(function(){doTableSearch(that, options.tableId);}, 100)
                         }).select().focus();
                     },
                 };
@@ -107,48 +128,32 @@ $tabs[] = [
             'tableId' => 'cmsTable',
         ]).')', \yii\web\View::POS_LOAD);
     ?>
-    <form id="megaSearch" class="form-horizontal" method="get" style="padding:15px 15px 0 15px;text-align: center;margin:0;overflow:hidden">
-
-        <!--            <label class="control-label col-sm-3" for="ordersearch-created_at">Дата заказа</label>-->
-        <div class="col-sm-6 col-sm-offset-3">
-            <input type="text" id="megaSearch-query" class="form-control" name="megaSearch[query]">
-            <div class="help-block help-block-error "></div>
-        </div>
-
-        <!--        <div class="form-group">-->
-        <!--            <button type="submit" class="btn btn-primary">Search</button>            <button type="reset" class="btn btn-default" onclick="clearForm(&quot;#e8ea03a514a89d913c1a149646137ca1&quot;);return false;">Reset</button> -->
-        <!--        </div>-->
-
+    <form id="megaSearch" class="form-horizontal" method="get" style="padding:25px 20px 0 20px;text-align: center;margin:0;overflow:hidden">
+        <input type="text" id="megaSearch-query" class="form-control" name="megaSearch[query]" placeholder="<?=Yii::t('app', 'Search')?>">
     </form>
     <?php Pjax::begin(); ?>
     <div class="card-section card-section--roots">
+        <div class="well" style="display: none" id="cmsTable_emptyContent">Ничего не найдено</div>
         <?php echo \yii\grid\GridView::widget([
             'id'=>'cmsTable',
             'layout' => '{items}{pager}{summary}',
             'tableOptions' => [
                 'width' => '100%',
-				'class' => 'table table--no-sort table-striped',
+                'class' => 'table table--no-sort table-striped',
             ],
             'dataProvider' => $dataProvider,
             'columns' => [
-////            ['class' => 'yii\grid\SerialColumn'],
-//            'name',
-//            'product_type',
                 [
                     'attribute' => 'name',
                     'value' => function($model) {
-                        return $model->getNameExtendedPrefix() . ' ' . Html::tag('span', $model->name, ['data-searchable-value' => $model->name]);
+                        return Html::tag('span', $model->name, ['data-searchable-value' => $model->name]);
                     },
                     'format' => 'raw',
                 ],
-//            [
-//                'attribute' => 'available_yn',
-//                'format' => 'boolean',
-//            ],
                 [
                     'format' => 'raw',
-                    'value' => function($model /** @var \common\modules\cms\models\CmsRoute $model */) {
-                        if (!$model->sitemap_yn && !$model->getIsRedirectType()) {
+                    'value' => function($model /** @var \webkadabra\yii\modules\cms\models\CmsRoute $model */) {
+                        if (!$model->sitemap_yn && !$model->getIsRedirectType() && !$model->getIsHomePage()) {
                             return '<span class="fa-stack fa-1x text-muted" title="Not in sitemap">
   <i class="fa  fa-ban fa-stack-2x"></i>
   <strong class="fa-stack-1x fa fa-sitemap"></strong>
@@ -175,6 +180,15 @@ $tabs[] = [
                     ],
                     'options' => [
                         'width' => '1%'
+                    ]
+                ],
+                [
+                    'format' => 'datetime',
+                    'attribute' => 'nodeLastEdit',
+                    'contentOptions' => [
+                        'width' => '4%',
+                        'nowrap' => 'nowrap',
+                        'class' => 'nowrap',
                     ]
                 ],
             ],

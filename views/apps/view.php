@@ -9,9 +9,8 @@
 /* @var $model webkadabra\yii\modules\cms\models\CmsApp */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Websites'), 'url' => ['apps/index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['pages/index', 'appId' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Settings');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Websites'), 'url' => ['apps/index', 'fromId' => $model->id]];
+$this->params['breadcrumbs'][] = $this->title;
 
 $this->beginBlock('actions');
 echo \yii\helpers\Html::a('View <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
@@ -19,9 +18,16 @@ echo \yii\helpers\Html::a('View <i class="fa fa-external-link" aria-hidden="true
     'target' => '_blank'
 ]);
 $this->endBlock();
+
+$this->beginBlock('links');
+echo \yii\helpers\Html::a('View <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
+    'class' => 'btn btn-link',
+    'target' => '_blank'
+]);
+$this->endBlock();
 ?>
 <div class="row">
-    <div class="col-md-7 col-md-offset-2">
+    <div class="col-md-12">
         <div class="card">
             <?= $this->render('_form', [
                 'model' => $model,

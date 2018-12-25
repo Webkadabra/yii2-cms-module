@@ -13,7 +13,12 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('cms', 'Websites');
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Content'), 'url' => ['pages/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Content'), 
+    'url' => Yii::$app->request->get('fromId') 
+    ? ['pages/index', 'appId' => Yii::$app->request->get('fromId')]
+    : ['pages/index']
+
+];
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->beginBlock('actions');
