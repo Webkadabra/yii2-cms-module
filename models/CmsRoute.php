@@ -225,6 +225,10 @@ class CmsRoute extends \yii\db\ActiveRecord
         return self::typeDropDownData();
     }
 
+    const TYPE_DOCUMENT = 'document';
+    const TYPE_CONTROLLER = 'controller';
+    const TYPE_REDIRECT = 'forward';
+
     /**
      * Generate data for backend dropdown list
      * @return array
@@ -232,9 +236,9 @@ class CmsRoute extends \yii\db\ActiveRecord
     public static function typeDropDownData()
     {
         return array(
-            'document' => Yii::t('app','Document'),
-            'controller' => Yii::t('app','Built-in Module'),
-            'forward' => Yii::t('app','Redirect'),
+            static::TYPE_DOCUMENT => Yii::t('app','Document'),
+            static::TYPE_CONTROLLER => Yii::t('app','Built-in Module'),
+            static::TYPE_REDIRECT => Yii::t('app','Redirect'),
         );
     }
 
