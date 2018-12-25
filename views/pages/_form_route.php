@@ -26,7 +26,19 @@ if (!isset($staticOnly)) $staticOnly = false;
     'columns'=>1,
     'attributes'=>[
         'nodeBackendName'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Отображается только в админке'],
-        'nodeRoute'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
+        'nodeRoute'=>[
+            'type'=>Form::INPUT_TEXT,
+            'hint'=>'Относительный путь к этой странице, от корня сайта.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>',
+            'fieldConfig' => [
+                'addon' => $model->cmsApp
+                    ?
+                    [
+                        'groupOptions' => ['class' => 'input-group--seamless'],
+                        'prepend' => Html::tag('span', $model->cmsApp->base_url, ['class' => 'input-group-addon input-group-addon--seamless'])
+                    ]
+                    : [],
+            ]
+        ],
         'nodeEnabled'=>[
             'type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
             // hide label column, because it would be duplicate of label inside of a CHECKBOX element. To do so,
