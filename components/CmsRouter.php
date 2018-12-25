@@ -94,6 +94,9 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
             $this->containerAppCode = Yii::$app->id;
         }
         $routeArray = [];
+        if (!isset($_SERVER['REQUEST_URI'])) { // $_SERVER['REQUEST_URI'] is some times empty in codeception tests
+            return;
+        }
         $route = $app->urlManager->parseRequest($app->request);
         if ($route[0] === '' && ($app->request->pathInfo === '' || $app->request->pathInfo == '/')) {
             $row = CmsRoute::findOne([
