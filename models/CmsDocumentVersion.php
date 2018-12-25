@@ -68,6 +68,12 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
     public function getRoute() {
         return $this->document->route;
     }
+    /**
+     * @return mixed
+     */
+    public function getIsHomePage() {
+        return $this->document->getIsHomePage();
+    }
 
     public function getSafeViewLayout() {
         return CmsRoute::safeViewLayout($this->viewLayout);

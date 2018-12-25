@@ -13,6 +13,7 @@ use webkadabra\yii\modules\cms\models\CmsRoute;
 use dektrium\user\filters\AccessRule;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\data\Sort;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -81,6 +82,7 @@ class PagesController extends Controller
         $apps = CmsApp::find()->all();
         $tabs = [];
         $i = 1;
+        $activeApp = null;
         foreach ($apps as $app) {
             if (!$appId) {
                 $appId = $app->id;
@@ -95,21 +97,28 @@ class PagesController extends Controller
                 'url' => \yii\helpers\Url::toRoute(['index', 'appId' => $app->id]),
                 'active' => $appId == $app->id
             ];
+            if ($appId == $app->id) {
+                $activeApp = $app;
+            }
             $i++;
         }
         $query = CmsRoute::find();
         $searchModel = new CmsRoute();
 
-        $query->andWhere(['container_app_id' => $appId])->addOrderBy('tree_root, tree_level, tree_left');
+        $query->andWhere(['container_app_id' => $appId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => false,
+            'sort' => [
+                'defaultOrder' => 'nodeHomePage DESC, nodeBackendName ASC'
+            ]
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'tabs' => $tabs,
+            'activeApp' => $activeApp,
             'searchModel' => $searchModel,
         ]);
     }
@@ -133,19 +142,8 @@ class PagesController extends Controller
         if ($appId) {
             $model->container_app_id = $appId;
         }
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $baseRoot = CmsRoute::find()->roots(1)->andWhere(['container_app_id' => $model->container_app_id])->one();
-            if ($model->appendTo > 0 && $root = CmsRoute::findOne($model->appendTo)) {
-                if ($root->id == $model->id) {
-                    if (!$model->isRoot()) $model->makeRoot();
-                } else {
-                    $model->appendTo($root);
-                }
-            } else if($baseRoot) {
-                $model->appendTo($baseRoot);
-            } else {
-                $model->makeRoot();
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -165,28 +163,8 @@ class PagesController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if ($model->appendTo > 0 && $root = CmsRoute::findOne($model->appendTo)) {
-                if ($root->id == $model->id) {
-                    if (!$model->isRoot()) {
-                        $model->makeRoot();
-                    }
-                } else {
-                    $model->appendTo($root);
-                    $model->tree_level = $root->tree_level + 1;
-                    if ($model->save()) {
-                        Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes saved'));
-                    }
-                }
-            } else if ($model->moveToRoot && !$model->isRoot()) {
-                $model->makeRoot();
-            } else if (!$model->isRoot()) {
-                if (!$model->parents()->count())
-                    $model->makeRoot();
-            }
-            if (!$model->hasErrors()) {
-                Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
-                return $this->refresh();
-            }
+            Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
+            return $this->refresh();
         }
         return $this->render('view', [
             'model' => $model,

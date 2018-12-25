@@ -17,10 +17,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property string $id
  * @property string $container_app_id
- * @property string $tree_root
- * @property string $tree_left
- * @property string $tree_right
- * @property string $tree_level
  * @property string $version_id
  * @property string $nodeBackendName
  * @property string $nodeRoute
@@ -49,13 +45,6 @@ class CmsRoute extends \yii\db\ActiveRecord
     use \webkadabra\yii\modules\cms\CmsPageFormTrait;
     use \kartik\tree\models\TreeTrait;
 
-    const IMG_SUB = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG2YAABzjgAA4VsAAIYrAAB8KAAAzkYAADQZAAAcfP/pwnAAAAMAUExURQAAAP///////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEjKtwcAAAADdFJOU///ANfKDUEAAAAcSURBVHjaYmBCAgz4OQxUloFBXJYCAAAA//8DAFVgARPcMjyVAAAAAElFTkSuQmCC';
-    const IMG_SUB2 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFCAgI////vE5+ngAAAAJ0Uk5T/wDltzBKAAAAF0lEQVR42mJgRAIM9OIwMCJDXMoAAgwAK7YAi7Pk8iwAAAAASUVORK5CYII=';
-
-    public $appendTo;
-
-    public $moveToRoot;
-
     /**
      * @inheritdoc
      */
@@ -70,7 +59,7 @@ class CmsRoute extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tree_root', 'tree_level', 'nodeEnabled', 'nodeContentPageID', 'nodeHomePage',
+            [['nodeEnabled', 'nodeContentPageID', 'nodeHomePage',
                 'nodeOrder', 'deleted_yn', 'sitemap_yn',], 'integer'],
             [['nodeType'], 'required'],
             [['nodeType', 'nodeProperties', 'nodeAccessLockType'], 'safe'],
@@ -85,7 +74,6 @@ class CmsRoute extends \yii\db\ActiveRecord
             [['nodeRoute'], 'unique'],
             [['sitemap_yn'], 'integer'],
             [['nodeEnabled'], 'integer'],
-            [['appendTo', 'moveToRoot',], 'integer'], // tree manipulation attributes
 
         ];
     }
@@ -120,13 +108,6 @@ class CmsRoute extends \yii\db\ActiveRecord
                     return !$model->versions && !$model->contentBlocks; // allow to delete empty draft orders
                 }
             ],
-            'tree' => [
-                'class' => NestedSetsBehavior::className(),
-                'treeAttribute' => 'tree_root',
-                'leftAttribute' => 'tree_left',
-                'rightAttribute' => 'tree_right',
-                'depthAttribute' => 'tree_level',
-            ],
         ];
     }
 
@@ -145,8 +126,6 @@ class CmsRoute extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tree_root' => 'Tree Root',
-            'tree_level' => 'Tree Level',
             'nodeBackendName' => Yii::t('cms', 'Internal name'),
             'nodeRoute' => Yii::t('cms', 'Route'),
             'nodeParentRoute' => 'Node Parent Route',
@@ -163,16 +142,6 @@ class CmsRoute extends \yii\db\ActiveRecord
             'viewTemplate' => 'View Template',
             'deleted_yn' => 'Deleted Yn',
             'sitemap_yn' => Yii::t('cms', 'Visible in sitemap'),
-            'moveToRoot' => Yii::t('cms', 'Move page to root folder'),
-        ];
-    }
-    /**
-     * @inheritdoc
-     */
-    public function attributeHints()
-    {
-        return [
-            'moveToRoot' => Yii::t('cms', 'This does not affect page URL.'),
         ];
     }
 
@@ -229,13 +198,14 @@ class CmsRoute extends \yii\db\ActiveRecord
      */
     public function getPermalink()
     {
+        $route = '/' . ltrim($this->nodeRoute, '/'); // avoid double slash in the beginning in case page has `/` set as a route  (for home page)
         if ($this->cmsApp->url_component) {
             /** @see UrlManager::createAbsoluteUrl() */
             $c = $this->cmsApp->url_component;
             $comp =  Yii::$app->get($c);
-            return $comp->createAbsoluteUrl('/'.$this->nodeRoute);
+            return $comp->createAbsoluteUrl($route);
         }
-        return rtrim($this->cmsApp->base_url, '/') . '/' . $this->nodeRoute;
+        return rtrim($this->cmsApp->base_url, '/') . $route;
     }
 
     /**
@@ -244,42 +214,6 @@ class CmsRoute extends \yii\db\ActiveRecord
     public function getRoute()
     {
         return $this->nodeRoute;
-    }
-
-    /**
-     * Use this with CGridView
-     * Example:
-     * <code>
-     * ...
-     * 'columns'=>array(
-     *    array(
-     *        'name'=>'nameExtendedWImage',
-     *        'type'=>'raw',
-     *    ),
-     * ...
-     * </code>
-     */
-    public function getNameExtendedWImage($remove=0)
-    {
-        return $this->getNameExtendedPrefix() . ' ' . $this->name;
-    }
-
-    public function getNameExtendedPrefix($remove=0)
-    {
-        $level = $this->tree_level-($remove);
-        $prefix = $level > 0 ? str_repeat("—", $level) . ' · ' : '';
-        if ($level == 0) {
-            $prefix = ' ';
-        } else {
-            if ($level == 1) {
-                $prefix = '<img src="'.static::IMG_SUB.'" > ';
-            } else {
-                $prefix = '<img src="'.static::IMG_SUB.'">';
-                $prefix .= str_repeat('<img src="'.static::IMG_SUB2.'">', $level - 1);
-                $prefix .= ' ';
-            }
-        }
-        return $prefix;
     }
 
     /**
@@ -306,6 +240,10 @@ class CmsRoute extends \yii\db\ActiveRecord
 
     public function getIsRedirectType() {
         return $this->nodeType == 'forward';
+    }
+
+    public function getIsHomePage() {
+        return $this->nodeHomePage || $this->nodeRoute == '/';
     }
 
     public static function templatesDropdownOptions() {
