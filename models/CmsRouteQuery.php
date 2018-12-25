@@ -12,12 +12,6 @@ use creocoder\nestedsets\NestedSetsQueryBehavior;
  */
 class CmsRouteQuery extends \yii\db\ActiveQuery
 {
-    public function behaviors() {
-        return [
-            NestedSetsQueryBehavior::className(),
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return CmsRoute[]|array
