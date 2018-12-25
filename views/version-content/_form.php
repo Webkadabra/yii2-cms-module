@@ -23,7 +23,19 @@ echo $form->errorSummary($model);
         echo Html::activeHiddenInput($model,'version_id',['value' => $documentVersion->id]);
     }
     $cc = [
-        'contentBlockName'=>['type'=>Form::INPUT_DROPDOWN_LIST, 'items'=>$model->blockIdDropdownOptions(), 'hint'=>''],
+        'contentBlockName'=>['type'=>Form::INPUT_WIDGET,
+            'widgetClass'=>'\kartik\widgets\Select2',
+            'options'=>[
+                'pluginOptions' => [
+                    'placeholder' => $model->getAttributeLabel('contentBlockName'),
+                    'allowClear' => true,
+                    'tags' => true,
+                    'multiple' => false,
+                    'tokenSeparators' => [';'],
+                    'maximumInputLength' => 200,
+                ],
+                'data'=>$model->blockIdDropdownOptions(),
+            ],],
         'sort_order'=>['type'=>Form::INPUT_TEXT, 'hint'=>''],
         'contentType'=>['type'=>Form::INPUT_DROPDOWN_LIST, 'items'=>\webkadabra\yii\modules\cms\models\CmsContentBlock::typeDropdownOptions(), 'hint'=>''],
         'content' => [

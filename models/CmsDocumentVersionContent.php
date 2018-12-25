@@ -89,9 +89,14 @@ class CmsDocumentVersionContent extends \yii\db\ActiveRecord
 
     public function getName()
     {
-        return $this->contentBlockName;
+        return $this->contentBlockName
+            ? $this->contentBlockName
+            : Yii::t('app', 'Untitled');
     }
 
+    /**
+     * @return array|mixed options for dropdown/select 2 plugin with list of available blocks in this template
+     */
     public function blockIdDropdownOptions() {
         $templatesWC = AdminModule::getInstance()->templateListWithConfigs();
         $templatesList = $templatesCells = array();
@@ -106,7 +111,13 @@ class CmsDocumentVersionContent extends \yii\db\ActiveRecord
                     }
                 }
         }
-        return $this->page && isset($templatesCells[$this->page->viewTemplate]) ? $templatesCells[$this->page->viewTemplate] : [];
+        $return = $this->page && isset($templatesCells[$this->page->viewTemplate]) ? $templatesCells[$this->page->viewTemplate] : [];
+        // since content block can be renamed to any free name, make sure we add current option to `$return` so that UI
+        // elements like dropdown or "Select 2 plugin" can build up UX properly:
+        if (!isset($return[$this->contentBlockName])) {
+            $return[$this->contentBlockName] = $this->contentBlockName;
+        }
+        return $return;
     }
 
     /**
