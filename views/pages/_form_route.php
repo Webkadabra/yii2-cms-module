@@ -62,32 +62,6 @@ if (!isset($staticOnly)) $staticOnly = false;
             ],
         ]); ?>
     </div>
-<?php echo Form::widget([
-    'model'=>$model,
-    'form'=>$form,
-    'staticOnly'=>$staticOnly,
-    'columns'=>1,
-    'attributes'=>[
-        'appendTo' => [
-            'type'=>Form::INPUT_WIDGET,
-            'widgetClass'=>'\kartik\tree\TreeViewInput',
-            'options' => [
-                'query' => \webkadabra\yii\modules\cms\models\CmsRoute::find()
-                    ->andWhere(['container_app_id' => $model->container_app_id])
-                    ->addOrderBy('tree_root, tree_level, tree_left'),
-                'headingOptions' => ['label' => 'Pages'],
-                'rootOptions' => ['label'=>'<i class="fa fa-home text-success"></i>'],
-                'fontAwesome' => false,
-                'isAdmin' => 0,
-                'asDropdown' => true,
-                'multiple' => false,
-            ]
-        ],
-        'moveToRoot'=>['type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
-            'visible' => !$model->isRoot(), 'label' => '',
-        ],
-    ],
-]); ?>
 
     <div class="row">
         <div class="col-sm-12">
