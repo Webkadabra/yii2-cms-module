@@ -3,6 +3,7 @@ return [
     'Save' => 'Сохранить',
     'Changes saved' => 'Настройки сохранены',
 
+    'Create page' => 'Создать новую страницу',
     'Create New Version' => 'Создать новую версию',
     'Add another site' => 'Добавить сайт',
     'Domain' => 'Домен',
@@ -21,4 +22,10 @@ return [
     'Optional custom URL manager component name, available in `Yii::$app`. By default, component `urlManager` will be used.' => 'Название компонента из `Yii::$app` для управления URL. По умолчанию, будет использован стандартный `urlManager`.',
 
     'This field is mandatory.' => 'Это обязательный пункт.',
+    'You need to add at least one website before creating pages.' => 'Перед созданием страниц вам нужно добавить хотя бы один сайт.',
+
+    'Pages' => 'Страницы',
+    'Redirects' => 'Перенаправления',
+    'Create rule' => 'Добавить правило',
+    'Open' => 'Открыть',
 ];
