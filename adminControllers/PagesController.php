@@ -79,7 +79,7 @@ class PagesController extends Controller
     public function actionIndex($appId=null, $filter = null)
     {
         /** @var CmsApp[] $apps */
-        $apps = CmsApp::find()->all();
+        $apps = CmsApp::find()->orderBy('id ASC')->all();
         $tabs = [];
         $i = 1;
         $activeApp = null;
@@ -106,6 +106,7 @@ class PagesController extends Controller
         $searchModel = new CmsRoute();
 
         $query->andWhere(['container_app_id' => $appId]);
+        $query->andWhere(['!=', 'nodeType', CmsRoute::TYPE_REDIRECT]); // exclude redirects form this list since they are managed in a different UI
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -124,12 +125,61 @@ class PagesController extends Controller
     }
 
     /**
+     * Lists all CmsRoute models.
+     * @return mixed
+     */
+    public function actionRedirects($appId=null, $filter = null)
+    {
+        if ($appId) {
+            if (!$appModel = CmsApp::findOne($appId)) {
+                throw new NotFoundHttpException();
+            }
+        } else {
+            if (!$appModel = CmsApp::find()->orderBy('id ASC')->one()) {
+                Yii::$app->session->addFlash('warning', Yii::t('cms', 'You need to add at least one website before creating pages.'));
+                return $this->redirect(['apps/create']);
+            }
+        }
+
+        $query = CmsRoute::find();
+        $searchModel = new CmsRoute();
+
+        $query->andWhere(['container_app_id' => $appId]);
+        $query->andWhere(['nodeType' => CmsRoute::TYPE_REDIRECT]); // exclude redirects form this list since they are managed in a different UI
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false,
+            'sort' => [
+                'defaultOrder' => 'nodeHomePage DESC, nodeBackendName ASC'
+            ]
+        ]);
+
+        return $this->render('redirects', [
+            'dataProvider' => $dataProvider,
+            'activeApp' => $appModel,
+            'searchModel' => $searchModel,
+        ]);
+    }
+
+    /**
      * Creates a new CmsRoute model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate($parent_id=null, $appId=null)
     {
+        if ($appId) {
+            if (!$appModel = CmsApp::findOne($appId)) {
+                throw new NotFoundHttpException();
+            }
+        } else {
+            if (!$appModel = CmsApp::find()->orderBy('id ASC')->one()) {
+                Yii::$app->session->addFlash('warning', Yii::t('cms', 'You need to add at least one website before creating pages.'));
+                return $this->redirect(['apps/create']);
+            }
+        }
+
         if ($parent_id && intval($parent_id)) {
             $parent = CmsRoute::find()->where(['id' => $parent_id])->limit(1)->one();
             if (!$parent) {
@@ -139,17 +189,18 @@ class PagesController extends Controller
             $parent = null;
         }
         $model = new CmsRoute();
-        if ($appId) {
-            $model->container_app_id = $appId;
-        }
+        $model->container_app_id = $appModel->id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'appModel' => $appModel,
                 'parent' => $parent,
-                'apps' => CmsApp::find()->all(),
+                'apps' => CmsApp::find()->andWhere([
+                    'active_yn' => 1,
+                ])->all(),
             ]);
         }
     }

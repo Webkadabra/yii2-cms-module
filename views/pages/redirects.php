@@ -11,50 +11,28 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('cms', 'Pages');
+$this->title = Yii::t('cms', 'Redirects');
 
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Websites'),
-    'url' => ['apps/index', 'fromId' => $activeApp->id]];
+$this->params['breadcrumbs'][] = ['label' => $activeApp->name,
+    'url' => ['apps/view', 'id' => $activeApp->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
-
-
-
 $this->beginBlock('actions');
-echo Html::a(Yii::t('app', 'Create New Page'), [
+echo Html::a(Yii::t('cms', 'Create rule'), [
     'create',
     'appId' => Yii::$app->request->get('appId')
 ], ['class' => 'btn btn-primary']);
 $this->endBlock();
-$tabs[] = [
-    'encode' => false,
-    'label' => '<i class="fa fa-cog"></i> &nbsp; Настройки сайта',
-    'url' => $activeApp
-        ? ['apps/view', 'id' => $activeApp->id]
-        : ['apps/index']
-    ,
-    'headerOptions'=>['class' => 'pull-right', 'style' => 'position: absolute; right: 40px'],
-    'linkOptions'=>['style' => 'border: 0',],
-    'class' => 'btn btn-default pull-right',
-    'contentOptions'=>['class' => 'btn btn-default pull-right'],
-]
+
 ?>
 
 <div class="ui-card">
-    <div class="ui-card-tabs">
-        <?php echo \yii\bootstrap\Tabs::widget([
-            'options' => ['class' => 'tabs'],
-            'items' => $tabs,
-//            'items' => \common\models\SavedObjectFilter::makeTabsConfig($searchModel, $tabs),
-        ]); ?>
-    </div>
     <?php echo \webkadabra\yii\modules\cms\components\TableFilterWidget::widget([
     ]); ?>
     <form id="megaSearch" class="form-horizontal" method="get" style="padding:25px 20px 0 20px;text-align: center;margin:0;overflow:hidden">
         <input type="text" id="megaSearch-query" class="form-control" name="megaSearch[query]" placeholder="<?=Yii::t('app', 'Search')?>">
     </form>
-
     <?php Pjax::begin(); ?>
     <div class="card-section card-section--roots">
         <div class="well" style="display: none" id="cmsTable_emptyContent">Ничего не найдено</div>
@@ -68,9 +46,16 @@ $tabs[] = [
             'dataProvider' => $dataProvider,
             'columns' => [
                 [
-                    'attribute' => 'nodeBackendName',
+                    'attribute' => 'nodeRoute',
                     'value' => function($model) {
-                        return Html::tag('span', $model->name, ['data-searchable-value' => $model->name]);
+                        return Html::tag('span', $model->nodeRoute, ['data-searchable-value' => $model->nodeRoute]);
+                    },
+                    'format' => 'raw',
+                ],
+                [
+                    'attribute' => 'nodeRoute',
+                    'value' => function($model) {
+                        return Html::tag('span', $model->redirect_to, ['data-searchable-value' => $model->redirect_to]);
                     },
                     'format' => 'raw',
                 ],
@@ -119,5 +104,21 @@ $tabs[] = [
         ]); ?>
         <?php Pjax::end(); ?>
         <br />
+    </div>
+</div>
+<div class="ui-footer-help">
+    <div class="ui-footer-help__content">
+        <div class="ui-footer-help__icon">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </div>
+        <div>
+            <p><?php echo Yii::t('cms', 'Learn more about {beginLink}redirects{endLink}', [
+                    'beginLink' => Html::beginTag('a', [
+                        'href' => \yii\helpers\Url::toRoute(['/docs/user/cms#redirects']),
+                        'target' => '_blank',
+                    ]),
+                    'endLink' => Html::endTag('a'),
+                ])?>.</p>
+        </div>
     </div>
 </div>
