@@ -84,7 +84,6 @@ $tabs[] = [
                     }
                 }
             }
-            // window.yii.TableSearch.updateMatchCount(mc);
             if (mc === 0) {
                 $('#'+myTable).hide();
                 $('#'+myTable+'_emptyContent').show();
@@ -99,10 +98,6 @@ $tabs[] = [
                 var pub = {
                     options: options,
                     isActive: true,
-                    // updateMatchCount: function(c) {
-                    //     var form  = $('#' + options.formId);
-                    //     form.hide();
-                    // },
                     init: function(options) {
                         var form  = $('#' + options.formId);
                         form.on('submit', function(e) {
@@ -114,6 +109,14 @@ $tabs[] = [
                             var that = this;
                             clearTimeout(typeTimer);
                             typeTimer = setTimeout(function(){doTableSearch(that, options.tableId);}, 100)
+                        }).on('change', function(e) {
+                            var that = this;
+                            clearTimeout(typeTimer);
+                            typeTimer = setTimeout(function(){doTableSearch(that, options.tableId);}, 500)
+                        }).on('drop', function(e) {
+                            var that = this;
+                            clearTimeout(typeTimer);
+                            typeTimer = setTimeout(function(){doTableSearch(that, options.tableId);}, 500)
                         }).select().focus();
                     },
                 };
