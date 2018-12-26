@@ -156,9 +156,26 @@ you can setup database by running migrations directly:
 
 NOTICE: you will have to run this command every time there is a change in modules' migrations.
 
+Finally, for the best admin experience, make sure your admin layout files do output blocks `actions`, `links` and `footer`.
+You can do it by adding this code to your layouts:
+
+```php
+    // ...
+    if (isset($this->blocks['actions'])) {
+        echo $this->blocks['actions']; 
+    }
+    if (isset($this->blocks['links'])) {
+        echo $this->blocks['links']; 
+    }
+    if (isset($this->blocks['footer'])) {
+        echo $this->blocks['footer']; 
+    }
+    // ...
+```
+
 ## Usage
 
-## Template files
+### Template files
 
 Each PHP template must have a block of comments at the beginning of a file for it to be used in CMS module.
 Example of such code block:
