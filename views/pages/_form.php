@@ -22,18 +22,18 @@ if (!isset($staticOnly)) $staticOnly = false;
 echo $form->errorSummary($model);
 ?>
 
-<?php echo Form::widget([
-    'model'=>$model,
-    'form'=>$form,
-    'staticOnly'=>$staticOnly,
-    'columns'=>1,
-    'attributes'=>[
-        'container_app_id'=>[
-            'type'=>Form::INPUT_DROPDOWN_LIST,
-            'items'=>\yii\helpers\ArrayHelper::map($apps, 'id', 'name')
-        ],
-    ],
-]); ?>
+<?php //echo Form::widget([
+//    'model'=>$model,
+//    'form'=>$form,
+//    'staticOnly'=>$staticOnly,
+//    'columns'=>1,
+//    'attributes'=>[
+//        'container_app_id'=>[
+//            'type'=>Form::INPUT_DROPDOWN_LIST,
+//            'items'=>\yii\helpers\ArrayHelper::map($apps, 'id', 'name')
+//        ],
+//    ],
+//]); ?>
 
 
 <?php echo Form::widget([
@@ -50,7 +50,19 @@ echo $form->errorSummary($model);
                     <b>Редирект</b> — перенаправить пользователя по ссылке на страницу или файл<br />'
         ],
         'nodeBackendName'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Отображается только в админке'],
-        'nodeRoute'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Относительный путь к этой странице, от корня фронтенда.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>'],
+        'nodeRoute'=>[
+            'type'=>Form::INPUT_TEXT,
+            'hint'=>'Относительный путь к этой странице, от корня сайта.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>',
+            'fieldConfig' => [
+                'addon' => $model->cmsApp
+                    ?
+                    [
+                        'groupOptions' => ['class' => 'input-group--seamless'],
+                        'prepend' => Html::tag('span', $model->cmsApp->base_url, ['class' => 'input-group-addon input-group-addon--seamless'])
+                    ]
+                    : [],
+            ]
+        ],
     ],
 ]); ?>
 <div class="clearfix available-for-controller available-for-document <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
@@ -107,7 +119,7 @@ echo $form->errorSummary($model);
     <?php echo $form->field($model, 'redirect_to')->label('Редирект на ссылку:')->hint('Укажите URL (относительный или абсолютный), на который должен быть перенаправлен посетитель этой страницы'); ?>
 </div>
 
-<div class="pull-right-">
+<div class="col-md-offset-3">
     <?php echo Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>
 </div>
 

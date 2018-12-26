@@ -25,20 +25,17 @@ $this->endBlock();
 ?>
 <div class="row">
     <div class="col-md-7 col-md-offset-2">
-        <div class="card card-loose">
+        <div class="panel panel-body">
             <h5 class="text-uppercase">Настройки</h5>
             <?php echo $this->render('_form', [
                 'model' => $model,
             ]) ?>
             <hr class="hr" />
-            <!--        </div>-->
-            <!---->
-            <!--        <div class="card ">-->
             <div class="pull-right">
                 <?php echo Html::a('Добавить блок', ['version-content/create', 'containerId' => $model->id], [
                     'class' => 'btn btn-default'])?>
             </div>
-            <h5 class="text-uppercase">Содержимое</h5>
+            <h5 class="text-uppercase"><?php echo Yii::t('cms', 'Content')?></h5>
             <?php echo \yii\grid\GridView::widget([
                 'dataProvider' => $dataProvider,
                 'tableOptions' => ['class' => 'table table-striped table--no-sort'],
@@ -91,7 +88,7 @@ $this->endBlock();
     </div>
 
     <div class="col-md-3">
-        <div class="card card-loose">
+        <div class="panel panel-body">
             <h5 class="text-uppercase">Публикация</h5>
 
             <?php echo Html::a('Опубликовать', ['document-version/publish', 'id' => $model->id], [

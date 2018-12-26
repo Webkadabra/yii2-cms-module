@@ -14,15 +14,15 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['pages/view', 'id' => $model->id]];
 
 $this->beginBlock('actions');
-echo \yii\helpers\Html::a('View <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
+echo \yii\helpers\Html::a(Yii::t('cms', 'Open') . ' <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
     'class' => 'btn btn-default',
     'target' => '_blank'
 ]);
 $this->endBlock();
 ?>
 <div class="row">
-    <div class="col-md-7 col-md-offset-2">
-        <div class="card">
+    <div class="col-md-8">
+        <div class="panel panel-body">
             <?php echo $this->render('_form_route', [
                 'model' => $model,
                 'staticOnly' => $model,
@@ -34,15 +34,16 @@ $this->endBlock();
             ]) ?>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <?php if ($model->versions) {
-            echo count($model->versions) .' versions:';
+            echo '<p>'.count($model->versions) .' version(s):</p>';
             $dataProvider = new \yii\data\ArrayDataProvider();
             $dataProvider->models = $model->versions;
             $dataProvider->pagination = false;
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $dataProvider,
                 'options' => ['class' => 'list-group'],
+                'layout' => '{items}',
                 'itemView' => function ($version, $key, $index, $widget) use ($model) {
                     /** @var \common\modules\cms\models\CmsDocumentVersion $version */
                     return \yii\helpers\Html::a($version->name, \yii\helpers\Url::toRoute(['document-version/view',
@@ -57,7 +58,10 @@ $this->endBlock();
     </div>
 </div>
 
+
+<?php $this->beginBlock('footer')?>
 <hr />
+<div class="container-fluid">
 <div class="row">
     <div class="col-lg-5 col-lg-offset-2 col-md-8">
         <?=\yii\helpers\Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
@@ -69,5 +73,7 @@ $this->endBlock();
         ]) ?>
 
     </div>
-</div
+</div>
+</div>
+<?php $this->endBlock('footer')?>
 

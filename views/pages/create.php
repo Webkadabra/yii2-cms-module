@@ -10,17 +10,13 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model webkadabra\yii\modules\cms\models\CmsRoute */
 
-$this->title = $model->name;
-//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['/cms/pages']];
+$this->title = Yii::t('cms', 'Create page');
+$this->params['breadcrumbs'][] = ['label' => $appModel->name, 'url' => ['/cms/pages', 'appId' => $appModel->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Create page');
 ?>
-<div class="page-create">
-    
-    <h2><?php echo Html::encode($this->title) ?></h2>
-    
+<div class="panel panel-body">
     <?php echo $this->render('_form', [
         'model' => $model,
         'apps' => $apps,
     ]) ?>
-    
 </div>
