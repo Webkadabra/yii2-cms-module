@@ -76,6 +76,6 @@ class CmsApp extends \yii\db\ActiveRecord
     }
 
     public function getPermalink() {
-        $this->base_url;
+        return $this->base_url;
     }
 }
