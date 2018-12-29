@@ -31,7 +31,7 @@ class TableFilterWidget extends Widget
                 var  filter, table, tr, td, tds, i, it, mc = 0;
                 filter = input.value.toUpperCase();
                 table = document.getElementById(myTable);
-                tr = table.getElementsByTagName("tr");
+                tr = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
                 // Loop through all table rows, and hide those who don't match the search query
                 for (i = 0; i < tr.length; i++) {
                     var hasMatch = false;
@@ -93,7 +93,13 @@ class TableFilterWidget extends Widget
                             }).on('drop', function(e) {
                                 var that = this;
                                 clearTimeout(typeTimer);
-                                typeTimer = setTimeout(function(){doTableSearch(that, options.tableId);}, 500)
+                                typeTimer = setTimeout(function(){doTableSearch(that, options.tableId);}, 100)
+                            }).on('cut', function(e) {
+                                var that = this;
+                                clearTimeout(typeTimer);
+                                typeTimer = setTimeout(function(){doTableSearch(that, options.tableId);}, 100)
+                            }).on('blur', function(e) {
+                                doTableSearch(this, options.tableId);
                             }).select().focus();
                         },
                     };
