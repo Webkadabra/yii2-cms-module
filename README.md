@@ -5,9 +5,11 @@ A CMS & routing module for Yii 2 applications.
 Features:
 
 * content version history & sandbox mode
+* multilingual support
 * handles routing on top of built-in `urlManager`
-* supports multiple websites
-* sitemap-aware
+* manage multiple websites
+* manage URL redirects
+* sitemap support
 
 ## Installation via Composer
 
@@ -15,7 +17,7 @@ You can install package with a command:
 
 > composer require webkadabra/yii2-cms-module
 
-This module is compatible with the following yii-2 extensions:
+This module is compatible  (but does not require) with the following yii-2 extensions:
 
 * `omgdef\multilingual`
 * `dektrium\user`
