@@ -95,10 +95,6 @@ echo $form->errorSummary($model);
     <?php echo $form->field($model, 'meta_description')->hint('META Description:'); ?>
 </div>
 
-<!-- Redirect URL -->
-<div class="clearfix available-for-forward <?php if ($model->nodeType !== 'forward') echo 'hidden_el'; ?>">
-    <?php echo $form->field($model, 'redirect_to')->label('Редирект на ссылку:')->hint('Укажите URL (относительный или абсолютный), на который должен быть перенаправлен посетитель этой страницы'); ?>
-</div>
 <?php if (!$staticOnly) { ?>
 <div class="pull-right-">
     <?php echo Html::button('Submit', ['type'=>'submit', 'class'=>'btn btn-primary btn-lh']) ?>

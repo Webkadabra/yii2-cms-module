@@ -21,12 +21,11 @@ use yii\helpers\Html;
     }
 </style>
 <script>
-    var CmsRouterEntity_type, CmsRouterEntity_controller_route, controller_rows, document_rows, forward_rows, submitButton, actionParametersContainer,
+    var CmsRouterEntity_type, CmsRouterEntity_controller_route, controller_rows, document_rows, submitButton, actionParametersContainer,
         lastActionKey = "<?php echo $currentActionKey;?>", actionKeyMap,
         availableTypes = {
             1:'controller',
             2:'document',
-            3:'forward'
         };
 
     /**
@@ -36,7 +35,6 @@ use yii\helpers\Html;
     function filterFormFields(type) {
         controller_rows.addClass('hidden_el');
         document_rows.addClass('hidden_el');
-        forward_rows.addClass('hidden_el');
 
         var show = eval(type + '_rows');
         show.removeClass('hidden_el');
@@ -71,7 +69,6 @@ use yii\helpers\Html;
             submitButton = $('#submitButton'),
             controller_rows = $('div.available-for-controller'),
             document_rows = $('div.available-for-document'),
-            forward_rows = $('div.available-for-forward');
 
         CmsRouterEntity_type.on('change',function (e) {
             filterFormFields(this.value);

@@ -9,7 +9,7 @@
 namespace webkadabra\yii\modules\cms\adminControllers;
 
 use webkadabra\yii\modules\cms\models\CmsApp;
-use webkadabra\yii\modules\cms\models\CmsRoute;
+use webkadabra\yii\modules\cms\models\CmsRedirect;
 use dektrium\user\filters\AccessRule;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -24,7 +24,7 @@ use yii\web\NotFoundHttpException;
  * @author Sergii Gamaiunov <devkadabra@gmail.com>
  * @package webkadabra\yii\modules\cms\backendControllers
  */
-class PagesController extends Controller
+class RedirectController extends Controller
 {
     /**
      * @inheritdoc
@@ -57,15 +57,15 @@ class PagesController extends Controller
     }
 
     /**
-     * Finds the CmsRoute model based on its primary key value.
+     * Finds the CmsRedirect model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return CmsRoute the loaded model
+     * @return CmsRedirect the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = CmsRoute::findOne($id)) !== null) {
+        if (($model = CmsRedirect::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -73,59 +73,44 @@ class PagesController extends Controller
     }
 
     /**
-     * Lists all CmsRoute models.
+     * Lists all CmsRedirect models.
      * @return mixed
      */
     public function actionIndex($appId=null, $filter = null)
     {
-        /** @var CmsApp[] $apps */
-        $apps = CmsApp::find()->orderBy('id ASC')->all();
-        $tabs = [];
-        $i = 1;
-        $activeApp = null;
-        foreach ($apps as $app) {
-            if (!$appId) {
-                $appId = $app->id;
+        if ($appId) {
+            if (!$appModel = CmsApp::findOne($appId)) {
+                throw new NotFoundHttpException();
             }
-            $tabs[] = [
-                'label' => $app->name,
-                'filter' => [
-                    'where' => [
-                        'container_app_id' => $app->id
-                    ],
-                ],
-                'url' => \yii\helpers\Url::toRoute(['index', 'appId' => $app->id]),
-                'active' => $appId == $app->id
-            ];
-            if ($appId == $app->id) {
-                $activeApp = $app;
+        } else {
+            if (!$appModel = CmsApp::find()->orderBy('id ASC')->one()) {
+                Yii::$app->session->addFlash('warning', Yii::t('cms', 'You need to add at least one website before creating pages.'));
+                return $this->redirect(['apps/create']);
             }
-            $i++;
         }
-        $query = CmsRoute::find();
-        $searchModel = new CmsRoute();
+
+        $query = CmsRedirect::find();
+        $searchModel = new CmsRedirect();
 
         $query->andWhere(['container_app_id' => $appId]);
-        $query->andWhere(['!=', 'nodeType', CmsRoute::TYPE_REDIRECT]); // exclude redirects form this list since they are managed in a different UI
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => false,
             'sort' => [
-                'defaultOrder' => 'nodeHomePage DESC, nodeBackendName ASC'
+                'defaultOrder' => 'redirect_from ASC'
             ]
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'tabs' => $tabs,
-            'activeApp' => $activeApp,
+            'activeApp' => $appModel,
             'searchModel' => $searchModel,
         ]);
     }
 
     /**
-     * Creates a new CmsRoute model.
+     * Creates a new CmsRedirect model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -143,15 +128,20 @@ class PagesController extends Controller
         }
 
         if ($parent_id && intval($parent_id)) {
-            $parent = CmsRoute::find()->where(['id' => $parent_id])->limit(1)->one();
+            $parent = CmsRedirect::find()->where(['id' => $parent_id])->limit(1)->one();
             if (!$parent) {
                 throw new NotFoundHttpException();
             }
         } else {
             $parent = null;
         }
-        $model = new CmsRoute();
+        $model = new CmsRedirect();
         $model->container_app_id = $appModel->id;
+        if ($model->load(Yii::$app->request->post())) {
+//            weed($_POST,0);
+//            weed($model->redirect_to, 0);
+//            weed($model->attributes);
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
             return $this->redirect(['view', 'id' => $model->id]);
@@ -168,16 +158,13 @@ class PagesController extends Controller
     }
 
     /**
-     * Displays a single CmsRoute model.
+     * Displays a single CmsRedirect model.
      * @param string $id
      * @return mixed
      */
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        if ($model->getIsRedirectType()) {
-            return $this->redirect(['redirect/view', 'id' => $id]);
-        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
             return $this->refresh();
@@ -188,16 +175,13 @@ class PagesController extends Controller
     }
 
     /**
-     * Displays a single CmsRoute model.
+     * Displays a single CmsRedirect model.
      * @param string $id
      * @return mixed
      */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if ($model->getIsRedirectType()) {
-            return $this->redirect(['redirect/view', 'id' => $id]);
-        }
         if ($model->delete()) {
             Yii::$app->session->addFlash('warning', Yii::t('cms', 'Page deleted'));
             return $this->redirect(['index']);

@@ -4,6 +4,7 @@ namespace webkadabra\yii\modules\cms\components;
 use webkadabra\yii\modules\cms\controllers\ViewController;
 use webkadabra\yii\modules\cms\models\CmsApp;
 use webkadabra\yii\modules\cms\models\CmsDocumentVersion;
+use webkadabra\yii\modules\cms\models\CmsRedirect;
 use webkadabra\yii\modules\cms\models\CmsRoute;
 use yii;
 use yii\base\BootstrapInterface;
@@ -111,11 +112,24 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
             } else {
                 $route_norm = trim($app->request->pathInfo, '/');
             }
+
+            // check for redirect
+            $redirect = CmsRedirect::find()->where([
+                'redirect_from' => $route_norm,
+                'container_app_id' => $this->getContainerId(),
+                'deleted_yn' => 0,
+            ])->limit(1)->one();
+            if ($redirect) {
+                Yii::$app->getResponse()->redirect($redirect->redirect_to);
+                Yii::$app->end();
+            }
+
             $row = CmsRoute::find()->where([
                 'nodeRoute' => $route_norm,
                 'container_app_id' => $this->getContainerId(),
                 'deleted_yn' => 0,
             ])->limit(1)->one();
+
 //            if (!$routes = Yii::$app->cache->get('cms-routes')) {
 //                $routes = CmsRoute::find()->where([
 //                    'deleted_yn' => 0,
@@ -154,10 +168,6 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
         if ($row) {
             Yii::$app->params['view_node'] = $row;
             /** @var CmsRoute $row */
-            if ($row->nodeType === 'forward') {
-                Yii::$app->getResponse()->redirect($row->redirect_to);
-                Yii::$app->end();
-            }
             $viewingDocument = $row;
             // preview mode
             if (($versionId = Yii::$app->request->get('previewVersion')) && Yii::$app->user->can('previewCms')) {
