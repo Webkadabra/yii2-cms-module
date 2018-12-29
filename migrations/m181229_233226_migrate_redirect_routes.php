@@ -12,7 +12,7 @@ class m181229_233226_migrate_redirect_routes extends Migration
      */
     public function safeUp()
     {
-        $data = \webkadabra\yii\modules\cms\models\CmsRoute::find()->where(['nodeType' => \webkadabra\yii\modules\cms\models\CmsRoute::TYPE_REDIRECT])->all();
+        $data = \webkadabra\yii\modules\cms\models\CmsRoute::find()->where(['nodeType' => 'forward'])->all();
         foreach ($data as $oldRedirect) {
             $redirect = new \webkadabra\yii\modules\cms\models\CmsRedirect();
             $redirect->redirect_from = $oldRedirect->nodeRoute;
