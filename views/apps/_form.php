@@ -30,7 +30,9 @@ if (!isset($staticOnly)) $staticOnly = false;
         'code'=>['type'=>Form::INPUT_TEXT,],
         'domain'=>['type'=>Form::INPUT_TEXT,],
         'base_url'=>['type'=>Form::INPUT_TEXT,],
-        'url_component'=>['type'=>Form::INPUT_TEXT,],
+        'url_component'=>['type'=>Form::INPUT_DROPDOWN_LIST,
+            'items'=>\webkadabra\yii\modules\cms\models\CmsApp::urlComponentDropdownOptions(),
+            'options' => ['prompt' => '']],
     ],
 ]); ?>
 <?php echo Form::widget([
