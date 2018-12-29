@@ -3,6 +3,7 @@
 namespace webkadabra\yii\modules\cms\models;
 
 use Yii;
+use yii\web\UrlManager;
 
 /**
  * This is the model class for table "cms_app" representing a container for CMS routes
@@ -77,5 +78,22 @@ class CmsApp extends \yii\db\ActiveRecord
 
     public function getPermalink() {
         return $this->base_url;
+    }
+
+    /**
+     * @return array list of available url management components for building URLs; for component to be included in this
+     * list, it must have `urlManager` as part of it's name, e.g. `uelManager` or `frontendUrlManager`
+     */
+    public static function urlComponentDropdownOptions() {
+        $data = Yii::$app->getComponents(true);
+        $options = [];
+        foreach ($data as $id => $component ) {
+            $component['class'] = strtolower($component['class']); // normalize `UrlManager` & `urlManager`
+            if (strstr($component['class'], '\urlmanager'))
+                if (strtolower($component['class']) == 'yii\\web\\urlmanager') {
+                    $options[$id] = $id;
+                }
+        }
+        return $options;
     }
 }
