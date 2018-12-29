@@ -43,7 +43,6 @@ class CmsRoute extends \yii\db\ActiveRecord
 {
     use \webkadabra\yii\modules\cms\CmsPageTrait;
     use \webkadabra\yii\modules\cms\CmsPageFormTrait;
-    use \kartik\tree\models\TreeTrait;
 
     /**
      * @inheritdoc
@@ -76,15 +75,6 @@ class CmsRoute extends \yii\db\ActiveRecord
             [['nodeEnabled'], 'integer'],
 
         ];
-    }
-
-    public function afterValidate()
-    {
-        parent::afterValidate();
-        if ($this->isAttributeSafe('redirect_to') && $this->getIsRedirectType() && !$this->getRedirect_to()) {
-            // we definitely need a URL to be redirected to if this is a redirect route:
-            $this->addError('redirect_to', Yii::t('cms', 'This field is mandatory.'));
-        }
     }
 
     public function behaviors()
@@ -126,7 +116,7 @@ class CmsRoute extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nodeBackendName' => Yii::t('cms', 'Internal name'),
+            'nodeBackendName' => Yii::t('cms', 'Internal note'),
             'nodeRoute' => Yii::t('cms', 'Route'),
             'nodeParentRoute' => 'Node Parent Route',
             'nodeType' => 'Node Type',
@@ -226,8 +216,8 @@ class CmsRoute extends \yii\db\ActiveRecord
     }
 
     const TYPE_DOCUMENT = 'document';
+
     const TYPE_CONTROLLER = 'controller';
-    const TYPE_REDIRECT = 'forward';
 
     /**
      * Generate data for backend dropdown list
@@ -238,12 +228,7 @@ class CmsRoute extends \yii\db\ActiveRecord
         return array(
             static::TYPE_DOCUMENT => Yii::t('app','Document'),
             static::TYPE_CONTROLLER => Yii::t('app','Built-in Module'),
-            static::TYPE_REDIRECT => Yii::t('app','Redirect'),
         );
-    }
-
-    public function getIsRedirectType() {
-        return $this->nodeType == 'forward';
     }
 
     public function getIsHomePage() {

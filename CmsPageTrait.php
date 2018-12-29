@@ -56,7 +56,6 @@ trait CmsPageTrait
 
     /**
      * Unset any empty option, so there's no empty strings saved into serialized field
-     * @todo unset obsolete options like meta tags or page title for redirect page
      * @return void
      */
     public function cleanUnusedOptions() {
@@ -110,13 +109,5 @@ trait CmsPageTrait
 
     public function setPage_title($value) {
         $this->setOption('page_title', $value);
-    }
-
-    public function getRedirect_to() {
-        return $this->loadOption('redirect_to');
-    }
-
-    public function setRedirect_to($value) {
-        $this->setOption('redirect_to', $value);
     }
 }
