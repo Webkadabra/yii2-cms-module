@@ -24,11 +24,6 @@ This module is compatible  (but does not require) with the following yii-2 exten
 
 ## Setup
 
-### Requirements
-
-This module uses Tree Manager <https://github.com/kartik-v/yii2-tree-manager>  - you must install it first, 
-if you're planning to use admin interface. 
-
 ### Configuration
 
 Add `cms` component to your main application configuration (e.g. `config/main.php` or `frontend/config/main.php`, 
