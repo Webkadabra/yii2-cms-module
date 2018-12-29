@@ -25,7 +25,11 @@ return [
     'You need to add at least one website before creating pages.' => 'Перед созданием страниц вам нужно добавить хотя бы один сайт.',
 
     'Pages' => 'Страницы',
+    'Navigation' => 'Навигация',
     'Redirects' => 'Перенаправления',
-    'Create rule' => 'Добавить правило',
+    'URL Redirect' => 'URL Перенаправление',
+    'Create redirect' => 'Добавить перенаправление',
+    'Redirect from' => 'Перенаправлять с',
+    'Redirect to' => 'Перенаправлять на',
     'Open' => 'Открыть',
 ];
