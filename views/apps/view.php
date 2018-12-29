@@ -1,4 +1,5 @@
 <?php
+use \webkadabra\yii\modules\cms\components\AdminViewHooks;
 /**
  * Alphatech, <http://www.alphatech.com.ua>
  *
@@ -13,25 +14,32 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Websites'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->beginBlock('actions');
-    echo \yii\helpers\Html::a(Yii::t('cms', 'Open') . ' <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
-        'class' => 'btn btn-default',
-        'target' => '_blank'
-    ]);
+echo \yii\helpers\Html::a(Yii::t('cms', 'Open') . ' <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
+    'class' => 'btn btn-default',
+    'target' => '_blank'
+]);
 $this->endBlock();
 
-$this->beginBlock('links');
-    echo \yii\helpers\Html::a(Yii::t('cms', 'Pages') . ' <i class="fa fa-list" aria-hidden="true"></i>',
+$buttons = [
+    \yii\helpers\Html::a(Yii::t('cms', 'Pages') . ' <i class="fa fa-list" aria-hidden="true"></i>',
         ['pages/index', 'appId' => $model->id], [
-        'class' => 'btn btn-link',
-    ]);
-    echo \yii\helpers\Html::a(Yii::t('cms', 'Redirects') . ' <i class="fa fa-exchange" aria-hidden="true"></i>',
-        ['pages/redirects', 'appId' => $model->id], [
-        'class' => 'btn btn-link',
-    ]);
-    echo \yii\helpers\Html::a(Yii::t('cms', 'Open') . ' <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
+            'class' => 'btn btn-link',
+        ]),
+    \yii\helpers\Html::a(Yii::t('cms', 'Redirects') . ' <i class="fa fa-exchange" aria-hidden="true"></i>',
+        ['redirect/index', 'appId' => $model->id], [
+            'class' => 'btn btn-link',
+        ]),
+    \yii\helpers\Html::a(Yii::t('cms', 'Open') . ' <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
         'class' => 'btn btn-link',
         'target' => '_blank'
-    ]);
+    ]),
+];
+
+$event = new \webkadabra\yii\modules\cms\components\events\NavigationLinks(['sender' => $model, 'buttons' => $buttons]);
+\yii\base\Event::trigger(AdminViewHooks::class, AdminViewHooks::APP_VIEW_LINKS_BUTTONS, $event);
+
+$this->beginBlock('links');
+    echo implode('', $event->buttons);
 $this->endBlock();
 
 ?>
