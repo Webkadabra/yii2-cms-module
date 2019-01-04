@@ -172,9 +172,6 @@ class PagesController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        if ($model->getIsRedirectType()) {
-            return $this->redirect(['redirect/view', 'id' => $id]);
-        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
             return $this->refresh();
@@ -192,9 +189,6 @@ class PagesController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if ($model->getIsRedirectType()) {
-            return $this->redirect(['redirect/view', 'id' => $id]);
-        }
         if ($model->delete()) {
             Yii::$app->session->addFlash('warning', Yii::t('cms', 'Page deleted'));
             return $this->redirect(['index']);
