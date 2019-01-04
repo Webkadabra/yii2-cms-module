@@ -41,8 +41,11 @@ class ViewController extends \yii\web\Controller
             }
         }
         // make sure user does not try to access a page directly if page's got permalink
-        if ($this->node->getRoute() && (trim(Yii::$app->request->pathInfo, '/') != trim($this->node->getRoute(), '/'))) {
+        if ($this->node->getRoute() && (trim(Yii::$app->request->pathInfo, '/') != trim($this->node->getRoute(), '/'))
+            // ... with the exception for page set as "Home Page"
+            && !($this->node->getIsHomePage() && (!Yii::$app->request->pathInfo || Yii::$app->request->pathInfo === '/'))) {
             throw new NotFoundHttpException();
+
         }
         if ($this->node->viewLayout) {
             $this->layout = $this->node->getSafeViewLayout();
