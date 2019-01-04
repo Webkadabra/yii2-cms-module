@@ -102,11 +102,9 @@ class PagesController extends Controller
             }
             $i++;
         }
-        $query = CmsRoute::find();
-        $searchModel = new CmsRoute();
 
+        $query = CmsRoute::find();
         $query->andWhere(['container_app_id' => $appId]);
-        $query->andWhere(['!=', 'nodeType', CmsRoute::TYPE_REDIRECT]); // exclude redirects form this list since they are managed in a different UI
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -120,7 +118,6 @@ class PagesController extends Controller
             'dataProvider' => $dataProvider,
             'tabs' => $tabs,
             'activeApp' => $activeApp,
-            'searchModel' => $searchModel,
         ]);
     }
 
