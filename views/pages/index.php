@@ -77,7 +77,7 @@ $tabs[] = [
                 [
                     'format' => 'raw',
                     'value' => function($model /** @var \webkadabra\yii\modules\cms\models\CmsRoute $model */) {
-                        if (!$model->sitemap_yn && !$model->getIsRedirectType() && !$model->getIsHomePage()) {
+                        if (!$model->sitemap_yn && !$model->getIsHomePage()) {
                             return '<span class="fa-stack fa-1x text-muted" title="Not in sitemap">
   <i class="fa  fa-ban fa-stack-2x"></i>
   <strong class="fa-stack-1x fa fa-sitemap"></strong>
