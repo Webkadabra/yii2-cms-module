@@ -76,4 +76,12 @@ class CmsRedirect extends ActiveRecord
             'deleted_yn' => Yii::t('app', 'Deleted Yn'),
         ];
     }
+
+    public function getCmsApp() {
+        return $this->hasOne(CmsApp::className(), ['id' => 'container_app_id']);
+    }
+
+    public function getRouterNode() {
+        return $this->hasOne(CmsRoute::className(), ['id' => 'container_app_id']);
+    }
 }
