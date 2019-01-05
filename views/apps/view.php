@@ -39,17 +39,19 @@ $event = new \webkadabra\yii\modules\cms\components\events\NavigationLinks(['sen
 \yii\base\Event::trigger(AdminViewHooks::class, AdminViewHooks::APP_VIEW_LINKS_BUTTONS, $event);
 
 $this->beginBlock('links');
-    echo implode('', $event->buttons);
+echo implode('', $event->buttons);
 $this->endBlock();
 
 ?>
 <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-body">
-            <?= $this->render('_form', [
-                'model' => $model,
-                'staticOnly' => $model,
-            ]) ?>
+        <div class="panel">
+            <div class="panel-body">
+                <?= $this->render('_form', [
+                    'model' => $model,
+                    'staticOnly' => $model,
+                ]) ?>
+            </div>
         </div>
     </div>
     <div class="col-md-3"><!-- Form Sidebar--></div>

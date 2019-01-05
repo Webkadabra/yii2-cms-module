@@ -22,16 +22,18 @@ $this->endBlock();
 ?>
 <div class="row">
     <div class="col-md-8">
-        <div class="panel panel-body">
-            <?php echo $this->render('_form_route', [
-                'model' => $model,
-                'staticOnly' => $model,
-            ]) ?>
-            <hr/>
-            <?php echo $this->render('_form_properties', [
-                'model' => $model,
-                'staticOnly' => true,
-            ]) ?>
+        <div class="panel">
+            <div class="panel-body">
+                <?php echo $this->render('_form_route', [
+                    'model' => $model,
+                    'staticOnly' => $model,
+                ]) ?>
+                <hr/>
+                <?php echo $this->render('_form_properties', [
+                    'model' => $model,
+                    'staticOnly' => true,
+                ]) ?>
+            </div>
         </div>
     </div>
     <div class="col-md-4">
