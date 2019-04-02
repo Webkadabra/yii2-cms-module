@@ -35,6 +35,65 @@ echo $form->errorSummary($model);
 //    ],
 //]); ?>
 
+<script>
+    function slugifyString ( str ) {
+        var chrmap = {
+            'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
+            'е': 'e', 'ё': 'e', 'ж': 'j', 'з': 'z', 'и': 'i',
+            'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o',
+            'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
+            'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch', 'ш': 'sh',
+            'щ': 'shch', 'ы': 'y', 'э': 'e', 'ю': 'u', 'я': 'ya'
+        }, n_str = [];
+
+        str = str.replace(/[ъь]+/g, '').replace(/й/g, 'i');
+        str = str.replace(/[\s-]+/g, '_');
+        str = str.replace(/_+/g, '_')
+            .replace(/_$/g, '');
+
+        for ( var i = 0; i < str.length; ++i ) {
+            n_str.push(
+                chrmap[ str[i] ]
+                || chrmap[ str[i].toLowerCase() ] == undefined && str[i]
+                || chrmap[ str[i].toLowerCase() ].replace(/^(.)/, function ( match ) { return match.toUpperCase() })
+            );
+        }
+
+        str =  n_str.join('');
+        str = str.toLowerCase()
+            .replace(/[^\w ]+/g,'')
+            .replace(/ +/g,'-').trim('_');
+
+        return str;
+    }
+
+    function onPermalinkGenerateClick() {
+        var title = document.getElementById('<?=Html::getInputId($model,'nodeBackendName')?>').value,
+            generatedPermalink;
+        if (!title) {
+            generatedPermalink = generateId(12) + '.html'
+        } else {
+            if (title.length < 5) {
+                generatedPermalink = slugifyString(title) + '_' + generateId(5);
+            } else {
+                generatedPermalink = slugifyString(title);
+            }
+        }
+        document.getElementById('<?=Html::getInputId($model,'nodeRoute')?>').value = generatedPermalink;
+    }
+
+    // dec2hex :: Integer -> String
+    function dec2hex (dec) {
+        return ('0' + dec.toString(16)).substr(-2)
+    }
+
+    // generateId :: Integer -> String
+    function generateId (len) {
+        var arr = new Uint8Array((len || 40) / 2)
+        window.crypto.getRandomValues(arr)
+        return Array.from(arr, dec2hex).join('')
+    }
+</script>
 
 <?php echo Form::widget([
     'model'=>$model,
@@ -52,7 +111,9 @@ echo $form->errorSummary($model);
         'nodeBackendName'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Отображается только в админке'],
         'nodeRoute'=>[
             'type'=>Form::INPUT_TEXT,
-            'hint'=>'Относительный путь к этой странице, от корня сайта.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>',
+            'hint'=>'Относительный путь к этой странице, от корня сайта. '
+                . Html::button(Yii::t('cms', 'Generate'), ['onclick' => 'onPermalinkGenerateClick();return false;', 'class' => 'btn btn-xs btn-default'])
+                .'<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>',
             'fieldConfig' => [
                 'addon' => $model->cmsApp
                     ?
