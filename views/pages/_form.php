@@ -108,7 +108,7 @@ echo $form->errorSummary($model);
                     <b>Контроллер</b> — привязать один из существующих контроллеров<br />
                     <b>Редирект</b> — перенаправить пользователя по ссылке на страницу или файл<br />'
         ],
-        'nodeBackendName'=>['type'=>Form::INPUT_TEXT, 'hint'=>'Отображается только в админке'],
+        'nodeBackendName'=>['type'=>Form::INPUT_TEXT,],
         'nodeRoute'=>[
             'type'=>Form::INPUT_TEXT,
             'hint'=>'Относительный путь к этой странице, от корня сайта. '

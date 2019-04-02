@@ -116,10 +116,10 @@ class CmsRoute extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nodeBackendName' => Yii::t('cms', 'Internal note'),
+            'nodeBackendName' => Yii::t('cms', 'Title'),
             'nodeRoute' => Yii::t('cms', 'Route'),
             'nodeParentRoute' => 'Node Parent Route',
-            'nodeType' => 'Node Type',
+            'nodeType' => Yii::t('cms', 'Page Type'),
             'nodeEnabled' => Yii::t('cms', 'Page is published'),
             'nodeProperties' => 'Node Properties',
             'nodeContentPageID' => 'Node Content Page ID',
