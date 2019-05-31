@@ -2,7 +2,6 @@
 namespace webkadabra\yii\modules\cms\components;
 
 use webkadabra\yii\modules\cms\controllers\ViewController;
-use webkadabra\yii\modules\cms\models\CmsApp;
 use webkadabra\yii\modules\cms\models\CmsDocumentVersion;
 use webkadabra\yii\modules\cms\models\CmsRedirect;
 use webkadabra\yii\modules\cms\models\CmsRoute;
@@ -16,13 +15,6 @@ use yii\base\BootstrapInterface;
  */
 class CmsRouter extends yii\base\Component implements BootstrapInterface
 {
-    /**
-     * @var string key for `CmsApp` model
-     */
-    public $containerAppCode;
-
-    protected $_containerAppId;
-
     public $templateMap = [];
 
     /**
@@ -71,17 +63,6 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
      */
     public $moduleId = 'cms-web';
 
-    public function getContainerId() {
-        if (!$this->_containerAppId) {
-            if ($this->containerAppCode) {
-                $site = CmsApp::findByCode($this->containerAppCode);
-                if ($site) {
-                    $this->_containerAppId = $site->id;
-                }
-            }
-        }
-        return $this->_containerAppId;
-    }
     /**
      * @param yii\base\Application $app
      * @todo add cache
@@ -90,9 +71,6 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
     {
         if (!$this->serveContent) {
             return;
-        }
-        if (!$this->containerAppCode) {
-            $this->containerAppCode = Yii::$app->id;
         }
         $routeArray = [];
         if (!isset($_SERVER['REQUEST_URI'])) { // $_SERVER['REQUEST_URI'] is some times empty in codeception tests
@@ -103,7 +81,6 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
             $row = CmsRoute::findOne([
                 'nodeHomePage' => 1,
                 'deleted_yn' => 0,
-                'container_app_id' => $this->getContainerId(),
             ]);
         } else if ($route[0] || $app->request->pathInfo) {
             if ($route[0]) {
@@ -116,7 +93,6 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
             // check for redirect
             $redirect = CmsRedirect::find()->where([
                 'redirect_from' => $route_norm,
-                'container_app_id' => $this->getContainerId(),
                 'deleted_yn' => 0,
             ])->limit(1)->one();
             if ($redirect) {
@@ -126,7 +102,6 @@ class CmsRouter extends yii\base\Component implements BootstrapInterface
 
             $row = CmsRoute::find()->where([
                 'nodeRoute' => $route_norm,
-                'container_app_id' => $this->getContainerId(),
                 'deleted_yn' => 0,
             ])->limit(1)->one();
 

@@ -10,7 +10,7 @@
 /* @var $model webkadabra\yii\modules\cms\models\CmsRoute */
 
 $this->title = Yii::t('cms', 'URL Redirect');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Redirects'), 'url' => ['redirect/index', 'appId' => $model->container_app_id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Redirects'), 'url' => ['redirect/index']];
 $this->params['breadcrumbs'][] =  Yii::t('cms', 'URL Redirect');
 
 $this->beginBlock('links');

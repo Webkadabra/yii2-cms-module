@@ -5,6 +5,8 @@
  * Copyright (C) 2015-present Sergii Gamaiunov <devkadabra@gmail.com>
  * All rights reserved.
  */
+
+use webkadabra\yii\modules\cms\components\AdminViewHooks;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -13,42 +15,37 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('cms', 'Pages');
 
-
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Websites'),
-    'url' => ['apps/index', 'fromId' => $activeApp->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
-
-
-
 $this->beginBlock('actions');
-echo Html::a(Yii::t('app', 'Create New Page'), [
+echo Html::a(Yii::t('cms', 'Create New Page'), [
     'create',
     'appId' => Yii::$app->request->get('appId')
 ], ['class' => 'btn btn-primary']);
 $this->endBlock();
-$tabs[] = [
-    'encode' => false,
-    'label' => '<i class="fa fa-cog"></i> &nbsp; Настройки сайта',
-    'url' => $activeApp
-        ? ['apps/view', 'id' => $activeApp->id]
-        : ['apps/index']
-    ,
-    'headerOptions'=>['class' => 'pull-right', 'style' => 'position: absolute; right: 40px'],
-    'linkOptions'=>['style' => 'border: 0',],
-    'class' => 'btn btn-default pull-right',
-    'contentOptions'=>['class' => 'btn btn-default pull-right'],
-]
+
+$buttons = [
+    \yii\helpers\Html::a(Yii::t('cms', 'Pages') . ' <i class="fa fa-list" aria-hidden="true"></i>',
+        ['pages/index'], [
+            'class' => 'btn btn-link',
+        ]),
+    \yii\helpers\Html::a(Yii::t('cms', 'Redirects') . ' <i class="fa fa-exchange" aria-hidden="true"></i>',
+        ['redirect/index'], [
+            'class' => 'btn btn-link',
+        ]),
+];
+
+$event = new \webkadabra\yii\modules\cms\components\events\NavigationLinks(['sender' => $this->context, 'buttons' => $buttons]);
+\yii\base\Event::trigger(AdminViewHooks::class, AdminViewHooks::PAGES_VIEW_LINKS_BUTTONS, $event);
+
+$this->beginBlock('links');
+echo implode('', $event->buttons);
+$this->endBlock();
+
+
 ?>
 
 <div class="ui-card">
-    <div class="ui-card-tabs">
-        <?php echo \yii\bootstrap\Tabs::widget([
-            'options' => ['class' => 'tabs'],
-            'items' => $tabs,
-//            'items' => \common\models\SavedObjectFilter::makeTabsConfig($searchModel, $tabs),
-        ]); ?>
-    </div>
     <?php echo \webkadabra\yii\modules\cms\components\TableFilterWidget::widget([
     ]); ?>
     <form id="megaSearch" class="form-horizontal" method="get" style="padding:25px 20px 0 20px;text-align: center;margin:0;overflow:hidden">

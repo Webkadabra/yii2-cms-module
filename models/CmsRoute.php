@@ -16,7 +16,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @package webkadabra\yii\modules\cms\models
  *
  * @property string $id
- * @property string $container_app_id
  * @property string $version_id
  * @property string $nodeBackendName
  * @property string $nodeRoute
@@ -37,7 +36,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property CmsDocumentVersion[] $versions
  * @property CmsDocumentVersion $publishedVersion
- * @property CmsApp $cmsApp
  */
 class CmsRoute extends \yii\db\ActiveRecord
 {
@@ -66,9 +64,7 @@ class CmsRoute extends \yii\db\ActiveRecord
             [['viewLayout'], 'string', 'max' => 100],
             [['viewTemplate'], 'string', 'max' => 200],
             [['nodeHomePage'], 'unique'],
-
-
-            [['container_app_id'], 'required'],
+            
             [['nodeRoute'], 'required'],
             [['nodeRoute'], 'unique'],
             [['sitemap_yn'], 'integer'],
@@ -178,9 +174,6 @@ class CmsRoute extends \yii\db\ActiveRecord
 
     public function getPublishedVersion() {
         return $this->hasOne(CmsDocumentVersion::className(), ['id' => 'version_id']);
-    }
-    public function getCmsApp() {
-        return $this->hasOne(CmsApp::className(), ['id' => 'container_app_id']);
     }
 
     /**

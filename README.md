@@ -35,7 +35,6 @@ depending on your application structure):
         // ...
         'cms' =>[
             'class' => 'webkadabra\yii\modules\cms\components\CmsRouter',
-            'containerAppCode' => null, // default
         ],
         // ...
 ],

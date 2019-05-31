@@ -30,13 +30,10 @@ if (!isset($staticOnly)) $staticOnly = false;
             'type'=>Form::INPUT_TEXT,
             'hint'=>'Относительный путь к этой странице, от корня сайта.<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>',
             'fieldConfig' => [
-                'addon' => $model->cmsApp
-                    ?
-                    [
-                        'groupOptions' => ['class' => 'input-group--seamless'],
-                        'prepend' => Html::tag('span', $model->cmsApp->base_url, ['class' => 'input-group-addon input-group-addon--seamless'])
-                    ]
-                    : [],
+                'addon' => [
+                    'groupOptions' => ['class' => 'input-group--seamless'],
+                    'prepend' => Html::tag('span', Yii::$app->urlManager->createAbsoluteUrl('/'), ['class' => 'input-group-addon input-group-addon--seamless'])
+                ]
             ]
         ],
         'nodeEnabled'=>[

@@ -17,7 +17,6 @@ use yii\db\Expression;
  * @package webkadabra\yii\modules\cms\models
  *
  * @property $id
- * @property $container_app_id
  * @property $redirect_from
  * @property $redirect_to
  * @property $updated_on
@@ -39,7 +38,6 @@ class CmsRedirect extends ActiveRecord
     public function rules()
     {
         return [
-            [['container_app_id', 'deleted_yn'], 'integer'],
             [['redirect_from', 'redirect_to'], 'required'],
             [['redirect_from', ], 'unique'],
             [['redirect_from', ], 'unique', 'targetAttribute' => 'nodeRoute', 'targetClass' => CmsRoute::class],
@@ -69,19 +67,10 @@ class CmsRedirect extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'container_app_id' => Yii::t('app', 'Container App ID'),
             'redirect_from' => Yii::t('app', 'Redirect from'),
             'redirect_to' => Yii::t('app', 'Redirect to'),
             'updated_on' => Yii::t('app', 'Updated On'),
             'deleted_yn' => Yii::t('app', 'Deleted Yn'),
         ];
-    }
-
-    public function getCmsApp() {
-        return $this->hasOne(CmsApp::className(), ['id' => 'container_app_id']);
-    }
-
-    public function getRouterNode() {
-        return $this->hasOne(CmsRoute::className(), ['id' => 'container_app_id']);
     }
 }

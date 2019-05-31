@@ -22,19 +22,6 @@ if (!isset($staticOnly)) $staticOnly = false;
 echo $form->errorSummary($model);
 ?>
 
-<?php //echo Form::widget([
-//    'model'=>$model,
-//    'form'=>$form,
-//    'staticOnly'=>$staticOnly,
-//    'columns'=>1,
-//    'attributes'=>[
-//        'container_app_id'=>[
-//            'type'=>Form::INPUT_DROPDOWN_LIST,
-//            'items'=>\yii\helpers\ArrayHelper::map($apps, 'id', 'name')
-//        ],
-//    ],
-//]); ?>
-
 <script>
     function slugifyString ( str ) {
         var chrmap = {
@@ -115,13 +102,10 @@ echo $form->errorSummary($model);
                 . Html::button(Yii::t('cms', 'Generate'), ['onclick' => 'onPermalinkGenerateClick();return false;', 'class' => 'btn btn-xs btn-default'])
                 .'<br /><small>например: <b>contacts.html</b> или  <b>company/news</b></small>',
             'fieldConfig' => [
-                'addon' => $model->cmsApp
-                    ?
-                    [
-                        'groupOptions' => ['class' => 'input-group--seamless'],
-                        'prepend' => Html::tag('span', $model->cmsApp->base_url, ['class' => 'input-group-addon input-group-addon--seamless'])
-                    ]
-                    : [],
+                'addon' => [
+                    'groupOptions' => ['class' => 'input-group--seamless'],
+                    'prepend' => Html::tag('span', Yii::$app->urlManager->createAbsoluteUrl('/'), ['class' => 'input-group-addon input-group-addon--seamless'])
+                ]
             ]
         ],
     ],

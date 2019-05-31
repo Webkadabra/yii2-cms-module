@@ -8,7 +8,6 @@
 
 namespace webkadabra\yii\modules\cms\adminControllers;
 
-use webkadabra\yii\modules\cms\models\CmsApp;
 use webkadabra\yii\modules\cms\models\CmsRoute;
 use dektrium\user\filters\AccessRule;
 use Yii;
@@ -78,33 +77,7 @@ class PagesController extends Controller
      */
     public function actionIndex($appId=null, $filter = null)
     {
-        /** @var CmsApp[] $apps */
-        $apps = CmsApp::find()->orderBy('id ASC')->all();
-        $tabs = [];
-        $i = 1;
-        $activeApp = null;
-        foreach ($apps as $app) {
-            if (!$appId) {
-                $appId = $app->id;
-            }
-            $tabs[] = [
-                'label' => $app->name,
-                'filter' => [
-                    'where' => [
-                        'container_app_id' => $app->id
-                    ],
-                ],
-                'url' => \yii\helpers\Url::toRoute(['index', 'appId' => $app->id]),
-                'active' => $appId == $app->id
-            ];
-            if ($appId == $app->id) {
-                $activeApp = $app;
-            }
-            $i++;
-        }
-
         $query = CmsRoute::find();
-        $query->andWhere(['container_app_id' => $appId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -116,8 +89,6 @@ class PagesController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'tabs' => $tabs,
-            'activeApp' => $activeApp,
         ]);
     }
 
@@ -126,19 +97,8 @@ class PagesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($parent_id=null, $appId=null)
+    public function actionCreate($parent_id=null)
     {
-        if ($appId) {
-            if (!$appModel = CmsApp::findOne($appId)) {
-                throw new NotFoundHttpException();
-            }
-        } else {
-            if (!$appModel = CmsApp::find()->orderBy('id ASC')->one()) {
-                Yii::$app->session->addFlash('warning', Yii::t('cms', 'You need to add at least one website before creating pages.'));
-                return $this->redirect(['apps/create']);
-            }
-        }
-
         if ($parent_id && intval($parent_id)) {
             $parent = CmsRoute::find()->where(['id' => $parent_id])->limit(1)->one();
             if (!$parent) {
@@ -148,18 +108,13 @@ class PagesController extends Controller
             $parent = null;
         }
         $model = new CmsRoute();
-        $model->container_app_id = $appModel->id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'appModel' => $appModel,
                 'parent' => $parent,
-                'apps' => CmsApp::find()->andWhere([
-                    'active_yn' => 1,
-                ])->all(),
             ]);
         }
     }

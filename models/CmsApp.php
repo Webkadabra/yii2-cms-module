@@ -88,6 +88,9 @@ class CmsApp extends \yii\db\ActiveRecord
         $data = Yii::$app->getComponents(true);
         $options = [];
         foreach ($data as $id => $component ) {
+            if (!is_array($component) || !isset($component['class'])) {
+                continue;
+            }
             $component['class'] = strtolower($component['class']); // normalize `UrlManager` & `urlManager`
             if (strstr($component['class'], '\urlmanager'))
                 if (strtolower($component['class']) == 'yii\\web\\urlmanager') {

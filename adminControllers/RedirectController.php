@@ -76,24 +76,10 @@ class RedirectController extends Controller
      * Lists all CmsRedirect models.
      * @return mixed
      */
-    public function actionIndex($appId=null, $filter = null)
+    public function actionIndex($filter = null)
     {
-        if ($appId) {
-            if (!$appModel = CmsApp::findOne($appId)) {
-                throw new NotFoundHttpException();
-            }
-        } else {
-            if (!$appModel = CmsApp::find()->orderBy('id ASC')->one()) {
-                Yii::$app->session->addFlash('warning', Yii::t('cms', 'You need to add at least one website before creating pages.'));
-                return $this->redirect(['apps/create']);
-            }
-        }
-
         $query = CmsRedirect::find();
         $searchModel = new CmsRedirect();
-
-        $query->andWhere(['container_app_id' => $appId]);
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => false,
@@ -104,7 +90,6 @@ class RedirectController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'activeApp' => $appModel,
             'searchModel' => $searchModel,
         ]);
     }
@@ -114,19 +99,8 @@ class RedirectController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($parent_id=null, $appId=null)
+    public function actionCreate($parent_id=null)
     {
-        if ($appId) {
-            if (!$appModel = CmsApp::findOne($appId)) {
-                throw new NotFoundHttpException();
-            }
-        } else {
-            if (!$appModel = CmsApp::find()->orderBy('id ASC')->one()) {
-                Yii::$app->session->addFlash('warning', Yii::t('cms', 'You need to add at least one website before creating pages.'));
-                return $this->redirect(['apps/create']);
-            }
-        }
-
         if ($parent_id && intval($parent_id)) {
             $parent = CmsRedirect::find()->where(['id' => $parent_id])->limit(1)->one();
             if (!$parent) {
@@ -136,23 +110,13 @@ class RedirectController extends Controller
             $parent = null;
         }
         $model = new CmsRedirect();
-        $model->container_app_id = $appModel->id;
-        if ($model->load(Yii::$app->request->post())) {
-//            weed($_POST,0);
-//            weed($model->redirect_to, 0);
-//            weed($model->attributes);
-        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->addFlash('success', Yii::t('cms', 'Changes Saved'));
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'appModel' => $appModel,
                 'parent' => $parent,
-                'apps' => CmsApp::find()->andWhere([
-                    'active_yn' => 1,
-                ])->all(),
             ]);
         }
     }
