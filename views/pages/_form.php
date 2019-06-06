@@ -91,9 +91,6 @@ echo $form->errorSummary($model);
         'nodeType'=>[
             'type'=>Form::INPUT_DROPDOWN_LIST,
             'items'=>$model->getTypeDropdownData(),
-            'hint'=>'<b>Документ</b> — создать страницу с произвольным HTML содержимым<br />
-                    <b>Контроллер</b> — привязать один из существующих контроллеров<br />
-                    <b>Редирект</b> — перенаправить пользователя по ссылке на страницу или файл<br />'
         ],
         'nodeBackendName'=>['type'=>Form::INPUT_TEXT,],
         'nodeRoute'=>[

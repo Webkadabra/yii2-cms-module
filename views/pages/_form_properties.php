@@ -31,25 +31,9 @@ echo $form->errorSummary($model);
         'nodeType'=>[
             'type'=>Form::INPUT_DROPDOWN_LIST,
             'items'=>$model->getTypeDropdownData(),
-            'hint'=>'<b>Документ</b> — создать страницу с произвольным HTML содержимым<br />
-                    <b>Контроллер</b> — привязать один из существующих контроллеров<br />
-                    <b>Редирект</b> — перенаправить пользователя по ссылке на страницу или файл<br />'
         ],
     ],
 ]); ?>
-<div class="clearfix available-for-controller available-for-document <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
-    <?php echo Form::widget([
-        'model'=>$model,
-        'form'=>$form,
-        'staticOnly'=>$staticOnly,
-        'columns'=>1,
-        'attributes'=>[
-            'sitemap_yn'=>[
-                'type'=>Form::INPUT_WIDGET, 'widgetClass'=>\bookin\aws\checkbox\AwesomeCheckbox::class,
-            ],
-        ],
-    ]); ?>
-</div>
 
 <?php if (!$staticOnly) { ?>
     <div style="margin-left:0px" class="alert alert-info available-for-document  available-for-controller <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
@@ -87,12 +71,12 @@ echo $form->errorSummary($model);
 
 <!-- META Keywords -->
 <div class="clearfix available-for-controller available-for-document <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
-    <?php echo $form->field($model, 'meta_keywords')->hint('META Keywords:'); ?>
+    <?php echo $form->field($model, 'meta_keywords'); ?>
 </div>
 
 <!-- META Description -->
 <div class="clearfix available-for-controller available-for-document <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
-    <?php echo $form->field($model, 'meta_description')->hint('META Description:'); ?>
+    <?php echo $form->field($model, 'meta_description'); ?>
 </div>
 
 <?php if (!$staticOnly) { ?>
