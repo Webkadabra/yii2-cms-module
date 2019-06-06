@@ -91,13 +91,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
      */
     public function getPermalink()
     {
-        if ($this->document->cmsApp->url_component) {
-            /** @see UrlManager::createAbsoluteUrl() */
-            $comp =  Yii::$app->get($this->document->cmsApp->url_component);
-            return $comp->createAbsoluteUrl('/'.$this->document->nodeRoute);
-        } else {
-            return Yii::$app->urlManager->createAbsoluteUrl(['/'.$this->document->nodeRoute, 'previewVersion' => $this->id]);
-        }
+        return Yii::$app->urlManager->createAbsoluteUrl(['/'.$this->document->nodeRoute, 'previewVersion' => $this->id]);
     }
 
     /**

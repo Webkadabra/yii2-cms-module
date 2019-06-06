@@ -64,7 +64,7 @@ class CmsRoute extends \yii\db\ActiveRecord
             [['viewLayout'], 'string', 'max' => 100],
             [['viewTemplate'], 'string', 'max' => 200],
             [['nodeHomePage'], 'unique'],
-            
+
             [['nodeRoute'], 'required'],
             [['nodeRoute'], 'unique'],
             [['sitemap_yn'], 'integer'],
@@ -182,13 +182,7 @@ class CmsRoute extends \yii\db\ActiveRecord
     public function getPermalink()
     {
         $route = '/' . ltrim($this->nodeRoute, '/'); // avoid double slash in the beginning in case page has `/` set as a route  (for home page)
-        if ($this->cmsApp->url_component) {
-            /** @see UrlManager::createAbsoluteUrl() */
-            $c = $this->cmsApp->url_component;
-            $comp =  Yii::$app->get($c);
-            return $comp->createAbsoluteUrl($route);
-        }
-        return rtrim($this->cmsApp->base_url, '/') . $route;
+        return Yii::$app->urlManager->createAbsoluteUrl($route);
     }
 
     /**
@@ -219,8 +213,8 @@ class CmsRoute extends \yii\db\ActiveRecord
     public static function typeDropDownData()
     {
         return array(
-            static::TYPE_DOCUMENT => Yii::t('app','Document'),
-            static::TYPE_CONTROLLER => Yii::t('app','Built-in Module'),
+            static::TYPE_DOCUMENT => Yii::t('cms','Document'),
+            static::TYPE_CONTROLLER => Yii::t('cms','Built-in Module'),
         );
     }
 
