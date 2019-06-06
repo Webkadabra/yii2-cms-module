@@ -13,9 +13,6 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('cms', 'Redirects');
 
-
-$this->params['breadcrumbs'][] = ['label' => $activeApp->name,
-    'url' => ['apps/view', 'id' => $activeApp->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->beginBlock('actions');
