@@ -63,7 +63,11 @@ class VersionContentController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = CmsDocumentVersionContent::find()->where(['id' => $id])->limit(1)->multilingual()->one()) !== null) {
+        $finder  = CmsDocumentVersionContent::find()->where(['id' => $id])->limit(1);
+        if (Yii::$app->cms->enableMultiLanguage) {
+            $finder->multilingual();
+        }
+        if (($model = $finder->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
