@@ -7,7 +7,6 @@ Features:
 * content version history & sandbox mode
 * multilingual support
 * handles routing on top of built-in `urlManager`
-* manage multiple websites
 * manage URL redirects
 * sitemap support
 
@@ -17,12 +16,9 @@ You can install package with a command:
 
 > composer require webkadabra/yii2-cms-module
 
-This module is compatible  (but does not require) with the following yii-2 extensions:
-
-* `omgdef\multilingual`
-* `dektrium\user`
-
 ## Setup
+
+**Note***: even though this module will run on most of MySQL versions, automated migrations require MySql >= 5.6.
 
 ### Configuration
 
@@ -168,6 +164,10 @@ You can do it by adding this code to your layouts:
     }
     // ...
 ```
+
+## Multilingual websites
+
+This module will automatically start working in multilingual mode with `omgdef\multilingual` extension
 
 ## Usage
 
