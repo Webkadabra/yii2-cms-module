@@ -222,6 +222,11 @@ class CmsRoute extends \yii\db\ActiveRecord
         return $this->nodeHomePage || $this->nodeRoute == '/';
     }
 
+    public function setAsHomepage() {
+        $this->nodeHomePage = 1;
+        return $this->save(false, ['nodeHomePage']);
+    }
+
     public static function templatesDropdownOptions() {
         $templatesWC = AdminModule::getInstance()->templateListWithConfigs();
         $templatesList = array();

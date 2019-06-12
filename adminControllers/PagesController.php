@@ -150,4 +150,19 @@ class PagesController extends Controller
         }
         return $this->redirect(['index']);
     }
+
+    /**
+     * Displays a single CmsRoute model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionSetHomepage($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->setAsHomepage()) {
+            Yii::$app->session->addFlash('warning', Yii::t('cms', 'Home page has been set.'));
+            return $this->redirect(['index']);
+        }
+        return $this->redirect(['index']);
+    }
 }

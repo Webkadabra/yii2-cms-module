@@ -14,6 +14,15 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['pages/view', 'id' => $model->id]];
 
 $this->beginBlock('actions');
+
+echo \yii\helpers\Html::a(Yii::t('cms', 'Set as Home Page'), ['set-homepage', 'id' => $model->id], [
+    'class' => 'btn btn-default ' . ($model->getIsHomePage() ? 'btn-disabled' : ''),
+    'data' => [
+        'confirm' => Yii::t('cms', 'Are you sure you want set this page as a Home Page?'),
+        'method' => 'post',
+    ],
+]);
+
 echo \yii\helpers\Html::a(Yii::t('cms', 'Open') . ' <i class="fa fa-external-link" aria-hidden="true"></i>', $model->getPermalink(), [
     'class' => 'btn btn-default',
     'target' => '_blank'
@@ -73,7 +82,6 @@ $this->endBlock();
                 'method' => 'post',
             ],
         ]) ?>
-
     </div>
 </div>
 </div>
