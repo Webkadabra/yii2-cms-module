@@ -83,7 +83,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
      * @return string
      */
     public function getViewTemplate() {
-        return '//cms-templates/'. $this->viewTemplate;
+        return ($this->viewTemplate ? '//cms-templates/'. $this->viewTemplate : 'view');
     }
 
     /**
