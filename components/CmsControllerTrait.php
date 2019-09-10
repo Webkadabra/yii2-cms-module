@@ -52,7 +52,7 @@ trait CmsControllerTrait
             foreach ($this->cmsJsBlocks[$name] as $blockKey => $blockConfig) {
                 if (isset($blockConfig['type']) && isset($blockConfig['value'])) {
                     if ($blockConfig['type'] == CmsContentBlock::TYPE_JAVASCRIPT_FILE) {
-                        $this->view->registerJsFile($blockConfig['value'], ['position' => View::POS_END]);
+                        $this->view->registerJsFile($blockConfig['value'], ['position' => yii\web\View::POS_END]);
                     } else if ($blockConfig['type'] == CmsContentBlock::TYPE_JAVASCRIPT_INLINE) {
                         $this->view->registerJs($blockConfig['value']);
                     }
