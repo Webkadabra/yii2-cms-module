@@ -54,7 +54,7 @@ trait CmsControllerTrait
                     if ($blockConfig['type'] == CmsContentBlock::TYPE_JAVASCRIPT_FILE) {
                         $this->view->registerJsFile($blockConfig['value'], ['position' => yii\web\View::POS_END]);
                     } else if ($blockConfig['type'] == CmsContentBlock::TYPE_JAVASCRIPT_INLINE) {
-                        $this->view->registerJs($blockConfig['value'], ['position' => yii\web\View::POS_HEAD]);
+                        $this->view->registerJs($blockConfig['value'], yii\web\View::POS_HEAD);
                     }
                 }
             }
