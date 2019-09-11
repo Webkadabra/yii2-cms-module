@@ -103,7 +103,7 @@ class CmsDocumentVersion extends \yii\db\ActiveRecord
             ['copyPageBlockIds', 'each', 'rule' => ['integer']],
             [['node_id'], 'required'],
             [['node_id', 'version', 'published_yn', 'owner_user_id'], 'integer'],
-            [['controller_route', 'redirect_to', 'page_title', 'meta_keywords', 'meta_description',], 'safe'],
+            [['controller_route', 'redirect_to', 'page_title', 'meta_keywords', 'meta_description', 'body_class',], 'safe'],
             [['created_on', 'published_on'], 'safe'],
             [['nodeType',], 'string'],
             [['description', 'viewLayout', 'viewTemplate'], 'string', 'max' => 255],

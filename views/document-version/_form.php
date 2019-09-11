@@ -80,6 +80,11 @@ if ($model->isNewRecord) {
     <!-- Controller Action Selector -->
     <?php echo $this->render('/pages/_controller_config_form', compact('model', 'form', 'staticOnly'))?>
 
+    <!-- Body class -->
+    <div class="clearfix available-for-controller available-for-document <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
+        <?php echo $form->field($model, 'body_class'); ?>
+    </div>
+
     <!-- Page Title -->
     <div class="clearfix available-for-controller available-for-document <?php if (!in_array($model->nodeType, array('controller', 'document'))) echo 'hidden_el'; ?>">
         <?php echo $form->field($model, 'page_title')->hint('Заголовок окна страницы (через тег HEAD>TITLE)'); ?>

@@ -50,6 +50,9 @@ class ViewController extends \yii\web\Controller
         if ($this->node->viewLayout) {
             $this->layout = $this->node->getSafeViewLayout();
         }
+        if ($this->node->getBody_class() && method_exists($this->view, 'addBodyClass')) {
+            $this->view->addBodyClass($this->node->getBody_class());
+        }
         return $this->render($this->node->getViewTemplate(), [
             'model' => $this->node,
         ]);

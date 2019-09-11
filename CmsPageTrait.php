@@ -110,4 +110,12 @@ trait CmsPageTrait
     public function setPage_title($value) {
         $this->setOption('page_title', $value);
     }
+
+    public function getBody_class() {
+        return $this->loadOption('body_class');
+    }
+
+    public function setBody_class($value) {
+        $this->setOption('body_class', $value);
+    }
 }
